@@ -6,6 +6,415 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Avenir', 'AvenirLTStd-Roman', Arial, ui-sans-serif, system-ui, sans-serif;
+    --font-body: 'Avenir', 'AvenirLTStd-Roman', Arial, ui-sans-serif, system-ui, sans-serif;
+    --font-heading: 'Avenir', 'AvenirLTStd-Roman', Arial, ui-sans-serif, system-ui, sans-serif;
+
+    --color-hansa-navy: #002e5b;
+    --color-hansa-navy-dark: #001f3f;
+    --color-hansa-blue: #6c98e1;
+    --color-hansa-gold: #fcb000;
+    --color-hansa-gold-dark: #b97c00;
+    --color-hansa-yellow: #fde428;
+}
+
+/* Brand font: Avenir, self-hosted under public/fonts (see public/fonts/README.txt). */
+@font-face {
+    font-family: 'Avenir';
+    src: url('/fonts/AvenirLTStd-Roman.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ============ Header replica (Consulting header_style_2 + transparent + sticky) ============ */
+
+/* Default (no hero): solid white bar, navy links — always readable */
+#header {
+    position: relative;
+    z-index: 50;
+    background: #fff;
+}
+
+#header .top_nav_wrapper .main_menu_nav > li > a {
+    color: #002e5b;
+}
+
+/* Hero mode only (dark slider/image under header): transparent, white links */
+body.has-hero.header_transparent #header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: transparent;
+}
+
+body.has-hero.header_transparent #header .top_nav_wrapper .main_menu_nav > li > a {
+    color: #fff;
+}
+
+body.has-hero.header_transparent #header .top_nav_wrapper .main_menu_nav > li > a:hover,
+body.has-hero.header_transparent #header .top_nav_wrapper .main_menu_nav > li.current-menu-item > a {
+    color: #fde428;
+}
+
+#header .header_top {
+    padding-top: 5px;
+}
+
+#header .header_top .container {
+    display: table;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#header .clearfix::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+#header .media-left,
+#header .media-body {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#header .logo a {
+    display: inline-block;
+}
+
+#header .top_nav {
+    text-align: right;
+}
+
+#header .header_socials {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 25px;
+}
+
+#header .top_nav_wrapper {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#header .main_menu_nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#header .top_nav_wrapper .main_menu_nav > li {
+    display: inline-block;
+    position: relative;
+    letter-spacing: -0.04em;
+}
+
+#header .top_nav_wrapper .main_menu_nav > li > a {
+    display: inline-block;
+    font-family: Arial, 'Avenir', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 10px 15px;
+}
+
+body.header_sticky #header .top_nav_wrapper .main_menu_nav > li > a {
+    color: #002e5b;
+}
+
+#header .top_nav_wrapper .main_menu_nav > li > a:hover,
+#header .top_nav_wrapper .main_menu_nav > li.current-menu-item > a {
+    color: #6c98e1;
+}
+
+/* Dropdown submenu */
+#header .main_menu_nav .sub-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -15px;
+    min-width: 270px;
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    background: #fff;
+    box-shadow: 0 6px 20px rgba(0, 46, 91, 0.18);
+    text-align: left;
+    z-index: 60;
+}
+
+#header .main_menu_nav li:hover > .sub-menu,
+#header .main_menu_nav li:focus-within > .sub-menu {
+    display: block;
+}
+
+#header .main_menu_nav .sub-menu li a {
+    display: block;
+    font-family: Arial, 'Avenir', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #002e5b;
+    text-decoration: none;
+    padding: 9px 20px;
+    white-space: nowrap;
+}
+
+#header .main_menu_nav .sub-menu li a:hover {
+    background: #f2f6fb;
+    color: #002e5b;
+}
+
+/* Sticky state: solid white bar pinned to top */
+body.header_sticky #header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: auto;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 46, 91, 0.12);
+}
+
+body.header_sticky #header .header_top {
+    padding-top: 0;
+}
+
+body.header_sticky #header .header_socials img {
+    height: 40px !important;
+    margin-top: 0 !important;
+}
+
+/* Mobile header — exact old-site panel (theme dark #090f00 + yellow #fcb000) */
+#header .mobile_header {
+    display: none;
+}
+
+@media only screen and (max-width: 1024px) {
+    #header .header_top {
+        display: none;
+    }
+
+    /* Mobile header is never fixed; a fixed bar would trap the tall open menu. */
+    body.header_sticky #header,
+    body.has-hero.header_transparent #header {
+        position: relative;
+        left: auto;
+        top: auto;
+        right: auto;
+        bottom: auto;
+        width: auto;
+        background: #fff;
+        box-shadow: none;
+    }
+
+    #header .mobile_header {
+        display: block;
+        width: 100%;
+        background: #fff;
+    }
+
+    #header .logo_wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 12px 15px;
+    }
+
+    #header .logo_wrapper .logo {
+        flex: 0 1 auto;
+        min-width: 0;
+    }
+
+    #header .logo_wrapper .logo img {
+        width: auto;
+        height: 70px;
+        max-width: 190px;
+    }
+
+    #header #menu_toggle {
+        margin-left: auto;
+        flex-shrink: 0;
+    }
+
+    #header #menu_toggle button {
+        position: relative;
+        width: 44px;
+        height: 40px;
+        background: #090f00;
+        border: 0;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    #header #menu_toggle button::before,
+    #header #menu_toggle button::after {
+        content: '';
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        height: 3px;
+        background: #fff;
+        transition: all 0.3s ease;
+    }
+
+    #header #menu_toggle button::before {
+        top: 12px;
+        box-shadow: 0 7px 0 #fff;
+    }
+
+    #header #menu_toggle button::after {
+        bottom: 12px;
+    }
+
+    #header #menu_toggle.open button {
+        background: transparent;
+    }
+
+    #header #menu_toggle.open button::before {
+        top: 18px;
+        box-shadow: none;
+        background: #090f00;
+        transform: rotate(45deg);
+    }
+
+    #header #menu_toggle.open button::after {
+        bottom: 19px;
+        background: #090f00;
+        transform: rotate(-45deg);
+    }
+
+    #header .header_info {
+        display: grid;
+        grid-template-rows: 0fr;
+        opacity: 0;
+        visibility: hidden;
+        width: 100%;
+        background: #090f00;
+        transition: grid-template-rows 0.38s ease, opacity 0.3s ease, visibility 0s linear 0.38s;
+    }
+
+    #header .mobile_header.open .header_info {
+        grid-template-rows: 1fr;
+        opacity: 1;
+        visibility: visible;
+        transition: grid-template-rows 0.38s ease, opacity 0.3s ease;
+    }
+
+    #header .top_nav_mobile {
+        overflow: hidden;
+        min-height: 0;
+    }
+
+    #header .top_nav_mobile .main_menu_nav {
+        list-style: none;
+        margin: 0;
+        padding: 18px 0 30px;
+    }
+
+    #header .top_nav_mobile .main_menu_nav > li {
+        position: relative;
+    }
+
+    #header .top_nav_mobile .main_menu_nav > li > a {
+        display: block;
+        position: relative;
+        font-family: Arial, 'Avenir', sans-serif;
+        font-size: 21px;
+        font-weight: 600;
+        color: #fff;
+        text-decoration: none;
+        padding: 13px 70px 13px 45px;
+    }
+
+    #header .top_nav_mobile .main_menu_nav > li.current-menu-item > a,
+    #header .top_nav_mobile .main_menu_nav > li.open > a {
+        color: #fcb000;
+    }
+
+    #header .top_nav_mobile .main_menu_nav > li .arrow {
+        position: absolute;
+        right: 28px;
+        top: 8px;
+        width: 34px;
+        height: 34px;
+        line-height: 34px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 700;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    #header .top_nav_mobile .main_menu_nav > li.open .arrow {
+        color: #fcb000;
+    }
+
+    #header .top_nav_mobile .main_menu_nav > li.open > a::after {
+        content: '';
+        position: absolute;
+        right: 31px;
+        bottom: -5px;
+        border-left: 13px solid transparent;
+        border-right: 13px solid transparent;
+        border-top: 15px solid #090f00;
+        z-index: 2;
+    }
+
+    #header .top_nav_mobile .main_menu_nav .sub-menu {
+        display: block;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        position: static;
+        top: auto;
+        left: auto;
+        min-width: 0;
+        width: auto;
+        box-shadow: none;
+        z-index: auto;
+        text-align: left;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        background: #f4f4f4;
+        transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.35s ease, visibility 0s linear 0.35s;
+    }
+
+    #header .top_nav_mobile .main_menu_nav > li.open .sub-menu {
+        max-height: 640px;
+        opacity: 1;
+        visibility: visible;
+        padding: 6px 0;
+        transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.45s ease;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        #header .header_info,
+        #header .mobile_header.open .header_info,
+        #header .top_nav_mobile .main_menu_nav .sub-menu,
+        #header .top_nav_mobile .main_menu_nav > li.open .sub-menu,
+        #header #menu_toggle button::before,
+        #header #menu_toggle button::after {
+            transition: none;
+        }
+    }
+
+    #header .top_nav_mobile .main_menu_nav .sub-menu li a {
+        display: block;
+        font-family: Arial, 'Avenir', sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        color: #222;
+        text-decoration: none;
+        padding: 10px 20px 10px 55px;
+    }
 }
