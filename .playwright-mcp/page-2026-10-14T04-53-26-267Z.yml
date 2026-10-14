@@ -1,0 +1,12 @@
+- generic [ref=f8e3]:
+  - heading "Laragon" [level=1] [ref=f8e4]
+  - generic [ref=f8e5]:
+    - paragraph [ref=f8e6]: Apache/2.4.68 (Win64) OpenSSL/3.0.16 mod_fcgid/2.3.10-dev
+    - paragraph [ref=f8e7]:
+      - text: "PHP version: 8.4.12"
+      - link "info" [ref=f8e8] [cursor=pointer]:
+        - /url: /?q=info
+    - paragraph [ref=f8e9]: "Document Root: C:/laragon/www"
+  - paragraph [ref=f8e11]:
+    - link "Getting Started" [ref=f8e12] [cursor=pointer]:
+      - /url: https://laragon.org/docs

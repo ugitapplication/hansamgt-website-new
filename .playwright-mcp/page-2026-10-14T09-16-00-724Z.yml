@@ -1,0 +1,172 @@
+- generic [active] [ref=f14e1]:
+  - link "Skip to main content" [ref=f14e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f14e3]:
+    - generic [ref=f14e5]:
+      - link [ref=f14e7] [cursor=pointer]:
+        - /url: http://localhost/hansamgt-website-new/public
+        - img "Hansa" [ref=f14e8]
+      - generic [ref=f14e9]:
+        - list [ref=f14e11]:
+          - listitem [ref=f14e12]:
+            - link "Home" [ref=f14e13] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public
+          - listitem [ref=f14e14]:
+            - link "About Us" [ref=f14e15] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f14e16]:
+            - link "Our Services" [ref=f14e17] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f14e18]:
+            - link "Projects" [ref=f14e19] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/projects
+          - listitem [ref=f14e20]:
+            - link "Gallery" [ref=f14e21] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/gallery
+          - listitem [ref=f14e22]:
+            - link "Careers" [ref=f14e23] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f14e24]:
+            - link "Contact Us" [ref=f14e25] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/contact
+        - link [ref=f14e27] [cursor=pointer]:
+          - /url: https://uniquegroupbd.com
+          - img "Hansa" [ref=f14e28]
+  - main [ref=f14e29]:
+    - generic [ref=f14e30]:
+      - heading "Our Projects — Buildings & Hotels Managed in Dhaka" [level=1] [ref=f14e31]
+      - group "Filter projects" [ref=f14e32]:
+        - button "Projects" [ref=f14e33]
+        - button "Ongoing" [ref=f14e34]
+        - button "Upcoming" [ref=f14e35]
+      - generic [ref=f14e36]:
+        - article [ref=f14e37]:
+          - img "Westin Dhaka, Gulshan-2, Dhaka" [ref=f14e38]
+          - paragraph [ref=f14e39]: Ongoing
+          - heading "WESTIN DHAKA" [level=2] [ref=f14e40]
+          - paragraph [ref=f14e41]: Gulshan-2, Dhaka
+        - article [ref=f14e42]:
+          - img "Unique Heights, Eskaton, Dhaka" [ref=f14e43]
+          - paragraph [ref=f14e44]: Ongoing
+          - heading "UNIQUE HEIGHTS" [level=2] [ref=f14e45]
+          - paragraph [ref=f14e46]: Kazi Nazrul Islam Avenue, Eskaton, Dhaka
+        - article [ref=f14e47]:
+          - img "Red Crescent Borak Tower, Old Elephant Road, Dhaka" [ref=f14e48]
+          - paragraph [ref=f14e49]: Ongoing
+          - heading "RED CRESCENT BORAK TOWER" [level=2] [ref=f14e50]
+          - paragraph [ref=f14e51]: Old Elephant Road, Dhaka
+        - article [ref=f14e52]:
+          - img "Unique Oval, Kemal Ataturk Avenue, Banani, Dhaka" [ref=f14e53]
+          - paragraph [ref=f14e54]: Ongoing
+          - heading "UNIQUE OVAL" [level=2] [ref=f14e55]
+          - paragraph [ref=f14e56]: Kemal Ataturk Avenue, Banani, Dhaka
+        - article [ref=f14e57]:
+          - img "Unique Trade Center, Panthapath, Kawran Bazar, Dhaka" [ref=f14e58]
+          - paragraph [ref=f14e59]: Ongoing
+          - heading "UNIQUE TRADE CENTER" [level=2] [ref=f14e60]
+          - paragraph [ref=f14e61]: Panthapath, Kawran Bazar, Dhaka
+        - article [ref=f14e62]:
+          - img "Sheraton Dhaka, Kemal Ataturk Avenue, Banani, Dhaka" [ref=f14e63]
+          - paragraph [ref=f14e64]: Upcoming
+          - heading "SHERATON DHAKA" [level=2] [ref=f14e65]
+          - paragraph [ref=f14e66]: Kemal Ataturk Avenue, Banani, Dhaka
+        - article [ref=f14e67]:
+          - img "Borak Biz Center, Dilkusha, Motijheel, Dhaka" [ref=f14e68]
+          - paragraph [ref=f14e69]: Upcoming
+          - heading "BORAK BIZ CENTER" [level=2] [ref=f14e70]
+          - paragraph [ref=f14e71]: Dilkusha, Motijheel, Dhaka
+        - article [ref=f14e72]:
+          - img "Borak Park Valley, Parkroad, Baridhara, Dhaka" [ref=f14e73]
+          - paragraph [ref=f14e74]: Upcoming
+          - heading "BORAK PARK VALLEY" [level=2] [ref=f14e75]
+          - paragraph [ref=f14e76]: Parkroad, Baridhara, Dhaka
+        - article [ref=f14e77]:
+          - img "Borak Mehnur, Banani, Dhaka" [ref=f14e78]
+          - paragraph [ref=f14e79]: Upcoming
+          - heading "BORAK MEHNUR" [level=2] [ref=f14e80]
+          - paragraph [ref=f14e81]: Banani, Dhaka
+        - article [ref=f14e82]:
+          - img "Borak Johir Tower, Panthapath, Kawran Bazar, Dhaka" [ref=f14e83]
+          - paragraph [ref=f14e84]: Upcoming
+          - heading "BORAK JOHIR TOWER" [level=2] [ref=f14e85]
+          - paragraph [ref=f14e86]: Panthapath, Kawran Bazar, Dhaka
+        - article [ref=f14e87]:
+          - img "Borak Acropolis, Gulshan-2, Dhaka" [ref=f14e88]
+          - paragraph [ref=f14e89]: Upcoming
+          - heading "BORAK ACROPOLIS" [level=2] [ref=f14e90]
+          - paragraph [ref=f14e91]: Gulshan-2, Dhaka
+    - region "A concern of Unique Group" [ref=f14e92]:
+      - generic [ref=f14e94]:
+        - paragraph [ref=f14e95]: a concern of Unique Group
+        - paragraph [ref=f14e96]:
+          - link "☎ 01708800870" [ref=f14e97] [cursor=pointer]:
+            - /url: tel:+8801708800870
+  - contentinfo [ref=f14e98]:
+    - generic [ref=f14e99]:
+      - generic [ref=f14e100]:
+        - link "HANSA Management Ltd. — home" [ref=f14e101] [cursor=pointer]:
+          - /url: http://localhost/hansamgt-website-new/public
+          - img "HANSA Management Ltd. logo" [ref=f14e102]
+        - paragraph [ref=f14e103]: HANSA Management Ltd. is an integrated hospitality & facility management company in Bangladesh, providing a full range of services.
+      - navigation "Footer services" [ref=f14e104]:
+        - heading "Our Services Link" [level=2] [ref=f14e105]
+        - list [ref=f14e106]:
+          - listitem [ref=f14e107]:
+            - link "Hospitality Management" [ref=f14e108] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/hospitality-management
+          - listitem [ref=f14e109]:
+            - link "Security Surveillance & Fire Life Safety" [ref=f14e110] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/security-fire-life-safety
+          - listitem [ref=f14e111]:
+            - link "Cleaning & White-Glove Housekeeping" [ref=f14e112] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/cleaning-white-glove-housekeeping
+          - listitem [ref=f14e113]:
+            - link "Mechanical, Electrical & Plumbing" [ref=f14e114] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/mep-mechanical-electrical-plumbing
+      - navigation "Footer company" [ref=f14e115]:
+        - heading "Company" [level=2] [ref=f14e116]
+        - list [ref=f14e117]:
+          - listitem [ref=f14e118]:
+            - link "Company Profile" [ref=f14e119] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/company-profile
+          - listitem [ref=f14e120]:
+            - link "Mission & Vision" [ref=f14e121] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/mission-vision
+          - listitem [ref=f14e122]:
+            - link "Charter of Unique Group" [ref=f14e123] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/charter-of-unique-group
+          - listitem [ref=f14e124]:
+            - link "Management" [ref=f14e125] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/management
+          - listitem [ref=f14e126]:
+            - link "CSR" [ref=f14e127] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/corporate-social-responsibility
+          - listitem [ref=f14e128]:
+            - link "Projects" [ref=f14e129] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/projects
+          - listitem [ref=f14e130]:
+            - link "Gallery" [ref=f14e131] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/gallery
+      - generic [ref=f14e132]:
+        - heading "Contact" [level=2] [ref=f14e133]
+        - generic [ref=f14e134]:
+          - paragraph [ref=f14e135]: Borak Mehnur (Level-18), 51/B Kemal Ataturk Avenue, Banani, Dhaka 1213
+          - paragraph [ref=f14e136]:
+            - link "01708800870" [ref=f14e137] [cursor=pointer]:
+              - /url: tel:+8801708800870
+          - paragraph [ref=f14e138]:
+            - link "info@hansamgt.com" [ref=f14e139] [cursor=pointer]:
+              - /url: mailto:info@hansamgt.com
+        - list [ref=f14e140]:
+          - listitem [ref=f14e141]:
+            - link "HANSA on Facebook" [ref=f14e142] [cursor=pointer]:
+              - /url: https://www.facebook.com/HANSAManagementLtd/
+          - listitem [ref=f14e145]:
+            - link "HANSA on LinkedIn" [ref=f14e146] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/hansa-management-ltd-222838196/
+          - listitem [ref=f14e149]:
+            - link "HANSA on YouTube" [ref=f14e150] [cursor=pointer]:
+              - /url: "#"
+    - generic [ref=f14e154]:
+      - paragraph [ref=f14e155]: Copyright © 2026 HANSA Management Ltd. All rights reserved.
+      - paragraph [ref=f14e156]: Developed by Unique Group IT

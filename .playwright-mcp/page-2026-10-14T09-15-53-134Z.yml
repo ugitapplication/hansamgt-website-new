@@ -1,0 +1,149 @@
+- generic [active] [ref=f6e1]:
+  - link "Skip to main content" [ref=f6e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f6e3]:
+    - generic [ref=f6e5]:
+      - link [ref=f6e7] [cursor=pointer]:
+        - /url: http://localhost/hansamgt-website-new/public
+        - img "Hansa" [ref=f6e8]
+      - generic [ref=f6e9]:
+        - list [ref=f6e11]:
+          - listitem [ref=f6e12]:
+            - link "Home" [ref=f6e13] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public
+          - listitem [ref=f6e14]:
+            - link "About Us" [ref=f6e15] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f6e16]:
+            - link "Our Services" [ref=f6e17] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f6e18]:
+            - link "Projects" [ref=f6e19] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/projects
+          - listitem [ref=f6e20]:
+            - link "Gallery" [ref=f6e21] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/gallery
+          - listitem [ref=f6e22]:
+            - link "Careers" [ref=f6e23] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f6e24]:
+            - link "Contact Us" [ref=f6e25] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/contact
+        - link [ref=f6e27] [cursor=pointer]:
+          - /url: https://uniquegroupbd.com
+          - img "Hansa" [ref=f6e28]
+  - main [ref=f6e29]:
+    - generic [ref=f6e31]:
+      - generic [ref=f6e32]:
+        - heading "Charter of Unique Group" [level=1] [ref=f6e33]
+        - generic [ref=f6e34]:
+          - paragraph [ref=f6e35]: Unique Group, a business conglomerate in Bangladesh, began its operation in 1982. It started its journey by exporting human resources and then pioneered skill development. It has spearheaded luxury hotel industry in Bangladesh.
+          - paragraph [ref=f6e36]: Over the years, the Group has diversified its business into many sectors including real estate and facilities management, tours and travels, education, financial institutions, ceramics, media, telecommunications, and agro based business. Today the Group is contributing to the national economy immensely.
+          - paragraph [ref=f6e37]: We value our customers under all and any circumstances. We deliver quality products on time, ensuring secure and good return on investment with excellent service. The direction of our future is being set by our customers.
+          - paragraph [ref=f6e38]: The purpose of Unique Group is to act boldly by pioneering new business directions and opportunities. We exist to provide world-class experience to our distinguished customers.
+        - heading "We Value" [level=2] [ref=f6e39]
+        - list [ref=f6e40]:
+          - listitem [ref=f6e41]:
+            - heading "Integrity" [level=3] [ref=f6e42]
+            - paragraph [ref=f6e43]: We stand to honor our word
+          - listitem [ref=f6e44]:
+            - heading "Innovation" [level=3] [ref=f6e45]
+            - paragraph [ref=f6e46]: We are creative and we take on new challenges
+          - listitem [ref=f6e47]:
+            - heading "Quality" [level=3] [ref=f6e48]
+            - paragraph [ref=f6e49]: We are uncompromising on delivering customer satisfaction
+          - listitem [ref=f6e50]:
+            - heading "Synergy" [level=3] [ref=f6e51]
+            - paragraph [ref=f6e52]: We take ownership and work collectively
+          - listitem [ref=f6e53]:
+            - heading "Excellence" [level=3] [ref=f6e54]
+            - paragraph [ref=f6e55]: We pursue the journey of breaking barriers in producing extraordinary products and services
+          - listitem [ref=f6e56]:
+            - heading "Leadership" [level=3] [ref=f6e57]
+            - paragraph [ref=f6e58]: We take continuous initiatives for developing individuals and teams to their full potential
+      - complementary "About HANSA" [ref=f6e59]:
+        - link "Company Profile" [ref=f6e60] [cursor=pointer]:
+          - /url: http://localhost/hansamgt-website-new/public/company-profile
+        - link "Charter of Unique Group" [ref=f6e61] [cursor=pointer]:
+          - /url: http://localhost/hansamgt-website-new/public/charter-of-unique-group
+        - link "Management" [ref=f6e62] [cursor=pointer]:
+          - /url: http://localhost/hansamgt-website-new/public/management
+        - link "Vision & Mission" [ref=f6e63] [cursor=pointer]:
+          - /url: http://localhost/hansamgt-website-new/public/mission-vision
+        - link "CSR" [ref=f6e64] [cursor=pointer]:
+          - /url: http://localhost/hansamgt-website-new/public/corporate-social-responsibility
+    - region "A concern of Unique Group" [ref=f6e65]:
+      - generic [ref=f6e67]:
+        - paragraph [ref=f6e68]: a concern of Unique Group
+        - paragraph [ref=f6e69]:
+          - link "☎ 01708800870" [ref=f6e70] [cursor=pointer]:
+            - /url: tel:+8801708800870
+  - contentinfo [ref=f6e71]:
+    - generic [ref=f6e72]:
+      - generic [ref=f6e73]:
+        - link "HANSA Management Ltd. — home" [ref=f6e74] [cursor=pointer]:
+          - /url: http://localhost/hansamgt-website-new/public
+          - img "HANSA Management Ltd. logo" [ref=f6e75]
+        - paragraph [ref=f6e76]: HANSA Management Ltd. is an integrated hospitality & facility management company in Bangladesh, providing a full range of services.
+      - navigation "Footer services" [ref=f6e77]:
+        - heading "Our Services Link" [level=2] [ref=f6e78]
+        - list [ref=f6e79]:
+          - listitem [ref=f6e80]:
+            - link "Hospitality Management" [ref=f6e81] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/hospitality-management
+          - listitem [ref=f6e82]:
+            - link "Security Surveillance & Fire Life Safety" [ref=f6e83] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/security-fire-life-safety
+          - listitem [ref=f6e84]:
+            - link "Cleaning & White-Glove Housekeeping" [ref=f6e85] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/cleaning-white-glove-housekeeping
+          - listitem [ref=f6e86]:
+            - link "Mechanical, Electrical & Plumbing" [ref=f6e87] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/mep-mechanical-electrical-plumbing
+      - navigation "Footer company" [ref=f6e88]:
+        - heading "Company" [level=2] [ref=f6e89]
+        - list [ref=f6e90]:
+          - listitem [ref=f6e91]:
+            - link "Company Profile" [ref=f6e92] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/company-profile
+          - listitem [ref=f6e93]:
+            - link "Mission & Vision" [ref=f6e94] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/mission-vision
+          - listitem [ref=f6e95]:
+            - link "Charter of Unique Group" [ref=f6e96] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/charter-of-unique-group
+          - listitem [ref=f6e97]:
+            - link "Management" [ref=f6e98] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/management
+          - listitem [ref=f6e99]:
+            - link "CSR" [ref=f6e100] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/corporate-social-responsibility
+          - listitem [ref=f6e101]:
+            - link "Projects" [ref=f6e102] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/projects
+          - listitem [ref=f6e103]:
+            - link "Gallery" [ref=f6e104] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/gallery
+      - generic [ref=f6e105]:
+        - heading "Contact" [level=2] [ref=f6e106]
+        - generic [ref=f6e107]:
+          - paragraph [ref=f6e108]: Borak Mehnur (Level-18), 51/B Kemal Ataturk Avenue, Banani, Dhaka 1213
+          - paragraph [ref=f6e109]:
+            - link "01708800870" [ref=f6e110] [cursor=pointer]:
+              - /url: tel:+8801708800870
+          - paragraph [ref=f6e111]:
+            - link "info@hansamgt.com" [ref=f6e112] [cursor=pointer]:
+              - /url: mailto:info@hansamgt.com
+        - list [ref=f6e113]:
+          - listitem [ref=f6e114]:
+            - link "HANSA on Facebook" [ref=f6e115] [cursor=pointer]:
+              - /url: https://www.facebook.com/HANSAManagementLtd/
+          - listitem [ref=f6e118]:
+            - link "HANSA on LinkedIn" [ref=f6e119] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/hansa-management-ltd-222838196/
+          - listitem [ref=f6e122]:
+            - link "HANSA on YouTube" [ref=f6e123] [cursor=pointer]:
+              - /url: "#"
+    - generic [ref=f6e127]:
+      - paragraph [ref=f6e128]: Copyright © 2026 HANSA Management Ltd. All rights reserved.
+      - paragraph [ref=f6e129]: Developed by Unique Group IT

@@ -1,0 +1,646 @@
+- generic [active] [ref=f8e1]:
+  - generic [ref=f8e3]:
+    - banner [ref=f8e4]:
+      - generic [ref=f8e6]:
+        - link [ref=f8e8] [cursor=pointer]:
+          - /url: http://hansamgt.com/index.php/home
+          - img "Hansa" [ref=f8e9]
+        - generic [ref=f8e10]:
+          - link [ref=f8e12] [cursor=pointer]:
+            - /url: http://uniquegroupbd.com
+            - img "Hansa" [ref=f8e13]
+          - list [ref=f8e15]:
+            - listitem [ref=f8e16]:
+              - link "Home" [ref=f8e17] [cursor=pointer]:
+                - /url: http://hansamgt.com/index.php/home
+            - listitem [ref=f8e18]:
+              - link "About Us" [ref=f8e19] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f8e20]:
+              - link "Our Services" [ref=f8e21] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f8e22]:
+              - link "Projects" [ref=f8e23] [cursor=pointer]:
+                - /url: http://hansamgt.com/index.php/home/project
+            - listitem [ref=f8e24]:
+              - link "Gallery" [ref=f8e25] [cursor=pointer]:
+                - /url: http://hansamgt.com/index.php/home/siteManagement
+            - listitem [ref=f8e26]:
+              - link "Careers" [ref=f8e27] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f8e28]:
+              - link "Contact Us" [ref=f8e29] [cursor=pointer]:
+                - /url: http://hansamgt.com/index.php/home/contact
+    - article [ref=f8e33]:
+      - generic [ref=f8e34]:
+        - generic [ref=f8e35]:
+          - generic [ref=f8e41]:
+            - generic [ref=f8e42]: HANSA Management Ltd. Hospitality and Facility Management Services
+            - generic [ref=f8e49] [cursor=pointer]: 
+            - generic [ref=f8e50] [cursor=pointer]: 
+          - generic [ref=f8e58]:
+            - heading "a concern of Unique Group" [level=2] [ref=f8e62]
+            - generic [ref=f8e65]:
+              - generic [ref=f8e66]: 
+              - text: "01708800870"
+        - generic [ref=f8e67]:
+          - generic [ref=f8e73]:
+            - img "OperationalExcellence" [ref=f8e75]
+            - generic [ref=f8e76]:
+              - generic [ref=f8e77]:
+                - generic [ref=f8e78]: 
+                - heading "Covid-19 Precautionary Measures" [level=6] [ref=f8e80]
+              - paragraph [ref=f8e81]: Our operational delivery and practices adhere to worldwide standards and policies, awarded and accredited by international bodies.
+          - generic [ref=f8e87]:
+            - img "SafetyFirst" [ref=f8e89]
+            - generic [ref=f8e90]:
+              - generic [ref=f8e91]:
+                - generic [ref=f8e92]: 
+                - heading "Safety First" [level=6] [ref=f8e94]
+              - paragraph [ref=f8e95]: Flawless safety record with daily objectives to achieve zero accident, HANSA applies an absolute safety policy to all employees in activities and projects.
+          - generic [ref=f8e101]:
+            - img "FutureReady (6)" [ref=f8e103]
+            - generic [ref=f8e104]:
+              - generic [ref=f8e105]:
+                - generic [ref=f8e106]: 
+                - heading "HANSA Never Sleeps" [level=6] [ref=f8e108]
+              - paragraph [ref=f8e109]: From the security and surveillance team, reception, housekeeping, elevator operator, electrical, mechanical and plumbing team, landscaping, pest management; Our dedicated team is always there for you regardless of the day or night, 24/7 or 365 days a day.
+        - generic [ref=f8e113]:
+          - heading "Our Services" [level=2] [ref=f8e115]
+          - generic [ref=f8e116]:
+            - link "  Hospitality Management We HANSA Management Ltd. (HML) is the only Integrated Facility Management Company in Bangladesh that provides services in international five-star standard hotels. Our hospitality partners are The Westin Dhaka, The Sheraton Dhaka and HANSA-A Premium Residence." [ref=f8e120] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/hardService
+              - generic [ref=f8e121]:  
+              - generic [ref=f8e123]:
+                - heading "Hospitality Management" [level=5] [ref=f8e124]
+                - paragraph [ref=f8e125]: We HANSA Management Ltd. (HML) is the only Integrated Facility Management Company in Bangladesh that provides services in international five-star standard hotels. Our hospitality partners are The Westin Dhaka, The Sheraton Dhaka and HANSA-A Premium Residence.
+            - link "  Security Surveliance & Fire Life Safety HML Security Surveillance, Fire Life Safety and Risk Management Services Include Investigations, Risk Management , Weapons Handling, Fire Life Safety and Operations.Law Enforcement Agency Liaison, Fire Alarm System Monitoring, Parking & Traffic Management and many things are included in this service." [ref=f8e129] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/softService
+              - generic [ref=f8e130]:  
+              - generic [ref=f8e132]:
+                - heading "Security Surveliance & Fire Life Safety" [level=5] [ref=f8e133]
+                - paragraph [ref=f8e134]: HML Security Surveillance, Fire Life Safety and Risk Management Services Include Investigations, Risk Management , Weapons Handling, Fire Life Safety and Operations.Law Enforcement Agency Liaison, Fire Alarm System Monitoring, Parking & Traffic Management and many things are included in this service.
+            - link "  Cleaning & White-Glove Housekeeping HML cleaning & white-glove housekeeping services includes floor care, hardwood flooring, vinyl or linoleum, marble crystallization, carpet shampooing, façade cleaning, pest control, odor control,guest room routine service and many things." [ref=f8e138] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/payperUse
+              - generic [ref=f8e139]:  
+              - generic [ref=f8e141]:
+                - heading "Cleaning & White-Glove Housekeeping" [level=5] [ref=f8e142]
+                - paragraph [ref=f8e143]: HML cleaning & white-glove housekeeping services includes floor care, hardwood flooring, vinyl or linoleum, marble crystallization, carpet shampooing, façade cleaning, pest control, odor control,guest room routine service and many things.
+            - link "  Mechanical, Electrical & Plumbing HML MEP Services Includes Installing Air Conditioning Systems, Water Supply & Drainage Systems, Firefighting System, Elevator, Fire Protection & Alarm Systems, Water Treatment Plant including Reverse Osmosis System, Building Management System (BMS), Security Control Room (CCTV) etc." [ref=f8e147] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/riskManagement
+              - generic [ref=f8e148]:  
+              - generic [ref=f8e150]:
+                - heading "Mechanical, Electrical & Plumbing" [level=5] [ref=f8e151]
+                - paragraph [ref=f8e152]: HML MEP Services Includes Installing Air Conditioning Systems, Water Supply & Drainage Systems, Firefighting System, Elevator, Fire Protection & Alarm Systems, Water Treatment Plant including Reverse Osmosis System, Building Management System (BMS), Security Control Room (CCTV) etc.
+        - generic [ref=f8e156]:
+          - generic [ref=f8e161]:
+            - generic [ref=f8e162]: 
+            - heading [level=4] [ref=f8e164]:
+              - mark [ref=f8e165]: HANSA
+              - text: in Numbers
+          - generic [ref=f8e166]:
+            - generic [ref=f8e171]:
+              - heading "No 0" [level=3] [ref=f8e172]
+              - generic [ref=f8e173]: Integrated Hospitality & Facility Management Company
+            - generic [ref=f8e178]:
+              - heading "0+" [level=3] [ref=f8e179]
+              - generic [ref=f8e180]: Employees
+            - generic [ref=f8e185]:
+              - heading "0+" [level=3] [ref=f8e186]
+              - generic [ref=f8e187]: Years in operation
+          - generic [ref=f8e196]:
+            - generic [ref=f8e201]:
+              - heading "0+" [level=3] [ref=f8e202]
+              - generic [ref=f8e203]: Happy Customers
+            - generic [ref=f8e208]:
+              - heading "0/7" [level=3] [ref=f8e209]
+              - generic [ref=f8e210]: One-Stop Service
+        - generic [ref=f8e212]:
+          - heading "Services at-a-glance" [level=2] [ref=f8e217]
+          - generic [ref=f8e227]:
+            - heading "Hospitality" [level=2] [ref=f8e228]
+            - paragraph [ref=f8e229]: We are the only integrated hotel & facility management company in the country that provides experienced associates in 5-STAR international luxury hotels.
+          - generic [ref=f8e239]:
+            - heading "MEP" [level=2] [ref=f8e240]
+            - paragraph [ref=f8e241]: Our engineering teams create safe, productive environments and ensure your assets function optimally throughout their lifecycle from building services to energy management.
+          - generic [ref=f8e251]:
+            - heading "Cleaning" [level=4] [ref=f8e252]
+            - paragraph [ref=f8e253]: Everyday our custom cleaning services keep people healthy and safe, nurture wellbeing and shape strong and reputable workplaces and expertly trained people to grant you peace of mind.
+          - generic [ref=f8e263]:
+            - heading "Façade Cleaning" [level=2] [ref=f8e264]
+            - paragraph [ref=f8e265]: We have highly trained and experienced workforce with all necessary machine tools and safety equipment’s for façade cleaning.
+          - generic [ref=f8e275]:
+            - heading "Security" [level=2] [ref=f8e276]
+            - paragraph [ref=f8e277]: Our security services are key to creating a welcoming and productive environment with intelligent solutions that meet today’s high standards, we ensure that people and places are safe.
+          - generic [ref=f8e287]:
+            - heading "Pest Control" [level=2] [ref=f8e288]
+            - paragraph [ref=f8e289]: Our pest control service includes bed bugs, moths, crickets, fleas, hornets, scorpions, silverfish, carpenter ants, roaches, mice, spiders, centipedes, earwigs, ticks, etc.
+          - generic [ref=f8e299]:
+            - heading "Parking Management" [level=2] [ref=f8e300]
+            - paragraph [ref=f8e301]: Parking management includes self-ticketing, enforcement, parking planning, maintenance, parking equipment, supplies, line painting services, letting spaces and garage maintenance.
+          - generic [ref=f8e311]:
+            - heading "Front Office" [level=2] [ref=f8e312]
+            - paragraph [ref=f8e313]: HANSA provides experienced male/female executives to manage front office operations by welcoming the guests, providing information, operating PABX & maintaining log books.
+        - generic [ref=f8e316]:
+          - heading "Why To Choose HANSA" [level=2] [ref=f8e318]
+          - generic [ref=f8e319]:
+            - generic:
+              - list [ref=f8e321]:
+                - listitem [ref=f8e322]: Experienced in maintaining multistoried complexes
+                - listitem [ref=f8e323]: Assure value addition to the property
+                - listitem [ref=f8e324]: One-stop service
+                - listitem [ref=f8e325]: Cost effective facility management services with no hidden cost
+                - listitem [ref=f8e326]: 100% transparency
+                - listitem [ref=f8e327]: 24/7 or 365 days round the clock
+              - list [ref=f8e329]:
+                - listitem [ref=f8e330]: A complete hospitality & facility management service provider
+                - listitem [ref=f8e331]: Experienced in maintenance of the world class amenities
+                - listitem [ref=f8e332]: Experienced civil and EME engineers services
+                - listitem [ref=f8e333]: Instant support in case of emergency
+                - listitem [ref=f8e334]: Surveillance from corporate office team
+                - listitem [ref=f8e335]: Well-equipped training centre with expert trainers
+        - generic [ref=f8e336]:
+          - heading "Our Valued Clients" [level=2] [ref=f8e341]
+          - generic [ref=f8e346]:
+            - generic [ref=f8e348]:
+              - img "Wasl-" [ref=f8e351]
+              - img "united-hostipital" [ref=f8e354]
+              - img "hyatt-place" [ref=f8e357]
+              - img "in" [ref=f8e360]
+              - img "in" [ref=f8e363]
+              - img "DFC-" [ref=f8e366]
+              - img "AWR-" [ref=f8e369]
+              - img "DHCC-" [ref=f8e372]
+              - img "DSO-" [ref=f8e375]
+              - img "Emaar-" [ref=f8e378]
+              - img "JGE-" [ref=f8e381]
+              - img "Kingfield-" [ref=f8e384]
+              - img "Meraas-" [ref=f8e387]
+              - img "Wasl-" [ref=f8e390]
+              - img "Wasl-" [ref=f8e393]
+              - img "Wasl-" [ref=f8e396]
+              - img "Wasl-" [ref=f8e399]
+              - img "Wasl-" [ref=f8e402]
+              - img "united-hostipital" [ref=f8e405]
+              - img "hyatt-place" [ref=f8e408]
+              - img "in" [ref=f8e411]
+              - img "in" [ref=f8e414]
+              - img "DFC-" [ref=f8e417]
+              - img "AWR-" [ref=f8e420]
+              - img "DHCC-" [ref=f8e423]
+              - img "DSO-" [ref=f8e426]
+              - img "Emaar-" [ref=f8e429]
+            - generic [ref=f8e430]:  
+        - generic [ref=f8e435]:
+          - heading "Service Projects" [level=2] [ref=f8e437]
+          - link " view all" [ref=f8e439] [cursor=pointer]:
+            - /url: http://hansamgt.com/index.php/home/project
+            - generic [ref=f8e440]: 
+            - text: view all
+        - list [ref=f8e446]:
+          - listitem [ref=f8e447]:
+            - generic [ref=f8e448]:
+              - link "" [ref=f8e450] [cursor=pointer]:
+                - /url: "#"
+              - generic [ref=f8e451]:
+                - heading [level=5] [ref=f8e452]:
+                  - link "5-Star International Chain Hotel Sheraton Dhaka" [ref=f8e453] [cursor=pointer]:
+                    - /url: "#"
+                - generic [ref=f8e454]: Banani, Dhaka
+          - listitem [ref=f8e455]:
+            - generic [ref=f8e456]:
+              - link "" [ref=f8e458] [cursor=pointer]:
+                - /url: "#"
+              - generic [ref=f8e459]:
+                - heading [level=5] [ref=f8e460]:
+                  - link "Multi-Storied Commercial Complex Borak Mehnur" [ref=f8e461] [cursor=pointer]:
+                    - /url: "#"
+                - generic [ref=f8e462]: Banani, Dhaka
+          - listitem [ref=f8e463]:
+            - generic [ref=f8e464]:
+              - link "" [ref=f8e466] [cursor=pointer]:
+                - /url: "#"
+              - generic [ref=f8e467]:
+                - heading [level=5] [ref=f8e468]:
+                  - link "High-Rise Modern Residential Complex Borak Park Valley" [ref=f8e469] [cursor=pointer]:
+                    - /url: "#"
+                - generic [ref=f8e470]: Baridhara Diplomatic Zone, Dhaka
+          - listitem [ref=f8e471]:
+            - generic [ref=f8e472]:
+              - link "" [ref=f8e474] [cursor=pointer]:
+                - /url: ""
+              - generic [ref=f8e475]:
+                - heading [level=5] [ref=f8e476]:
+                  - link "Multi-Storied Commercial Cum Residential Complex Unique Heights" [ref=f8e477] [cursor=pointer]:
+                    - /url: ""
+                - generic [ref=f8e478]: Paribagh, Dhaka
+        - generic [ref=f8e479]:
+          - heading "Business Concerns & Associates" [level=4] [ref=f8e484]
+          - generic [ref=f8e489]:
+            - generic [ref=f8e491]:
+              - img "Meraas-" [ref=f8e494]
+              - img "Wasl-" [ref=f8e497]
+              - img "Wasl-" [ref=f8e500]
+              - img "Wasl-" [ref=f8e503]
+              - img "Wasl-" [ref=f8e506]
+              - img "AlFuttaim-" [ref=f8e509]
+              - img "DFC-" [ref=f8e512]
+              - img "AWR-" [ref=f8e515]
+              - img "DHCC-" [ref=f8e518]
+              - img "DSO-" [ref=f8e521]
+              - img "Emaar-" [ref=f8e524]
+              - img "JGE-" [ref=f8e527]
+              - img "Kingfield-" [ref=f8e530]
+              - img "Meraas-" [ref=f8e533]
+              - img "Wasl-" [ref=f8e536]
+              - img "Wasl-" [ref=f8e539]
+              - img "Wasl-" [ref=f8e542]
+              - img "Wasl-" [ref=f8e545]
+              - img "AlFuttaim-" [ref=f8e548]
+              - img "DFC-" [ref=f8e551]
+              - img "AWR-" [ref=f8e554]
+              - img "DHCC-" [ref=f8e557]
+              - img "DSO-" [ref=f8e560]
+            - generic [ref=f8e561]:  
+        - generic [ref=f8e566]:
+          - heading "News" [level=2] [ref=f8e568]
+          - generic [ref=f8e569]:
+            - generic [ref=f8e571]:
+              - generic [ref=f8e572]:
+                - link [ref=f8e574] [cursor=pointer]:
+                  - /url: javascript:void(0)
+                  - img "Hansa HIghly commended" [ref=f8e575]
+                  - text: 
+                - generic [ref=f8e576]:
+                  - heading [level=4] [ref=f8e577]:
+                    - link "Fire Fighting Training" [ref=f8e578] [cursor=pointer]:
+                      - /url: javascript:void(0)
+                  - paragraph [ref=f8e579]: Conduct Fire Fighting Training to Security Team of HANSA Management Ltd.
+              - generic [ref=f8e580]:
+                - link [ref=f8e582] [cursor=pointer]:
+                  - /url: javascript:void(0)
+                  - img "TEDL9352awa" [ref=f8e583]
+                  - text: 
+                - generic [ref=f8e584]:
+                  - heading [level=4] [ref=f8e585]:
+                    - link "General Cleaning Training" [ref=f8e586] [cursor=pointer]:
+                      - /url: javascript:void(0)
+                  - paragraph [ref=f8e587]: Conduct General Cleaning Training to HML Housekeeping Associates
+              - generic [ref=f8e588]:
+                - link [ref=f8e590] [cursor=pointer]:
+                  - /url: javascript:void(0)
+                  - img "Hansa HIghly commended" [ref=f8e591]
+                  - text: 
+                - generic [ref=f8e592]:
+                  - heading [level=4] [ref=f8e593]:
+                    - link "Fire Fighting Training" [ref=f8e594] [cursor=pointer]:
+                      - /url: javascript:void(0)
+                  - paragraph [ref=f8e595]: Conduct Fire Fighting Training to Security Team of HANSA Management Ltd.
+              - generic [ref=f8e596]:
+                - link [ref=f8e598] [cursor=pointer]:
+                  - /url: javascript:void(0)
+                  - img "TEDL9352awa" [ref=f8e599]
+                  - text: 
+                - generic [ref=f8e600]:
+                  - heading [level=4] [ref=f8e601]:
+                    - link "General Cleaning Training" [ref=f8e602] [cursor=pointer]:
+                      - /url: javascript:void(0)
+                  - paragraph [ref=f8e603]: Conduct General Cleaning Training to HML Housekeeping Associates
+            - generic [ref=f8e604] [cursor=pointer]: 
+            - generic [ref=f8e606] [cursor=pointer]: 
+        - generic [ref=f8e608]:
+          - generic [ref=f8e611]:
+            - generic [ref=f8e612]: Let's Talk
+            - paragraph [ref=f8e616]: Would you like to speak with our customer service agent to know about our hospitality & facility management services? Just submit your details and we’ll be in touch shortly.
+          - form [ref=f8e620]:
+            - generic [ref=f8e625]:
+              - paragraph [ref=f8e626]: "I would like to discuss:"
+              - generic [ref=f8e627]:
+                - textbox "Full Name" [ref=f8e631]
+                - textbox "Email" [ref=f8e635]
+                - textbox "Phone Number" [ref=f8e639]
+                - textbox "Your Message *" [ref=f8e643]
+                - button "Submit " [ref=f8e646] [cursor=pointer]:
+                  - text: Submit
+                  - generic [ref=f8e647]: 
+        - generic [ref=f8e652]:
+          - generic [ref=f8e653]:
+            - generic [ref=f8e654]:
+              - generic:
+                - button "Keyboard shortcuts"
+              - region "Map" [ref=f8e1025]
+              - generic [ref=f8e1026]:
+                - generic [ref=f8e1088]:
+                  - generic:
+                    - generic:
+                      - img "Unique Group" [ref=f8e1090] [cursor=pointer]
+                      - img "Unique Group" [ref=f8e1091] [cursor=pointer]
+                      - img "Unique Group" [ref=f8e1092] [cursor=pointer]
+                      - img "Unique Group" [ref=f8e1093] [cursor=pointer]
+                - iframe [aria-hidden] [ref=f8e1094]
+                - button "Toggle fullscreen view" [ref=f8e1095] [cursor=pointer]
+                - generic:
+                  - generic:
+                    - button "Map camera controls" [ref=f8e1097] [cursor=pointer]
+                    - button "Drag Pegman onto the map to open Street View"
+                - link "Open this area in Google Maps (opens a new window)" [ref=f8e1099] [cursor=pointer]:
+                  - /url: https://maps.google.com/maps?ll=23.894001,90.506515&z=10&t=m&hl=en-US&gl=US&mapclient=apiv3
+                  - img "Google" [ref=f8e1101]
+                - generic [ref=f8e1102]:
+                  - button "Keyboard shortcuts" [ref=f8e1108] [cursor=pointer]
+                  - generic [ref=f8e1109]: Map data ©2026
+                  - link "Terms (opens in new tab)" [ref=f8e1118] [cursor=pointer]:
+                    - /url: https://www.google.com/intl/en-US_US/help/terms_maps.html
+                    - text: Terms
+                  - link "Report a map error (opens in new tab)" [ref=f8e1123] [cursor=pointer]:
+                    - /url: https://www.google.com/maps/@23.8940008,90.5065146,10z/data=!10m1!1e1!12b1?source=apiv3&rapsrc=apiv3
+                    - text: Report a map error
+            - generic [ref=f8e1124]:
+              - generic [ref=f8e1126]: This page can't load Google Maps correctly.
+              - table [ref=f8e1127]:
+                - row [ref=f8e1128]:
+                  - cell [ref=f8e1129]:
+                    - link "Do you own this website?" [ref=f8e1130] [cursor=pointer]:
+                      - /url: http://g.co/dev/maps-no-account
+                  - cell [ref=f8e1131]:
+                    - button "OK" [ref=f8e1132] [cursor=pointer]
+          - generic [ref=f8e660]:
+            - generic [ref=f8e662]:
+              - generic [ref=f8e664]:
+                - generic [ref=f8e665]: Corporate Office
+                - list [ref=f8e666]:
+                  - listitem [ref=f8e667]:
+                    - generic [ref=f8e668]: 
+                    - paragraph [ref=f8e671]: Borak Mehnur (Level-18), 51/B Kemal Ataturk Avenue, Banani, Dhaka-1213, Bangladesh
+                  - listitem [ref=f8e672]:
+                    - generic [ref=f8e673]: 
+                    - paragraph [ref=f8e676]: "01708800870"
+                  - listitem [ref=f8e677]:
+                    - generic [ref=f8e678]: 
+                    - paragraph [ref=f8e681]: 88 02 222285116-123
+                  - listitem [ref=f8e682]:
+                    - generic [ref=f8e683]: 
+                    - link "info@hansamanagementltd.com" [ref=f8e686] [cursor=pointer]:
+                      - /url: mailto:info@hansamanagementltd.com
+              - generic [ref=f8e688]:
+                - generic [ref=f8e689]: Service Booth (Midtown)
+                - list [ref=f8e690]:
+                  - listitem [ref=f8e691]:
+                    - generic [ref=f8e692]: 
+                    - paragraph [ref=f8e695]: Unique Heights, 117 Kazi Nazrul Islam Avenue, Eskaton, Dhaka, Bangladesh
+                  - listitem [ref=f8e696]:
+                    - generic [ref=f8e697]: 
+                    - paragraph [ref=f8e700]: "01708800870"
+                  - listitem [ref=f8e701]:
+                    - generic [ref=f8e702]: 
+                    - paragraph [ref=f8e705]: 88 02 48322812
+                  - listitem [ref=f8e706]:
+                    - generic [ref=f8e707]: 
+                    - link "info@hansamanagementltd.com" [ref=f8e710] [cursor=pointer]:
+                      - /url: mailto:info@hansamanagementltd.com
+              - generic [ref=f8e712]:
+                - generic [ref=f8e713]: Service Booth (Uttara)
+                - list [ref=f8e714]:
+                  - listitem [ref=f8e715]:
+                    - generic [ref=f8e716]: 
+                    - paragraph [ref=f8e719]: "HANSA- A Premium Residence, House # 3 & 5, Road # 10/A , Sector # 09, Uttara, Dhaka - 1230, Bangladesh"
+                  - listitem [ref=f8e720]:
+                    - generic [ref=f8e721]: 
+                    - paragraph [ref=f8e724]: "01708800870"
+                  - listitem [ref=f8e725]:
+                    - generic [ref=f8e726]: 
+                    - link "info@hansamanagementltd.com" [ref=f8e729] [cursor=pointer]:
+                      - /url: mailto:info@hansamanagementltd.com
+              - generic [ref=f8e731]:
+                - generic [ref=f8e732]: Service Booth (Dhanmondi)
+                - list [ref=f8e733]:
+                  - listitem [ref=f8e734]:
+                    - generic [ref=f8e735]: 
+                    - paragraph [ref=f8e738]: Unique Trade Centre , 8 Panthapath, Kawranbazar, Dhaka-1215, Bangladesh
+                  - listitem [ref=f8e739]:
+                    - generic [ref=f8e740]: 
+                    - paragraph [ref=f8e743]: "01708800870"
+                  - listitem [ref=f8e744]:
+                    - generic [ref=f8e745]: 
+                    - link "info@hansamanagementltd.com" [ref=f8e748] [cursor=pointer]:
+                      - /url: mailto:info@hansamanagementltd.com
+              - generic [ref=f8e750]:
+                - generic [ref=f8e751]: Corporate Office
+                - list [ref=f8e752]:
+                  - listitem [ref=f8e753]:
+                    - generic [ref=f8e754]: 
+                    - paragraph [ref=f8e757]: Borak Mehnur (Level-18), 51/B Kemal Ataturk Avenue, Banani, Dhaka-1213, Bangladesh
+                  - listitem [ref=f8e758]:
+                    - generic [ref=f8e759]: 
+                    - paragraph [ref=f8e762]: "01708800870"
+                  - listitem [ref=f8e763]:
+                    - generic [ref=f8e764]: 
+                    - paragraph [ref=f8e767]: 88 02 222285116-123
+                  - listitem [ref=f8e768]:
+                    - generic [ref=f8e769]: 
+                    - link "info@hansamanagementltd.com" [ref=f8e772] [cursor=pointer]:
+                      - /url: mailto:info@hansamanagementltd.com
+              - generic [ref=f8e774]:
+                - generic [ref=f8e775]: Service Booth (Midtown)
+                - list [ref=f8e776]:
+                  - listitem [ref=f8e777]:
+                    - generic [ref=f8e778]: 
+                    - paragraph [ref=f8e781]: Unique Heights, 117 Kazi Nazrul Islam Avenue, Eskaton, Dhaka, Bangladesh
+                  - listitem [ref=f8e782]:
+                    - generic [ref=f8e783]: 
+                    - paragraph [ref=f8e786]: "01708800870"
+                  - listitem [ref=f8e787]:
+                    - generic [ref=f8e788]: 
+                    - paragraph [ref=f8e791]: 88 02 48322812
+                  - listitem [ref=f8e792]:
+                    - generic [ref=f8e793]: 
+                    - link "info@hansamanagementltd.com" [ref=f8e796] [cursor=pointer]:
+                      - /url: mailto:info@hansamanagementltd.com
+              - generic [ref=f8e798]:
+                - generic [ref=f8e799]: Service Booth (Uttara)
+                - list [ref=f8e800]:
+                  - listitem [ref=f8e801]:
+                    - generic [ref=f8e802]: 
+                    - paragraph [ref=f8e805]: "HANSA- A Premium Residence, House # 3 & 5, Road # 10/A , Sector # 09, Uttara, Dhaka - 1230, Bangladesh"
+                  - listitem [ref=f8e806]:
+                    - generic [ref=f8e807]: 
+                    - paragraph [ref=f8e810]: "01708800870"
+                  - listitem [ref=f8e811]:
+                    - generic [ref=f8e812]: 
+                    - link "info@hansamanagementltd.com" [ref=f8e815] [cursor=pointer]:
+                      - /url: mailto:info@hansamanagementltd.com
+              - generic [ref=f8e817]:
+                - generic [ref=f8e818]: Service Booth (Dhanmondi)
+                - list [ref=f8e819]:
+                  - listitem [ref=f8e820]:
+                    - generic [ref=f8e821]: 
+                    - paragraph [ref=f8e824]: Unique Trade Centre , 8 Panthapath, Kawranbazar, Dhaka-1215, Bangladesh
+                  - listitem [ref=f8e825]:
+                    - generic [ref=f8e826]: 
+                    - paragraph [ref=f8e829]: "01708800870"
+                  - listitem [ref=f8e830]:
+                    - generic [ref=f8e831]: 
+                    - link "info@hansamanagementltd.com" [ref=f8e834] [cursor=pointer]:
+                      - /url: mailto:info@hansamanagementltd.com
+              - generic [ref=f8e836]:
+                - generic [ref=f8e837]: Corporate Office
+                - list [ref=f8e838]:
+                  - listitem [ref=f8e839]:
+                    - generic [ref=f8e840]: 
+                    - paragraph [ref=f8e843]: Borak Mehnur (Level-18), 51/B Kemal Ataturk Avenue, Banani, Dhaka-1213, Bangladesh
+                  - listitem [ref=f8e844]:
+                    - generic [ref=f8e845]: 
+                    - paragraph [ref=f8e848]: "01708800870"
+                  - listitem [ref=f8e849]:
+                    - generic [ref=f8e850]: 
+                    - paragraph [ref=f8e853]: 88 02 222285116-123
+                  - listitem [ref=f8e854]:
+                    - generic [ref=f8e855]: 
+                    - link "info@hansamanagementltd.com" [ref=f8e858] [cursor=pointer]:
+                      - /url: mailto:info@hansamanagementltd.com
+              - generic [ref=f8e860]:
+                - generic [ref=f8e861]: Service Booth (Midtown)
+                - list [ref=f8e862]:
+                  - listitem [ref=f8e863]:
+                    - generic [ref=f8e864]: 
+                    - paragraph [ref=f8e867]: Unique Heights, 117 Kazi Nazrul Islam Avenue, Eskaton, Dhaka, Bangladesh
+                  - listitem [ref=f8e868]:
+                    - generic [ref=f8e869]: 
+                    - paragraph [ref=f8e872]: "01708800870"
+                  - listitem [ref=f8e873]:
+                    - generic [ref=f8e874]: 
+                    - paragraph [ref=f8e877]: 88 02 48322812
+                  - listitem [ref=f8e878]:
+                    - generic [ref=f8e879]: 
+                    - link "info@hansamanagementltd.com" [ref=f8e882] [cursor=pointer]:
+                      - /url: mailto:info@hansamanagementltd.com
+              - generic [ref=f8e884]:
+                - generic [ref=f8e885]: Service Booth (Uttara)
+                - list [ref=f8e886]:
+                  - listitem [ref=f8e887]:
+                    - generic [ref=f8e888]: 
+                    - paragraph [ref=f8e891]: "HANSA- A Premium Residence, House # 3 & 5, Road # 10/A , Sector # 09, Uttara, Dhaka - 1230, Bangladesh"
+                  - listitem [ref=f8e892]:
+                    - generic [ref=f8e893]: 
+                    - paragraph [ref=f8e896]: "01708800870"
+                  - listitem [ref=f8e897]:
+                    - generic [ref=f8e898]: 
+                    - link "info@hansamanagementltd.com" [ref=f8e901] [cursor=pointer]:
+                      - /url: mailto:info@hansamanagementltd.com
+              - generic [ref=f8e903]:
+                - generic [ref=f8e904]: Service Booth (Dhanmondi)
+                - list [ref=f8e905]:
+                  - listitem [ref=f8e906]:
+                    - generic [ref=f8e907]: 
+                    - paragraph [ref=f8e910]: Unique Trade Centre , 8 Panthapath, Kawranbazar, Dhaka-1215, Bangladesh
+                  - listitem [ref=f8e911]:
+                    - generic [ref=f8e912]: 
+                    - paragraph [ref=f8e915]: "01708800870"
+                  - listitem [ref=f8e916]:
+                    - generic [ref=f8e917]: 
+                    - link "info@hansamanagementltd.com" [ref=f8e920] [cursor=pointer]:
+                      - /url: mailto:info@hansamanagementltd.com
+            - generic [ref=f8e921]:  
+  - contentinfo [ref=f8e923]:
+    - generic [ref=f8e927]:
+      - generic [ref=f8e928]:
+        - link [ref=f8e930] [cursor=pointer]:
+          - /url: http://hansamgt.com/index.php/home
+          - img "Hansa" [ref=f8e931]
+        - paragraph [ref=f8e933]: HANSA Management Ltd. is an integrated hospitality & facility management company in Bangladesh, providing a full range of services.
+      - generic [ref=f8e935]:
+        - heading "Our Services Link" [level=4] [ref=f8e936]
+        - list [ref=f8e938]:
+          - listitem [ref=f8e939]:
+            - link "Hospitality Management" [ref=f8e940] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/hardService
+          - listitem [ref=f8e941]:
+            - link "Facility Management" [ref=f8e942] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/hardService
+          - listitem [ref=f8e943]:
+            - link "Property Management" [ref=f8e944] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/payperUse
+          - listitem [ref=f8e945]:
+            - link "Loss Prevention" [ref=f8e946] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/hardService
+          - listitem [ref=f8e947]:
+            - link "Security Service" [ref=f8e948] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/hardService
+          - listitem [ref=f8e949]:
+            - link "Front Office" [ref=f8e950] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/hardService
+          - listitem [ref=f8e951]:
+            - link "Engineering & Maintenance" [ref=f8e952] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/riskManagement
+          - listitem [ref=f8e953]:
+            - link "Cleaning Service" [ref=f8e954] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/payperUse
+          - listitem [ref=f8e955]:
+            - link "Façade Cleaning" [ref=f8e956] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/hardService
+          - listitem [ref=f8e957]:
+            - link "Public Area Cleaning" [ref=f8e958] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/payperUse
+          - listitem [ref=f8e959]:
+            - link "Pest Control Service" [ref=f8e960] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/payperUse
+          - listitem [ref=f8e961]:
+            - link "Food & Beverage Service" [ref=f8e962] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/hardService
+          - listitem [ref=f8e963]:
+            - link "Food & Beverage Production" [ref=f8e964] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/hardService
+          - listitem [ref=f8e965]:
+            - link "Fire Life Safety" [ref=f8e966] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/softService
+          - listitem [ref=f8e967]:
+            - link "Parking Management" [ref=f8e968] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/softService
+          - listitem [ref=f8e969]:
+            - link "PABX Operator" [ref=f8e970] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home/riskManagement
+    - generic [ref=f8e973]:
+      - list [ref=f8e975]:
+        - listitem [ref=f8e976]:
+          - link "" [ref=f8e977] [cursor=pointer]:
+            - /url: https://www.facebook.com/HANSAManagementLtd/
+        - listitem [ref=f8e979]:
+          - link "" [ref=f8e980] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/hansa-management-ltd-222838196/
+        - listitem [ref=f8e982]:
+          - link "" [ref=f8e983] [cursor=pointer]:
+            - /url: "#"
+      - generic [ref=f8e985]: Copyright ©2026 All rights reserved | developed by Unique Group IT
+  - generic:
+    - generic:
+      - navigation:
+        - list [ref=f8e986]:
+          - listitem [ref=f8e987]:
+            - link [ref=f8e988] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home#what_we_do
+              - generic [aria-hidden] [ref=f8e990]: 
+          - listitem [ref=f8e991]:
+            - link [ref=f8e992] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home#ServiceExcellence
+              - generic [aria-hidden] [ref=f8e994]: 
+          - listitem [ref=f8e995]:
+            - link [ref=f8e996] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home#emr_highlights
+              - generic [aria-hidden] [ref=f8e998]: 
+          - listitem [ref=f8e999]:
+            - link [ref=f8e1000] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home#why_choos_us
+              - generic [aria-hidden] [ref=f8e1002]: 
+          - listitem [ref=f8e1003]:
+            - link [ref=f8e1004] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home#emr_news
+              - generic [aria-hidden] [ref=f8e1006]: 
+          - listitem [ref=f8e1007]:
+            - link [ref=f8e1008] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home#emr_awards
+              - generic [aria-hidden] [ref=f8e1010]: 
+          - listitem [ref=f8e1011]:
+            - link [ref=f8e1012] [cursor=pointer]:
+              - /url: http://hansamgt.com/index.php/home#emr_contact
+              - generic [aria-hidden] [ref=f8e1014]: 
+  - text: 

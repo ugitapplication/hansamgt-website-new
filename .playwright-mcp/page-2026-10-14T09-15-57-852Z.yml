@@ -1,0 +1,161 @@
+- generic [active] [ref=f11e1]:
+  - link "Skip to main content" [ref=f11e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f11e3]:
+    - generic [ref=f11e5]:
+      - link [ref=f11e7] [cursor=pointer]:
+        - /url: http://localhost/hansamgt-website-new/public
+        - img "Hansa" [ref=f11e8]
+      - generic [ref=f11e9]:
+        - list [ref=f11e11]:
+          - listitem [ref=f11e12]:
+            - link "Home" [ref=f11e13] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public
+          - listitem [ref=f11e14]:
+            - link "About Us" [ref=f11e15] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f11e16]:
+            - link "Our Services" [ref=f11e17] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f11e18]:
+            - link "Projects" [ref=f11e19] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/projects
+          - listitem [ref=f11e20]:
+            - link "Gallery" [ref=f11e21] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/gallery
+          - listitem [ref=f11e22]:
+            - link "Careers" [ref=f11e23] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f11e24]:
+            - link "Contact Us" [ref=f11e25] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/contact
+        - link [ref=f11e27] [cursor=pointer]:
+          - /url: https://uniquegroupbd.com
+          - img "Hansa" [ref=f11e28]
+  - main [ref=f11e29]:
+    - generic [ref=f11e31]:
+      - generic [ref=f11e32]:
+        - img "Security surveillance and fire life safety services banner" [ref=f11e33]
+        - heading "Security Surveillance, Fire Life Safety & Risk Management" [level=1] [ref=f11e34]
+        - paragraph [ref=f11e36]: HML Security Surveillance, Fire Life Safety and Risk Management Services Include
+        - generic [ref=f11e37]:
+          - img "Security and surveillance training" [ref=f11e38]
+          - generic [ref=f11e39]:
+            - heading "Fire Life Safety" [level=2] [ref=f11e40]
+            - list [ref=f11e41]:
+              - listitem [ref=f11e42]: Fire Alarm System Monitoring
+              - listitem [ref=f11e43]: Fire Evacuation System & Management
+            - heading "Risk Management" [level=2] [ref=f11e44]
+            - list [ref=f11e45]:
+              - listitem [ref=f11e46]: Developing Loss Prevention Procedures
+              - listitem [ref=f11e47]: Emergency/Crisis Management & Recovery Plan
+              - listitem [ref=f11e48]: First Aid Program
+              - listitem [ref=f11e49]: Weapons Handling
+              - listitem [ref=f11e50]: Automated External Defibrillator (AED) Program
+            - heading "Investigations" [level=2] [ref=f11e51]
+            - list [ref=f11e52]:
+              - listitem [ref=f11e53]: Covert Surveillance
+              - listitem [ref=f11e54]: Intelligence Gathering
+              - listitem [ref=f11e55]: Law Enforcement Agency Liaison
+              - listitem [ref=f11e56]: Workplace Violence
+            - heading "Operations" [level=2] [ref=f11e57]
+            - list [ref=f11e58]:
+              - listitem [ref=f11e59]: Parking & Traffic Management
+              - listitem [ref=f11e60]: Key Control
+              - listitem [ref=f11e61]: Associate & Guest Entrance & Exit Controlling
+              - listitem [ref=f11e62]: Biohazardous & Infectious Materials Handling
+      - complementary "Our services" [ref=f11e63]:
+        - navigation "Services" [ref=f11e64]:
+          - link "Hospitality Management" [ref=f11e65] [cursor=pointer]:
+            - /url: http://localhost/hansamgt-website-new/public/hospitality-management
+          - link "Security Surveillance & Fire Life Safety" [ref=f11e66] [cursor=pointer]:
+            - /url: http://localhost/hansamgt-website-new/public/security-fire-life-safety
+          - link "Cleaning & White-Glove Housekeeping" [ref=f11e67] [cursor=pointer]:
+            - /url: http://localhost/hansamgt-website-new/public/cleaning-white-glove-housekeeping
+          - link "Mechanical, Electrical & Plumbing" [ref=f11e68] [cursor=pointer]:
+            - /url: http://localhost/hansamgt-website-new/public/mep-mechanical-electrical-plumbing
+        - generic [ref=f11e69]:
+          - heading "How can we help?" [level=2] [ref=f11e70]
+          - paragraph [ref=f11e71]:
+            - text: Contact at
+            - link "01708800870" [ref=f11e72] [cursor=pointer]:
+              - /url: tel:+8801708800870
+            - text: or submit an inquiry online.
+          - paragraph [ref=f11e73]:
+            - link "Contact Us" [ref=f11e74] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/contact
+    - region "A concern of Unique Group" [ref=f11e75]:
+      - generic [ref=f11e77]:
+        - paragraph [ref=f11e78]: a concern of Unique Group
+        - paragraph [ref=f11e79]:
+          - link "☎ 01708800870" [ref=f11e80] [cursor=pointer]:
+            - /url: tel:+8801708800870
+  - contentinfo [ref=f11e81]:
+    - generic [ref=f11e82]:
+      - generic [ref=f11e83]:
+        - link "HANSA Management Ltd. — home" [ref=f11e84] [cursor=pointer]:
+          - /url: http://localhost/hansamgt-website-new/public
+          - img "HANSA Management Ltd. logo" [ref=f11e85]
+        - paragraph [ref=f11e86]: HANSA Management Ltd. is an integrated hospitality & facility management company in Bangladesh, providing a full range of services.
+      - navigation "Footer services" [ref=f11e87]:
+        - heading "Our Services Link" [level=2] [ref=f11e88]
+        - list [ref=f11e89]:
+          - listitem [ref=f11e90]:
+            - link "Hospitality Management" [ref=f11e91] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/hospitality-management
+          - listitem [ref=f11e92]:
+            - link "Security Surveillance & Fire Life Safety" [ref=f11e93] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/security-fire-life-safety
+          - listitem [ref=f11e94]:
+            - link "Cleaning & White-Glove Housekeeping" [ref=f11e95] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/cleaning-white-glove-housekeeping
+          - listitem [ref=f11e96]:
+            - link "Mechanical, Electrical & Plumbing" [ref=f11e97] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/mep-mechanical-electrical-plumbing
+      - navigation "Footer company" [ref=f11e98]:
+        - heading "Company" [level=2] [ref=f11e99]
+        - list [ref=f11e100]:
+          - listitem [ref=f11e101]:
+            - link "Company Profile" [ref=f11e102] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/company-profile
+          - listitem [ref=f11e103]:
+            - link "Mission & Vision" [ref=f11e104] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/mission-vision
+          - listitem [ref=f11e105]:
+            - link "Charter of Unique Group" [ref=f11e106] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/charter-of-unique-group
+          - listitem [ref=f11e107]:
+            - link "Management" [ref=f11e108] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/management
+          - listitem [ref=f11e109]:
+            - link "CSR" [ref=f11e110] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/corporate-social-responsibility
+          - listitem [ref=f11e111]:
+            - link "Projects" [ref=f11e112] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/projects
+          - listitem [ref=f11e113]:
+            - link "Gallery" [ref=f11e114] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/gallery
+      - generic [ref=f11e115]:
+        - heading "Contact" [level=2] [ref=f11e116]
+        - generic [ref=f11e117]:
+          - paragraph [ref=f11e118]: Borak Mehnur (Level-18), 51/B Kemal Ataturk Avenue, Banani, Dhaka 1213
+          - paragraph [ref=f11e119]:
+            - link "01708800870" [ref=f11e120] [cursor=pointer]:
+              - /url: tel:+8801708800870
+          - paragraph [ref=f11e121]:
+            - link "info@hansamgt.com" [ref=f11e122] [cursor=pointer]:
+              - /url: mailto:info@hansamgt.com
+        - list [ref=f11e123]:
+          - listitem [ref=f11e124]:
+            - link "HANSA on Facebook" [ref=f11e125] [cursor=pointer]:
+              - /url: https://www.facebook.com/HANSAManagementLtd/
+          - listitem [ref=f11e128]:
+            - link "HANSA on LinkedIn" [ref=f11e129] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/hansa-management-ltd-222838196/
+          - listitem [ref=f11e132]:
+            - link "HANSA on YouTube" [ref=f11e133] [cursor=pointer]:
+              - /url: "#"
+    - generic [ref=f11e137]:
+      - paragraph [ref=f11e138]: Copyright © 2026 HANSA Management Ltd. All rights reserved.
+      - paragraph [ref=f11e139]: Developed by Unique Group IT

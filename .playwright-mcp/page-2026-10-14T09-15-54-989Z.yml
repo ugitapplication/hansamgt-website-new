@@ -1,0 +1,126 @@
+- generic [active] [ref=f8e1]:
+  - link "Skip to main content" [ref=f8e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f8e3]:
+    - generic [ref=f8e5]:
+      - link [ref=f8e7] [cursor=pointer]:
+        - /url: http://localhost/hansamgt-website-new/public
+        - img "Hansa" [ref=f8e8]
+      - generic [ref=f8e9]:
+        - list [ref=f8e11]:
+          - listitem [ref=f8e12]:
+            - link "Home" [ref=f8e13] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public
+          - listitem [ref=f8e14]:
+            - link "About Us" [ref=f8e15] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f8e16]:
+            - link "Our Services" [ref=f8e17] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f8e18]:
+            - link "Projects" [ref=f8e19] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/projects
+          - listitem [ref=f8e20]:
+            - link "Gallery" [ref=f8e21] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/gallery
+          - listitem [ref=f8e22]:
+            - link "Careers" [ref=f8e23] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f8e24]:
+            - link "Contact Us" [ref=f8e25] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/contact
+        - link [ref=f8e27] [cursor=pointer]:
+          - /url: https://uniquegroupbd.com
+          - img "Hansa" [ref=f8e28]
+  - main [ref=f8e29]:
+    - generic [ref=f8e31]:
+      - generic [ref=f8e32]:
+        - heading "Corporate Social Responsibility — HANSA Management Ltd." [level=1] [ref=f8e33]
+        - img "HANSA environmental commitment banner" [ref=f8e34]
+        - paragraph [ref=f8e36]: The environment is our life long shelter and HANSA will never act anything harmful to the nation and earth. We are committed to serve you through ensuring green environment. HANSA is trying its level best to protect the interest of yours and the environment as well. HANSA is created for helping others and our philosophy will be remained as long as we can.
+      - complementary "About HANSA" [ref=f8e37]:
+        - link "Company Profile" [ref=f8e38] [cursor=pointer]:
+          - /url: http://localhost/hansamgt-website-new/public/company-profile
+        - link "Charter of Unique Group" [ref=f8e39] [cursor=pointer]:
+          - /url: http://localhost/hansamgt-website-new/public/charter-of-unique-group
+        - link "Management" [ref=f8e40] [cursor=pointer]:
+          - /url: http://localhost/hansamgt-website-new/public/management
+        - link "Vision & Mission" [ref=f8e41] [cursor=pointer]:
+          - /url: http://localhost/hansamgt-website-new/public/mission-vision
+        - link "CSR" [ref=f8e42] [cursor=pointer]:
+          - /url: http://localhost/hansamgt-website-new/public/corporate-social-responsibility
+    - region "A concern of Unique Group" [ref=f8e43]:
+      - generic [ref=f8e45]:
+        - paragraph [ref=f8e46]: a concern of Unique Group
+        - paragraph [ref=f8e47]:
+          - link "☎ 01708800870" [ref=f8e48] [cursor=pointer]:
+            - /url: tel:+8801708800870
+  - contentinfo [ref=f8e49]:
+    - generic [ref=f8e50]:
+      - generic [ref=f8e51]:
+        - link "HANSA Management Ltd. — home" [ref=f8e52] [cursor=pointer]:
+          - /url: http://localhost/hansamgt-website-new/public
+          - img "HANSA Management Ltd. logo" [ref=f8e53]
+        - paragraph [ref=f8e54]: HANSA Management Ltd. is an integrated hospitality & facility management company in Bangladesh, providing a full range of services.
+      - navigation "Footer services" [ref=f8e55]:
+        - heading "Our Services Link" [level=2] [ref=f8e56]
+        - list [ref=f8e57]:
+          - listitem [ref=f8e58]:
+            - link "Hospitality Management" [ref=f8e59] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/hospitality-management
+          - listitem [ref=f8e60]:
+            - link "Security Surveillance & Fire Life Safety" [ref=f8e61] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/security-fire-life-safety
+          - listitem [ref=f8e62]:
+            - link "Cleaning & White-Glove Housekeeping" [ref=f8e63] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/cleaning-white-glove-housekeeping
+          - listitem [ref=f8e64]:
+            - link "Mechanical, Electrical & Plumbing" [ref=f8e65] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/mep-mechanical-electrical-plumbing
+      - navigation "Footer company" [ref=f8e66]:
+        - heading "Company" [level=2] [ref=f8e67]
+        - list [ref=f8e68]:
+          - listitem [ref=f8e69]:
+            - link "Company Profile" [ref=f8e70] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/company-profile
+          - listitem [ref=f8e71]:
+            - link "Mission & Vision" [ref=f8e72] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/mission-vision
+          - listitem [ref=f8e73]:
+            - link "Charter of Unique Group" [ref=f8e74] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/charter-of-unique-group
+          - listitem [ref=f8e75]:
+            - link "Management" [ref=f8e76] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/management
+          - listitem [ref=f8e77]:
+            - link "CSR" [ref=f8e78] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/corporate-social-responsibility
+          - listitem [ref=f8e79]:
+            - link "Projects" [ref=f8e80] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/projects
+          - listitem [ref=f8e81]:
+            - link "Gallery" [ref=f8e82] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/gallery
+      - generic [ref=f8e83]:
+        - heading "Contact" [level=2] [ref=f8e84]
+        - generic [ref=f8e85]:
+          - paragraph [ref=f8e86]: Borak Mehnur (Level-18), 51/B Kemal Ataturk Avenue, Banani, Dhaka 1213
+          - paragraph [ref=f8e87]:
+            - link "01708800870" [ref=f8e88] [cursor=pointer]:
+              - /url: tel:+8801708800870
+          - paragraph [ref=f8e89]:
+            - link "info@hansamgt.com" [ref=f8e90] [cursor=pointer]:
+              - /url: mailto:info@hansamgt.com
+        - list [ref=f8e91]:
+          - listitem [ref=f8e92]:
+            - link "HANSA on Facebook" [ref=f8e93] [cursor=pointer]:
+              - /url: https://www.facebook.com/HANSAManagementLtd/
+          - listitem [ref=f8e96]:
+            - link "HANSA on LinkedIn" [ref=f8e97] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/hansa-management-ltd-222838196/
+          - listitem [ref=f8e100]:
+            - link "HANSA on YouTube" [ref=f8e101] [cursor=pointer]:
+              - /url: "#"
+    - generic [ref=f8e105]:
+      - paragraph [ref=f8e106]: Copyright © 2026 HANSA Management Ltd. All rights reserved.
+      - paragraph [ref=f8e107]: Developed by Unique Group IT

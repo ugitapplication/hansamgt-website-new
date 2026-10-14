@@ -1,0 +1,137 @@
+- generic [active] [ref=f7e1]:
+  - link "Skip to main content" [ref=f7e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f7e3]:
+    - generic [ref=f7e5]:
+      - link [ref=f7e7] [cursor=pointer]:
+        - /url: http://localhost/hansamgt-website-new/public
+        - img "Hansa" [ref=f7e8]
+      - generic [ref=f7e9]:
+        - list [ref=f7e11]:
+          - listitem [ref=f7e12]:
+            - link "Home" [ref=f7e13] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public
+          - listitem [ref=f7e14]:
+            - link "About Us" [ref=f7e15] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f7e16]:
+            - link "Our Services" [ref=f7e17] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f7e18]:
+            - link "Projects" [ref=f7e19] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/projects
+          - listitem [ref=f7e20]:
+            - link "Gallery" [ref=f7e21] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/gallery
+          - listitem [ref=f7e22]:
+            - link "Careers" [ref=f7e23] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f7e24]:
+            - link "Contact Us" [ref=f7e25] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/contact
+        - link [ref=f7e27] [cursor=pointer]:
+          - /url: https://uniquegroupbd.com
+          - img "Hansa" [ref=f7e28]
+  - main [ref=f7e29]:
+    - generic [ref=f7e30]:
+      - heading "Management Team — HANSA Management Ltd." [level=1] [ref=f7e31]
+      - generic [ref=f7e32]:
+        - article [ref=f7e33]:
+          - button "Salina Ali, Chairperson Chairperson Ms. Salina Ali, a renowned business personality and Chairperson of HANSA Management Ltd. and Unique Group has been the key stakeholder behind the success of Unique Group over the past decades. Read more" [ref=f7e34]:
+            - img "Salina Ali, Chairperson" [ref=f7e35]
+            - generic [ref=f7e36]: Chairperson Ms. Salina Ali, a renowned business personality and Chairperson of HANSA Management Ltd. and Unique Group has been the key stakeholder behind the success of Unique Group over the past decades. Read more
+          - heading "Chairperson" [level=2] [ref=f7e37]
+          - paragraph [ref=f7e38]: Salina Ali
+        - article [ref=f7e39]:
+          - button "Mohd. Noor Ali, Managing Director Managing Director Mr. Mohd Noor Ali is the Managing Director of HANSA Management Ltd. and the founder of Unique Group. He is one of the best-known entrepreneurs in Bangladesh. Read more" [ref=f7e40]:
+            - img "Mohd. Noor Ali, Managing Director" [ref=f7e41]
+            - generic [ref=f7e42]: Managing Director Mr. Mohd Noor Ali is the Managing Director of HANSA Management Ltd. and the founder of Unique Group. He is one of the best-known entrepreneurs in Bangladesh. Read more
+          - heading "Managing Director" [level=2] [ref=f7e43]
+          - paragraph [ref=f7e44]: Mohd. Noor Ali
+        - article [ref=f7e45]:
+          - button "Abu Sadhaq Alam, Chief Executive Officer Chief Executive Officer Mr. Abu Sadhaq Alam serves as the Chief Executive Officer of HANSA Management Limited. Read more" [ref=f7e46]:
+            - img "Abu Sadhaq Alam, Chief Executive Officer" [ref=f7e47]
+            - generic [ref=f7e48]: Chief Executive Officer Mr. Abu Sadhaq Alam serves as the Chief Executive Officer of HANSA Management Limited. Read more
+          - heading "Chief Executive Officer" [level=2] [ref=f7e49]
+          - paragraph [ref=f7e50]: Mr. Abu Sadhaq Alam
+        - article [ref=f7e51]:
+          - button "Mohammad Shahedul Haque, Chief Operating Officer Chief Operating Officer Mohammad Shahedul Haque is the Chief Operating Officer of HANSA Management Limited. Read more" [ref=f7e52]:
+            - img "Mohammad Shahedul Haque, Chief Operating Officer" [ref=f7e53]
+            - generic [ref=f7e54]: Chief Operating Officer Mohammad Shahedul Haque is the Chief Operating Officer of HANSA Management Limited. Read more
+          - heading "Chief Operating Officer" [level=2] [ref=f7e55]
+          - paragraph [ref=f7e56]: Mohammad Shahedul Haque
+    - region "A concern of Unique Group" [ref=f7e57]:
+      - generic [ref=f7e59]:
+        - paragraph [ref=f7e60]: a concern of Unique Group
+        - paragraph [ref=f7e61]:
+          - link "☎ 01708800870" [ref=f7e62] [cursor=pointer]:
+            - /url: tel:+8801708800870
+  - contentinfo [ref=f7e63]:
+    - generic [ref=f7e64]:
+      - generic [ref=f7e65]:
+        - link "HANSA Management Ltd. — home" [ref=f7e66] [cursor=pointer]:
+          - /url: http://localhost/hansamgt-website-new/public
+          - img "HANSA Management Ltd. logo" [ref=f7e67]
+        - paragraph [ref=f7e68]: HANSA Management Ltd. is an integrated hospitality & facility management company in Bangladesh, providing a full range of services.
+      - navigation "Footer services" [ref=f7e69]:
+        - heading "Our Services Link" [level=2] [ref=f7e70]
+        - list [ref=f7e71]:
+          - listitem [ref=f7e72]:
+            - link "Hospitality Management" [ref=f7e73] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/hospitality-management
+          - listitem [ref=f7e74]:
+            - link "Security Surveillance & Fire Life Safety" [ref=f7e75] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/security-fire-life-safety
+          - listitem [ref=f7e76]:
+            - link "Cleaning & White-Glove Housekeeping" [ref=f7e77] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/cleaning-white-glove-housekeeping
+          - listitem [ref=f7e78]:
+            - link "Mechanical, Electrical & Plumbing" [ref=f7e79] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/mep-mechanical-electrical-plumbing
+      - navigation "Footer company" [ref=f7e80]:
+        - heading "Company" [level=2] [ref=f7e81]
+        - list [ref=f7e82]:
+          - listitem [ref=f7e83]:
+            - link "Company Profile" [ref=f7e84] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/company-profile
+          - listitem [ref=f7e85]:
+            - link "Mission & Vision" [ref=f7e86] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/mission-vision
+          - listitem [ref=f7e87]:
+            - link "Charter of Unique Group" [ref=f7e88] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/charter-of-unique-group
+          - listitem [ref=f7e89]:
+            - link "Management" [ref=f7e90] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/management
+          - listitem [ref=f7e91]:
+            - link "CSR" [ref=f7e92] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/corporate-social-responsibility
+          - listitem [ref=f7e93]:
+            - link "Projects" [ref=f7e94] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/projects
+          - listitem [ref=f7e95]:
+            - link "Gallery" [ref=f7e96] [cursor=pointer]:
+              - /url: http://localhost/hansamgt-website-new/public/gallery
+      - generic [ref=f7e97]:
+        - heading "Contact" [level=2] [ref=f7e98]
+        - generic [ref=f7e99]:
+          - paragraph [ref=f7e100]: Borak Mehnur (Level-18), 51/B Kemal Ataturk Avenue, Banani, Dhaka 1213
+          - paragraph [ref=f7e101]:
+            - link "01708800870" [ref=f7e102] [cursor=pointer]:
+              - /url: tel:+8801708800870
+          - paragraph [ref=f7e103]:
+            - link "info@hansamgt.com" [ref=f7e104] [cursor=pointer]:
+              - /url: mailto:info@hansamgt.com
+        - list [ref=f7e105]:
+          - listitem [ref=f7e106]:
+            - link "HANSA on Facebook" [ref=f7e107] [cursor=pointer]:
+              - /url: https://www.facebook.com/HANSAManagementLtd/
+          - listitem [ref=f7e110]:
+            - link "HANSA on LinkedIn" [ref=f7e111] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/hansa-management-ltd-222838196/
+          - listitem [ref=f7e114]:
+            - link "HANSA on YouTube" [ref=f7e115] [cursor=pointer]:
+              - /url: "#"
+    - generic [ref=f7e119]:
+      - paragraph [ref=f7e120]: Copyright © 2026 HANSA Management Ltd. All rights reserved.
+      - paragraph [ref=f7e121]: Developed by Unique Group IT
