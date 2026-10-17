@@ -166,6 +166,12 @@ Featured Services, Statistics, Featured Projects, Latest News, CTA,
 Services, Projects, News, Gallery, Settings) intentionally have no sidebar
 entries yet.
 
+> **Snapshot, 15 October 2026.** Insights, Site Settings, Offices and the four
+> Tier 2 content resources (Projects, Gallery, Team, Homepage Sections) were
+> added afterwards, Contact Submissions moved under a new *Operations* group, and
+> the sidebar now reads Content / Homepage Management / Settings / Operations —
+> see `docs/admin-panel-audit.md` for the current panel and its build order.
+
 ---
 
 ## 8. Environment and Deployment Notes

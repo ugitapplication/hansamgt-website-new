@@ -45,6 +45,10 @@ class AdminPanelProvider extends PanelProvider
                     ->label('Content'),
                 NavigationGroup::make()
                     ->label('Homepage Management'),
+                NavigationGroup::make()
+                    ->label('Settings'),
+                NavigationGroup::make()
+                    ->label('Operations'),
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([

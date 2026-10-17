@@ -3,27 +3,33 @@
 @section('content')
     <div class="page-wrap">
         <h1 class="page-h1 page-h1--center">Site Management Gallery</h1>
+        {{-- Managed under Content → Gallery. The built-in list below is the
+             fallback so the page still renders before the table is seeded. --}}
         @php
-            $photos = [
-                ['img' => 'team.jpg', 'caption' => 'Top Management'],
-                ['img' => 'IMG_9572.JPG', 'caption' => 'Training Session'],
-                ['img' => 'IMG_3555.JPG', 'caption' => 'Training Session'],
-                ['img' => 'IMG_9849.JPG', 'caption' => 'Team Work'],
-                ['img' => 'IMG_9320.JPG', 'caption' => 'Hospitality'],
-                ['img' => 'IMG_9712.JPG', 'caption' => 'Meetup With Management'],
-                ['img' => 'IMG_9402.JPG', 'caption' => 'Temperature Measurement'],
-                ['img' => 'IMG_9440.JPG', 'caption' => 'Security First'],
-                ['img' => 'IMG_9446.JPG', 'caption' => 'Hospitality'],
-                ['img' => 'IMG_9455.JPG', 'caption' => 'Customer Service'],
-                ['img' => 'IMG_9477.JPG', 'caption' => 'Customer Satisfaction'],
-                ['img' => 'IMG_9498.JPG', 'caption' => 'Customer Reception'],
-            ];
+            $photos = ($photos ?? []);
+
+            if (empty($photos)) {
+                $photos = [
+                    ['src' => asset('images/pages/gallery/team.jpg'), 'caption' => 'Top Management'],
+                    ['src' => asset('images/pages/gallery/IMG_9572.JPG'), 'caption' => 'Training Session'],
+                    ['src' => asset('images/pages/gallery/IMG_3555.JPG'), 'caption' => 'Training Session'],
+                    ['src' => asset('images/pages/gallery/IMG_9849.JPG'), 'caption' => 'Team Work'],
+                    ['src' => asset('images/pages/gallery/IMG_9320.JPG'), 'caption' => 'Hospitality'],
+                    ['src' => asset('images/pages/gallery/IMG_9712.JPG'), 'caption' => 'Meetup With Management'],
+                    ['src' => asset('images/pages/gallery/IMG_9402.JPG'), 'caption' => 'Temperature Measurement'],
+                    ['src' => asset('images/pages/gallery/IMG_9440.JPG'), 'caption' => 'Security First'],
+                    ['src' => asset('images/pages/gallery/IMG_9446.JPG'), 'caption' => 'Hospitality'],
+                    ['src' => asset('images/pages/gallery/IMG_9455.JPG'), 'caption' => 'Customer Service'],
+                    ['src' => asset('images/pages/gallery/IMG_9477.JPG'), 'caption' => 'Customer Satisfaction'],
+                    ['src' => asset('images/pages/gallery/IMG_9498.JPG'), 'caption' => 'Customer Reception'],
+                ];
+            }
         @endphp
         <div class="gal-grid">
             @foreach ($photos as $photo)
                 <figure class="gal-item">
-                    <button type="button" data-gal-open="{{ asset('images/pages/gallery/' . $photo['img']) }}" data-gal-cap="{{ $photo['caption'] }}" aria-haspopup="dialog" aria-label="View larger: {{ $photo['caption'] }}">
-                        <img src="{{ asset('images/pages/gallery/' . $photo['img']) }}" alt="{{ $photo['caption'] }}"
+                    <button type="button" data-gal-open="{{ $photo['src'] }}" data-gal-cap="{{ $photo['caption'] }}" aria-haspopup="dialog" aria-label="View larger: {{ $photo['caption'] }}">
+                        <img src="{{ $photo['src'] }}" alt="{{ $photo['caption'] }}"
                              width="350" height="250" loading="lazy" decoding="async">
                     </button>
                     <figcaption>{{ $photo['caption'] }}</figcaption>

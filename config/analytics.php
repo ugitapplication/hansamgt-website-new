@@ -31,7 +31,7 @@ return [
     |
     */
 
-    'consent_version' => 1,
+    'consent_version' => (int) env('CONSENT_VERSION', 1),
 
     'consent_storage_key' => 'hansa.consent',
 

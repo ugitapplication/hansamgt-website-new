@@ -16,7 +16,7 @@
     </nav>
     <div class="side-cta">
         <h2>How can we help?</h2>
-        <p>Contact at <a href="tel:+8801708800870">01708800870</a> or submit an inquiry online.</p>
+        <p>Contact at <a href="{{ \App\Support\Settings::phoneHref() }}">{{ \App\Support\Settings::phoneDisplay() }}</a> or submit an inquiry online.</p>
         <p><a class="home-submit" href="{{ url('contact') }}">Contact Us</a></p>
     </div>
 </aside>

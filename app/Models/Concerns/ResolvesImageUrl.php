@@ -2,7 +2,7 @@
 
 namespace App\Models\Concerns;
 
-use Illuminate\Support\Facades\Storage;
+use App\Support\ImageUrl;
 
 /**
  * Resolve a web-accessible URL for a managed image field.
@@ -15,20 +15,6 @@ trait ResolvesImageUrl
 {
     public function imageUrl(string $field = 'image'): string
     {
-        $path = trim((string) ($this->{$field} ?? ''));
-
-        if ($path === '') {
-            return '';
-        }
-
-        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
-            return $path;
-        }
-
-        if (Storage::disk('public')->exists($path)) {
-            return url(Storage::disk('public')->url($path));
-        }
-
-        return asset(ltrim($path, '/'));
+        return ImageUrl::resolve($this->{$field} ?? null);
     }
 }

@@ -17,7 +17,8 @@
                 <p>Sorry, the page you are looking for doesn&rsquo;t exist or has been moved.</p>
                 <p>
                     Please <a href="{{ url('/') }}">return to the homepage</a> or
-                    <a href="{{ url('contact') }}">contact our Information Desk</a> (01708800870).
+                    @php($phone = \App\Support\Settings::phoneDisplay())
+                    <a href="{{ url('contact') }}">contact our Information Desk</a>@if ($phone) ({{ $phone }})@endif.
                 </p>
             </div>
         </div>

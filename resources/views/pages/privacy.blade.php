@@ -3,12 +3,14 @@
 @section('content')
     @php
         // Values below are business decisions, not facts scraped from the code.
-        // Change them here and the wording follows. Confirm each one:
-        //  - $lastUpdated: bump whenever the policy changes.
+        //  - $lastUpdated: editable in the admin panel (Site Settings → Legal).
         //  - $enquiryRetention: how long you actually keep enquiry records.
         //  - $analyticsRetention: must match the retention period set in the
         //    Google Analytics 4 property, or this policy will be inaccurate.
-        $lastUpdated = '17 October 2026';
+        $lastUpdated = \App\Support\Settings::get('privacy_updated');
+        $lastUpdatedDisplay = $lastUpdated
+            ? \Illuminate\Support\Carbon::parse($lastUpdated)->format('j F Y')
+            : null;
         $enquiryRetention = '24 months';
         $analyticsRetention = '14 months';
 
@@ -33,9 +35,11 @@
         <div class="page-grid">
             <div class="legal-doc">
                 <h1 class="page-h1">Privacy Policy</h1>
-                <p class="privacy-updated">
-                    Last updated: <time datetime="2026-10-17">{{ $lastUpdated }}</time>
-                </p>
+                @if ($lastUpdatedDisplay)
+                    <p class="privacy-updated">
+                        Last updated: <time datetime="{{ $lastUpdated }}">{{ $lastUpdatedDisplay }}</time>
+                    </p>
+                @endif
 
                 <div class="callout">
                     <h2 class="callout__title">In brief</h2>
@@ -223,9 +227,9 @@
                 <div class="page-body">
                     <p>To ask about this policy, to exercise any of your rights, or to complain about how we have handled your data, contact us:</p>
                     <ul>
-                        <li>Email: <a href="mailto:info@hansamgt.com">info@hansamgt.com</a></li>
-                        <li>Telephone: <a href="tel:+8801708800870">01708800870</a></li>
-                        <li>Post: HANSA Management Ltd., Borak Mehnur (Level-18), 51/B Kemal Ataturk Avenue, Banani, Dhaka 1213, Bangladesh</li>
+                        <li>Email: <a href="mailto:{{ \App\Support\Settings::get('email') }}">{{ \App\Support\Settings::get('email') }}</a></li>
+                        <li>Telephone: <a href="{{ \App\Support\Settings::phoneHref() }}">{{ \App\Support\Settings::phoneDisplay() }}</a></li>
+                        <li>Post: {{ \App\Support\Settings::get('legal_name') }}, {{ \App\Support\Settings::get('postal_address') }}, Bangladesh</li>
                     </ul>
                     <p>Please tell us what you would like us to do, and enough about your enquiry for us to find it &mdash; the name and email address you used, and roughly when you got in touch. We will respond within a reasonable period and we will not charge you for exercising your rights.</p>
                     <p>This policy is published in English. If you would like help understanding it in Bangla, contact us and we will assist you.</p>
@@ -244,7 +248,7 @@
 
                 <div class="side-cta">
                     <h2>Questions about your data?</h2>
-                    <p>Email <a href="mailto:info@hansamgt.com">info@hansamgt.com</a> or call <a href="tel:+8801708800870">01708800870</a>.</p>
+                    <p>Email <a href="mailto:{{ \App\Support\Settings::get('email') }}">{{ \App\Support\Settings::get('email') }}</a> or call <a href="{{ \App\Support\Settings::phoneHref() }}">{{ \App\Support\Settings::phoneDisplay() }}</a>.</p>
                     <p><a class="home-submit" href="{{ url('contact') }}">Contact us</a></p>
                 </div>
             </aside>

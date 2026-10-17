@@ -55,14 +55,14 @@
 
                 <h2 class="page-h2">How to apply</h2>
                 <div class="page-body">
-                    <p>We continuously recruit for our operations across Dhaka. To apply, email your CV to <a class="text-hansa-navy hover:underline" href="mailto:info@hansamgt.com">info@hansamgt.com</a> stating the position or department you are interested in, or call our information desk on <a class="text-hansa-navy hover:underline" href="tel:+8801708800870">01708800870</a>. Shortlisted candidates will be contacted for an interview.</p>
+                    <p>We continuously recruit for our operations across Dhaka. To apply, email your CV to <a class="text-hansa-navy hover:underline" href="mailto:{{ \App\Support\Settings::get('email') }}">{{ \App\Support\Settings::get('email') }}</a> stating the position or department you are interested in, or call our information desk on <a class="text-hansa-navy hover:underline" href="{{ \App\Support\Settings::phoneHref() }}">{{ \App\Support\Settings::phoneDisplay() }}</a>. Shortlisted candidates will be contacted for an interview.</p>
                 </div>
             </div>
             <aside aria-label="Apply to HANSA">
                 <div class="side-cta">
                     <h2>Join our team</h2>
-                    <p>Send your CV to <a href="mailto:info@hansamgt.com">info@hansamgt.com</a> or call <a href="tel:+8801708800870">01708800870</a>.</p>
-                    <p><a class="home-submit" href="mailto:info@hansamgt.com">Email your CV</a></p>
+                    <p>Send your CV to <a href="mailto:{{ \App\Support\Settings::get('email') }}">{{ \App\Support\Settings::get('email') }}</a> or call <a href="{{ \App\Support\Settings::phoneHref() }}">{{ \App\Support\Settings::phoneDisplay() }}</a>.</p>
+                    <p><a class="home-submit" href="mailto:{{ \App\Support\Settings::get('email') }}">Email your CV</a></p>
                 </div>
             </aside>
         </div>

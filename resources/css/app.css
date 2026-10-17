@@ -727,7 +727,12 @@ body.has-hero.header_transparent.header_sticky #header {
 
 .home-hero__cta--ghost {
     color: #fff;
-    background: transparent;
+    /* These buttons sit directly on the hero photographs with no scrim between
+       them, so a transparent background leaves white text at the mercy of the
+       image behind it — a white quilt or a lit lobby drops it well below AA.
+       The translucent navy wash keeps white text at >= 5.4:1 even over pure
+       white, and still reads as the secondary button next to the gold one. */
+    background: rgba(0, 46, 91, 0.72);
     border-color: #fff;
 }
 

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Post;
+use App\Support\Settings;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
@@ -42,7 +43,7 @@ class GenerateSitemap extends Command
 
     public function handle(): int
     {
-        $base = rtrim(config('seo.organization.url'), '/');
+        $base = rtrim(Settings::get('site_url') ?? (string) config('app.url'), '/');
         $today = now()->toDateString();
 
         $entries = [];

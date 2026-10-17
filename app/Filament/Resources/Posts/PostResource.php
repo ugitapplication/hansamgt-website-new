@@ -6,6 +6,7 @@ use App\Filament\Resources\Posts\Pages\CreatePost;
 use App\Filament\Resources\Posts\Pages\EditPost;
 use App\Filament\Resources\Posts\Pages\ListPosts;
 use App\Models\Post;
+use App\Support\ImageUrl;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -95,6 +96,13 @@ class PostResource extends Resource
                         ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                         ->maxSize(3072)
                         ->imagePreviewHeight('250')
+                        ->fetchFileInformation(false)
+                        ->getUploadedFileUsing(fn (string $file): ?array => [
+                            'name' => basename($file),
+                            'size' => 0,
+                            'type' => null,
+                            'url' => ImageUrl::resolve($file),
+                        ])
                         ->helperText('JPG, PNG or WebP, max 3 MB. Landscape images (~1600x900) work best.')
                         ->columnSpanFull(),
                     TextInput::make('cover_image_alt')
@@ -139,6 +147,13 @@ class PostResource extends Resource
                         ->visibility('public')
                         ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                         ->maxSize(3072)
+                        ->fetchFileInformation(false)
+                        ->getUploadedFileUsing(fn (string $file): ?array => [
+                            'name' => basename($file),
+                            'size' => 0,
+                            'type' => null,
+                            'url' => ImageUrl::resolve($file),
+                        ])
                         ->helperText('Used for social/Open Graph previews. Falls back to the cover image.')
                         ->columnSpanFull(),
                 ]),

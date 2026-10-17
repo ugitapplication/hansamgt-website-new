@@ -155,6 +155,8 @@ Only **Hero Slides, Clients, and Concerns** are editable from the admin panel. E
 
 **Recommended:** a Site Settings module (phone, social, addresses) plus Pages, Services, Projects, Gallery, Team, and News resources, and per-page SEO fields.
 
+**Full audit:** [`docs/admin-panel-audit.md`](admin-panel-audit.md) — the complete hard-coded inventory, the settings-vs-`.env` decision, the recommended sidebar structure, and a tiered build order.
+
 ---
 
 ## 7. Technical Gaps
@@ -283,7 +285,7 @@ Hero → Slogan band → Policy cards → Our Services → HANSA in Numbers → 
 - [ ] 5. Add WhatsApp click-to-chat + separate emergency number
 - [x] 6. Add primary hero CTA ("Request a Quote" → `#emr_contact` + "Call" button)
 - [x] 7. Privacy Policy page (`/privacy-policy`, carries the cookies disclosure) + contact-form privacy notice + **consent-gated GA4** (Consent Mode v2, banner, footer "Cookie settings"). Scope revised — **Terms set aside** (no accounts, transactions or user content), and one policy page instead of separate Privacy + Cookie pages so there is no duplicate content
-- [ ] 7b. **Confirm the two policy values** set at the top of `resources/views/pages/privacy.blade.php` — enquiry retention (`24 months`) and GA4 data retention (`14 months`, which must match the retention period actually configured in the GA4 property, or the policy is inaccurate). Also revisit the wording if analytics is ever switched off via `GA4_ENABLED=false`
+- [x] 7b. **Confirm the two policy values** set at the top of `resources/views/pages/privacy.blade.php` — enquiry retention (`24 months`) and GA4 data retention (`14 months`) — **confirmed by the business on 2026-10-17**; the policy text stands as written. One action remains outside the codebase: set the GA4 property's data-retention period to 14 months so the policy matches the property. Also revisit the wording if analytics is ever switched off via `GA4_ENABLED=false`
 - [x] 8. Add `LocalBusiness` structured data (plus `Organization`, `WebSite`, `WebPage`, `BreadcrumbList` and per-service `Service` in the `partials/seo.blade.php` `@graph`)
 - [ ] 9. Publish downloadable Company Profile PDF
 
@@ -323,6 +325,11 @@ Hero → Slogan band → Policy cards → Our Services → HANSA in Numbers → 
 - [ ] 13. Service-level ledger + FAQ (+ `FAQPage` schema) per service page
 - [x] 14a. Admin CMS — Insights (Posts): `Post` model + migration + Filament resource with SEO, cover and publish fields
 - [ ] 14b. Admin CMS — Site Settings, Pages/Services/Projects/Gallery/Team
+  - [x] 14b-i. Admin panel + website-configuration audit (`docs/admin-panel-audit.md`) — current resources, full hard-coded inventory, what belongs in Site Settings vs what must stay in `.env`, tiered build order
+  - [x] 14b-ii. Tier 1 built — **Site Settings** (`settings` table + `App\Support\Settings` + `config/site.php` + Filament page) and **Offices** (table + resource + seeder); phone, email, address, logo, social links, GA4 id and schema facts now have one source and are editable from the panel without a deploy
+  - [x] 14b-iii. Tier 1 verified live (`php artisan migrate` + `OfficeSeeder` + `npm run build`) — 16/16 public routes 200, 0 console errors, header/footer/hero/slogan/offices/schema all settings-driven, both privacy panels styled, consent gate and sitemap re-checked; stale `offices` rows that repeated the corporate mobile + email on all four cards were found and corrected
+  - [x] 14b-iv. Tier 2 built — **Projects**, **Gallery**, **Team** and **Homepage Sections** (`projects`, `gallery_images`, `team_members`, `homepage_section_items` tables + models + Filament resources + four idempotent seeders). `/projects`, `/gallery`, `/management` and the five homepage bands now read from the database, with the published content kept as the Blade fallback. The homepage "Service Projects" band is the featured flag on Projects and keeps its own longer card wording and order
+  - [ ] 14b-v. Tier 2 verified against the database — run `php artisan migrate` + the four seeders (see `docs/admin-panel-audit.md` §12)
 - [ ] 15. Dynamic copyright year — already satisfied (see above)
 
 ### Phase 3 — Depth & Growth
@@ -372,3 +379,13 @@ Hero → Slogan band → Policy cards → Our Services → HANSA in Numbers → 
 | 2026-10-17 | Long-form policy styles scoped to `.legal-doc` so they cannot leak into the shared `.page-body` (service pages and Insights articles keep their own typography) | Done |
 | 2026-10-17 | Insights article lists — restored the `list-style` markers that Tailwind's preflight removed (the article bodies use plain `<ul>`), a pre-existing defect found during this work | Done |
 | 2026-10-17 | Both enquiry forms now carry the **same** notice panel — the contact page matches the homepage (solid `#002e5b`, white text, 13.62:1), replacing the band-specific translucent wash so parity no longer depends on what sits behind the notice | Done |
+| 2026-10-17 | Admin panel + website-configuration audit (`docs/admin-panel-audit.md`) — resources, hard-coded inventory, settings-vs-`.env` split, build order; 7 data-integrity defects logged | Done |
+| 2026-10-17 | Tier 1 admin build — **Site Settings** (`settings` table, `App\Support\Settings`, `config/site.php`, Filament page with Send-test-email) + **Offices** (table, resource, seeder). Phone/email/address/logo/social links/GA4 id/schema facts now have a single source, editable from the panel; the duplicate office phone + email, the two copies of the office list and the two dead `#` social links are fixed. Mail credentials deliberately stay in `.env` | Done |
+| 2026-10-17 | Tier 1 verified live after `migrate` + `OfficeSeeder` + `npm run build` — 16/16 routes 200, 0 console errors/warnings, rebuilt bundle carries `.form-privacy--panel`/`.legal-doc`, socials + offices + hero CTAs + schema all settings-driven, consent gate intact, sitemap 20 URLs with `<lastmod>` | Done |
+| 2026-10-17 | Repaired stale `offices` rows in the local DB that repeated the corporate mobile + email on every card (a live instance of the defect this build removes); `OfficeSeeder` was re-run through the app and now converges. Site Settings slug pinned to `/admin/settings` | Done |
+| 2026-10-17 | Policy retention values confirmed by the business — enquiry data `24 months`, GA4 data retention `14 months` (item 7b closed; setting the GA4 property's own retention to 14 months is a console action) | Done |
+| 2026-10-17 | Hero ghost CTA ("Call …") — the transparent background was replaced with a translucent navy wash (`rgba(0,46,91,.72)`). White text sat straight on the photographs with no scrim: **1.00:1 over a white image, 3.95:1 over a mid-tone**. Now **5.75:1 over pure white** and ≥ 6.98:1 over bright imagery — WCAG AA at any offset (needs `npm run build`) | Done |
+| 2026-10-17 | Tier 2 admin build — **Projects**, **Gallery**, **Team**, **Homepage Sections**: four tables + models + Filament resources + four idempotent seeders. `/projects`, `/gallery`, `/management` and the five homepage bands now read from the database with the published content retained as the Blade fallback, so nothing was invented and nothing breaks before the seeders run | Done |
+| 2026-10-17 | Filament `FileUpload` data-loss bug fixed — a value that lives under `public/images/…` (every seeded image on this site) was filtered out of the form on load and wiped on save. Added `App\Support\ImageUrl`, `->fetchFileInformation(false)` and a preview callback; applied to the four new resources and to the pre-existing Insights cover/OG fields | Done |
+| 2026-10-17 | Tier 2 verified pre-seed: 11 projects / 12 photos / 4 executives (dialog ids intact) / 3 commitments + 8 glance cards + 2×6 bullets + 5 statistics including the live count-up attributes — all byte-for-byte the published content, 0 console errors, 8 admin routes register | Done |
+| 2026-10-17 | Homepage inline critical CSS brought back in step with the stylesheet — it still carried the pre-fix transparent "Call" button background, so the fix flashed unapplied on first paint | Done |

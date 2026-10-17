@@ -8,8 +8,8 @@
          id="consent-banner"
          role="region"
          aria-labelledby="consent-title"
-         data-consent-key="{{ config('analytics.consent_storage_key') }}"
-         data-consent-version="{{ config('analytics.consent_version') }}"
+         data-consent-key="{{ \App\Support\Consent::storageKey() }}"
+         data-consent-version="{{ \App\Support\Consent::version() }}"
          hidden>
         <div class="consent__inner">
             <div class="consent__text">

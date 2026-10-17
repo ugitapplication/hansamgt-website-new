@@ -17,7 +17,7 @@
                 <p>Sorry, we hit an unexpected problem while loading this page.</p>
                 <p>
                     Please try again in a moment, or <a href="{{ url('contact') }}">contact our Information Desk</a>
-                    (01708800870). You can also <a href="{{ url('/') }}">return to the homepage</a>.
+                    @php($phone = \App\Support\Settings::phoneDisplay())@if ($phone)({{ $phone }})@endif You can also <a href="{{ url('/') }}">return to the homepage</a>.
                 </p>
             </div>
         </div>

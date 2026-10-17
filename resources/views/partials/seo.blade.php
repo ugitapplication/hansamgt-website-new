@@ -2,17 +2,24 @@
     $seo = $seo ?? [];
     $breadcrumbs = $breadcrumbs ?? [];
 
-    $org = config('seo.organization');
+    $setting = static fn (string $key): ?string => \App\Support\Settings::get($key);
+
+    $org = [
+        'name' => (string) $setting('legal_name'),
+        'url' => (string) $setting('site_url'),
+    ];
     $siteUrl = rtrim($org['url'], '/');
     $lang = str_replace('_', '-', app()->getLocale());
 
-    $seoTitle = $seo['title'] ?? 'HANSA Management Ltd. | Hospitality and Facility Management Services in Dhaka';
-    $seoDescription = $seo['description'] ?? 'HANSA Management Ltd., a concern of Unique Group. Hospitality and facility management services in Dhaka. Information Desk: 01708800870.';
+    $phoneDisplay = \App\Support\Settings::phoneDisplay();
+
+    $seoTitle = $seo['title'] ?? $org['name'].' | Hospitality and Facility Management Services in Dhaka';
+    $seoDescription = $seo['description'] ?? $org['name'].', a concern of Unique Group. Hospitality and facility management services in Dhaka.'.($phoneDisplay ? ' Information Desk: '.$phoneDisplay.'.' : '');
     $seoCanonical = $seo['canonical'] ?? url('/');
     $seoType = $seo['type'] ?? 'website';
     $ogImage = ! empty($seo['image'])
         ? (str_starts_with($seo['image'], 'http') ? $seo['image'] : asset($seo['image']))
-        : asset(config('seo.default_image'));
+        : \App\Support\Settings::imageUrl('og_image');
 
     // Local and staging environments must never be indexed, no matter what a
     // page asks for. Production honours the per-page value.
@@ -27,25 +34,54 @@
         '@id' => $siteUrl.'/#organization',
         'name' => $org['name'],
         'url' => $org['url'],
-        'logo' => asset($org['logo']),
-        'image' => asset($org['logo']),
-        'description' => $org['description'],
-        'telephone' => $org['telephone'],
-        'email' => $org['email'],
+        'logo' => \App\Support\Settings::imageUrl('logo'),
+        'image' => \App\Support\Settings::imageUrl('og_image'),
+        'description' => (string) $setting('description'),
+        'telephone' => (string) $setting('phone_primary'),
+        'email' => (string) $setting('email'),
         'address' => [
             '@type' => 'PostalAddress',
-            'streetAddress' => $org['street_address'],
-            'addressLocality' => $org['address_locality'],
-            'postalCode' => $org['postal_code'],
-            'addressCountry' => $org['address_country'],
+            'streetAddress' => (string) $setting('street_address'),
+            'addressLocality' => (string) $setting('address_locality'),
+            'postalCode' => (string) $setting('postal_code'),
+            'addressCountry' => (string) $setting('address_country'),
         ],
         'parentOrganization' => [
             '@type' => 'Organization',
-            'name' => $org['parent']['name'],
-            'url' => $org['parent']['url'],
+            'name' => (string) $setting('parent_name'),
+            'url' => (string) $setting('parent_url'),
         ],
-        'sameAs' => $org['same_as'],
+        'sameAs' => \App\Support\Settings::sameAs(),
     ];
+
+    // Local-business extras. Published only when the real values are known —
+    // invented coordinates or opening hours would produce misleading results.
+    if (filled($setting('latitude')) && filled($setting('longitude'))) {
+        $organization['geo'] = [
+            '@type' => 'GeoCoordinates',
+            'latitude' => (float) $setting('latitude'),
+            'longitude' => (float) $setting('longitude'),
+        ];
+    }
+
+    if (filled($setting('opening_hours'))) {
+        $organization['openingHours'] = $setting('opening_hours');
+    }
+
+    // Grounded in the Company Profile page: HANSA Management Ltd. was
+    // incorporated in 2015 (Unique Group has operated since 1982).
+    if (filled($setting('founding_year'))) {
+        $organization['foundingDate'] = (string) $setting('founding_year');
+    }
+
+    // Never publish an empty parent organisation or an empty sameAs list.
+    if (! filled($setting('parent_name'))) {
+        unset($organization['parentOrganization']);
+    }
+
+    if ($organization['sameAs'] === []) {
+        unset($organization['sameAs']);
+    }
 
     $graph = [
         $organization,
@@ -168,5 +204,5 @@
 {!! $jsonLd !!}
 </script>
 
-<link rel="icon" href="{{ asset('images/hansa_logo_new.png') }}" type="image/png">
-<link rel="apple-touch-icon" href="{{ asset('images/hansa_logo_new.png') }}">
+<link rel="icon" href="{{ \App\Support\Settings::imageUrl('favicon') }}">
+<link rel="apple-touch-icon" href="{{ \App\Support\Settings::imageUrl('favicon') }}">

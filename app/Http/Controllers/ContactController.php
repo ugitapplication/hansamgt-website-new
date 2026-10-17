@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactSubmission;
+use App\Support\Settings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -36,9 +37,14 @@ class ContactController extends Controller
 
         $submission = ContactSubmission::query()->create($validated);
 
+        // The recipient is a setting (Settings → Site Settings), so enquiries can
+        // be routed without a code change. The mail transport and credentials
+        // stay in .env.
+        $recipient = Settings::get('enquiry_recipient') ?: (string) config('mail.from.address');
+
         try {
-            Mail::send('emails.contact-admin', ['submission' => $submission], function ($mail) use ($submission) {
-                $mail->to('info@hansamgt.com')
+            Mail::send('emails.contact-admin', ['submission' => $submission], function ($mail) use ($submission, $recipient) {
+                $mail->to($recipient)
                     ->replyTo($submission->email, $submission->name)
                     ->subject('Website enquiry from '.$submission->name);
             });
