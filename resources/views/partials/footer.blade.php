@@ -31,6 +31,7 @@
                 <li><a class="text-hansa-gold hover:text-white hover:underline" href="{{ url('charter-of-unique-group') }}">Charter of Unique Group</a></li>
                 <li><a class="text-hansa-gold hover:text-white hover:underline" href="{{ url('management') }}">Management</a></li>
                 <li><a class="text-hansa-gold hover:text-white hover:underline" href="{{ url('corporate-social-responsibility') }}">CSR</a></li>
+                <li><a class="text-hansa-gold hover:text-white hover:underline" href="{{ url('careers') }}">Careers</a></li>
                 <li><a class="text-hansa-gold hover:text-white hover:underline" href="{{ url('projects') }}">Projects</a></li>
                 <li><a class="text-hansa-gold hover:text-white hover:underline" href="{{ url('gallery') }}">Gallery</a></li>
             </ul>

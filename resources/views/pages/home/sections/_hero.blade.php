@@ -30,6 +30,10 @@
             <span class="text-hansa-gold">HANSA Management Ltd.</span><br>
             <span class="text-white">Hospitality and Facility Management Services</span>
         </h1>
+        <div class="home-hero__actions">
+            <a class="home-hero__cta" href="#emr_contact" data-rail-link>Request a Quote</a>
+            <a class="home-hero__cta home-hero__cta--ghost" href="tel:+8801708800870">Call 01708800870</a>
+        </div>
     </div>
     <button type="button" class="home-hero__arrow home-hero__arrow--prev" data-hero-prev aria-label="Previous slide">&#8249;</button>
     <button type="button" class="home-hero__arrow home-hero__arrow--next" data-hero-next aria-label="Next slide">&#8250;</button>

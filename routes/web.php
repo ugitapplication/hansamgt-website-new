@@ -21,6 +21,7 @@ Route::get('/cleaning-white-glove-housekeeping', [HomeController::class, 'payper
 Route::get('/mep-mechanical-electrical-plumbing', [HomeController::class, 'riskManagement'])->name('mep-mechanical-electrical-plumbing');
 Route::get('/projects', [HomeController::class, 'project'])->name('projects');
 Route::get('/gallery', [HomeController::class, 'siteManagement'])->name('gallery');
+Route::get('/careers', [HomeController::class, 'careers'])->name('careers');
 
 // Legacy CodeIgniter URLs (home/*) → clean canonical URLs.
 // SEO 301s so indexed/cached old addresses keep their traffic (query string preserved).

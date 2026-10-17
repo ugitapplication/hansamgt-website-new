@@ -1,7 +1,10 @@
+@php
+    $breadcrumbs = $breadcrumbs ?? \App\Support\Breadcrumbs::forRoute(request()->route()?->getName());
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    @include('partials.seo', ['seo' => $seo ?? []])
+    @include('partials.seo', ['seo' => $seo ?? [], 'breadcrumbs' => $breadcrumbs])
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
 </head>
@@ -24,6 +27,7 @@
     </script>
 
     <main id="main-content" class="flex-1">
+        @include('partials.breadcrumbs', ['breadcrumbs' => $breadcrumbs])
         @yield('content')
     </main>
 

@@ -145,6 +145,11 @@ class HomeController extends Controller
                 'title' => 'Hospitality Management | HANSA Management Ltd.',
                 'description' => 'Hospitality Management streams listed on this page: front office, food & beverage service, culinary, cleaning, laundry, landscaping and related operations.',
                 'canonical' => 'https://hansamgt.com/hospitality-management',
+                'service' => [
+                    'name' => 'Hospitality Management',
+                    'type' => 'Hospitality management services',
+                    'description' => 'Front office, food & beverage service, culinary, cleaning, laundry, landscaping and related hospitality operations staffing.',
+                ],
             ],
         ]);
     }
@@ -156,6 +161,11 @@ class HomeController extends Controller
                 'title' => 'Security Surveillance, Fire Life Safety & Risk Management | HANSA',
                 'description' => 'Services listed on this page: fire alarm monitoring, evacuation management, loss prevention procedures, investigations and operations.',
                 'canonical' => 'https://hansamgt.com/security-fire-life-safety',
+                'service' => [
+                    'name' => 'Security Surveillance, Fire Life Safety & Risk Management',
+                    'type' => 'Security, fire and life safety services',
+                    'description' => 'Fire alarm monitoring, evacuation management, loss prevention procedures, investigations and security operations.',
+                ],
             ],
         ]);
     }
@@ -167,6 +177,11 @@ class HomeController extends Controller
                 'title' => 'Cleaning & White-Glove Housekeeping | HANSA Management Ltd.',
                 'description' => 'Services listed on this page: floor care, marble crystallization, carpet shampooing, facade cleaning, pest control and public area cleaning.',
                 'canonical' => 'https://hansamgt.com/cleaning-white-glove-housekeeping',
+                'service' => [
+                    'name' => 'Cleaning & White-Glove Housekeeping',
+                    'type' => 'Cleaning and housekeeping services',
+                    'description' => 'Floor care, marble crystallization, carpet shampooing, facade cleaning, pest control and public area cleaning.',
+                ],
             ],
         ]);
     }
@@ -178,6 +193,11 @@ class HomeController extends Controller
                 'title' => 'MEP (Mechanical, Electrical & Plumbing) | HANSA Management Ltd.',
                 'description' => 'MEP services listed on this page: air conditioning, water supply and drainage, firefighting, elevator, CCTV, BMS and water treatment.',
                 'canonical' => 'https://hansamgt.com/mep-mechanical-electrical-plumbing',
+                'service' => [
+                    'name' => 'MEP (Mechanical, Electrical & Plumbing)',
+                    'type' => 'Mechanical, electrical and plumbing services',
+                    'description' => 'Air conditioning, water supply and drainage, firefighting, elevator, CCTV, BMS and water treatment services.',
+                ],
             ],
         ]);
     }
@@ -200,6 +220,17 @@ class HomeController extends Controller
                 'title' => 'Gallery | HANSA Management Ltd.',
                 'description' => 'Gallery images labelled on this page include Top Management, Training Session and Team Work.',
                 'canonical' => 'https://hansamgt.com/gallery',
+            ],
+        ]);
+    }
+
+    public function careers(): View
+    {
+        return view('pages.careers', [
+            'seo' => [
+                'title' => 'Careers | HANSA Management Ltd.',
+                'description' => 'Build your career with HANSA Management Ltd. Explore roles across hospitality, security, cleaning and housekeeping, and MEP services in Dhaka.',
+                'canonical' => 'https://hansamgt.com/careers',
             ],
         ]);
     }
