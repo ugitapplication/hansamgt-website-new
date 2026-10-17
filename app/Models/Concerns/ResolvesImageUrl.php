@@ -13,15 +13,19 @@ use Illuminate\Support\Facades\Storage;
  */
 trait ResolvesImageUrl
 {
-    public function imageUrl(): string
+    public function imageUrl(string $field = 'image'): string
     {
-        $path = (string) ($this->image ?? '');
+        $path = trim((string) ($this->{$field} ?? ''));
+
+        if ($path === '') {
+            return '';
+        }
 
         if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
             return $path;
         }
 
-        if ($path !== '' && Storage::disk('public')->exists($path)) {
+        if (Storage::disk('public')->exists($path)) {
             return url(Storage::disk('public')->url($path));
         }
 

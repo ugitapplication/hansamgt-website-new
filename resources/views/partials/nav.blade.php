@@ -53,5 +53,6 @@
 
     </li>
     <li id="menu-item-2142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2142"><a href="{{ url('careers') }}" data-ps2id-api="true">Careers</a></li>
+    <li id="menu-item-insights" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-insights"><a href="{{ url('insights') }}" data-ps2id-api="true">Insights</a></li>
     <li id="menu-item-1311" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1311"><a href="{{ url('contact') }}" data-ps2id-api="true">Contact Us</a></li>
 </ul>

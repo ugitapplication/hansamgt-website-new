@@ -10,7 +10,9 @@
     $seoDescription = $seo['description'] ?? 'HANSA Management Ltd., a concern of Unique Group. Hospitality and facility management services in Dhaka. Information Desk: 01708800870.';
     $seoCanonical = $seo['canonical'] ?? url('/');
     $seoType = $seo['type'] ?? 'website';
-    $ogImage = isset($seo['image']) ? asset($seo['image']) : asset(config('seo.default_image'));
+    $ogImage = ! empty($seo['image'])
+        ? (str_starts_with($seo['image'], 'http') ? $seo['image'] : asset($seo['image']))
+        : asset(config('seo.default_image'));
 
     // Local and staging environments must never be indexed, no matter what a
     // page asks for. Production honours the per-page value.
@@ -113,15 +115,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="{{ $robots }}">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-NJDKQTDFB5"></script>
+{{-- Google Analytics 4 — consent-gated.
+     The consent defaults are declared before anything else, and the gtag.js
+     library itself is only requested once the visitor accepts analytics
+     (resources/js/consent.js). Until then nothing is loaded from Google and
+     nothing is sent to Google — not even a cookieless ping. --}}
+@if (\App\Support\Consent::analyticsEnabled())
 <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-NJDKQTDFB5');
+    gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'wait_for_update': 500
+    });
+    gtag('set', 'ads_data_redaction', true);
+    window.hansaAnalytics = { id: @json(\App\Support\Consent::measurementId()) };
 </script>
+@endif
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -141,6 +154,15 @@
 <meta name="twitter:title" content="{{ $seoTitle }}">
 <meta name="twitter:description" content="{{ $seoDescription }}">
 <meta name="twitter:image" content="{{ $ogImage }}">
+@if (! empty($seo['published_time']))
+<meta property="article:published_time" content="{{ $seo['published_time'] }}">
+@endif
+@if (! empty($seo['modified_time']))
+<meta property="article:modified_time" content="{{ $seo['modified_time'] }}">
+@endif
+@if (! empty($seo['feed']))
+<link rel="alternate" type="application/rss+xml" title="{{ $seoTitle }}" href="{{ $seo['feed'] }}">
+@endif
 
 <script type="application/ld+json">
 {!! $jsonLd !!}

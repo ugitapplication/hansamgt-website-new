@@ -38,9 +38,11 @@ class AdminPanelProvider extends PanelProvider
                 Dashboard::class,
             ])
             ->navigationGroups([
-                // Parent group for homepage sections. Only implemented modules get
-                // a navigation entry; planned sections stay out of the sidebar
-                // until their functionality exists (no placeholder links).
+                // Parent groups for the admin sidebar. Only implemented modules
+                // get a navigation entry; planned sections stay out of the
+                // sidebar until their functionality exists (no placeholder links).
+                NavigationGroup::make()
+                    ->label('Content'),
                 NavigationGroup::make()
                     ->label('Homepage Management'),
             ])

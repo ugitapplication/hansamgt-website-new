@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Concern;
 use App\Models\HeroSlide;
+use App\Models\Post;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -59,6 +60,17 @@ class HomeController extends Controller
             $concerns = [];
         }
 
+        // Latest published articles for the homepage "Latest News" section.
+        try {
+            $latestPosts = Post::query()
+                ->published()
+                ->ordered()
+                ->limit(2)
+                ->get();
+        } catch (\Throwable) {
+            $latestPosts = collect();
+        }
+
         return view('pages.home', [
             'seo' => [
                 'title' => 'HANSA Management Ltd. | Hospitality and Facility Management Services in Dhaka',
@@ -69,6 +81,7 @@ class HomeController extends Controller
             'heroSlides' => $heroSlides,
             'clients' => $clients,
             'concerns' => $concerns,
+            'latestPosts' => $latestPosts,
         ]);
     }
 
@@ -220,6 +233,17 @@ class HomeController extends Controller
                 'title' => 'Gallery | HANSA Management Ltd.',
                 'description' => 'Gallery images labelled on this page include Top Management, Training Session and Team Work.',
                 'canonical' => 'https://hansamgt.com/gallery',
+            ],
+        ]);
+    }
+
+    public function privacy(): View
+    {
+        return view('pages.privacy', [
+            'seo' => [
+                'title' => 'Privacy Policy | HANSA Management Ltd.',
+                'description' => 'How HANSA Management Ltd. collects, uses and protects personal data on this website — including the cookies we set and how to change your consent choice.',
+                'canonical' => 'https://hansamgt.com/privacy-policy',
             ],
         ]);
     }

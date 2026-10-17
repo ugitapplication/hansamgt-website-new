@@ -24,6 +24,8 @@ class Breadcrumbs
         'projects' => 'Projects',
         'gallery' => 'Gallery',
         'careers' => 'Careers',
+        'privacy-policy' => 'Privacy Policy',
+        'insights' => 'Insights',
     ];
 
     /**

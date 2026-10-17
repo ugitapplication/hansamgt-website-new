@@ -45,6 +45,10 @@
                     @enderror
                 </div>
             </div>
+            <p class="form-privacy form-privacy--panel">
+                We use the details you send here only to respond to your enquiry and provide our services.
+                See our <a href="{{ url('privacy-policy') }}">Privacy Policy</a>.
+            </p>
             <button type="submit" class="home-submit">Submit &#8250;</button>
         </form>
     </div>

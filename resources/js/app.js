@@ -1,4 +1,5 @@
 import './bootstrap';
+import { initConsent } from './consent';
 
 function initStickyHeader() {
     const header = document.querySelector('#header');
@@ -110,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSloganParticles();
     initCountUp();
     initRailLinks();
+    initConsent();
 });
 
 function initHomeHero() {

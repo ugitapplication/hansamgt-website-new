@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(HeroSlideSeeder::class);
         $this->call(ClientSeeder::class);
         $this->call(ConcernSeeder::class);
+        $this->call(InsightsSeeder::class);
     }
 }

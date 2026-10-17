@@ -32,7 +32,7 @@ HANSA's site answers none of these three questions with verifiable proof. It mak
 | **Conversion (lead generation)** | **3/10** | Largest weakness |
 | **Trust / proof (certs, testimonials, case studies)** | **2/10** | Claims without evidence |
 | Content depth | 4/10 | Thin service pages, no blog |
-| Legal / compliance | 2/10 | No privacy/terms/cookie consent |
+| Legal / compliance | 4/10 | Privacy Policy + consent-gated GA4 built (Terms set aside — no accounts or user content) |
 | Accessibility | 6/10 | Skip link + ARIA present; gaps remain |
 | Admin/CMS coverage | 4/10 | Most content is hard-coded |
 | Performance / image optimization | 5/10 | Lazy-load present; no WebP/CDN |
@@ -63,7 +63,7 @@ Industry research on FM/procurement websites (2025–2026) consistently shows:
 | Newsletter signup | Yes | Yes | No | No |
 | Careers / job portal | Yes (external) | Yes — job search | Partial | No — dead nav link |
 | Downloadable reports / profile | Yes — ESG report PDF | Yes — annual reports PDF | No | No |
-| Legal pages (privacy/terms/cookie) | Yes | Yes | Partial | No |
+| Legal pages (privacy/terms/cookie) | Yes | Yes | Partial | Yes — Privacy Policy with a cookies section; Terms set aside (no accounts/user content) |
 | Stat proof (scale) | Yes — 3,000+ customers, £5.6bn | Yes — 330k employees, 40k customers | Yes — 50-year legacy | Partial — count-up placeholders |
 | Multilingual / locale switcher | Partial | Yes — 40+ countries | No | No — English only |
 | Client portal / CMMS | Partial | Partial | No | No |
@@ -282,7 +282,8 @@ Hero → Slogan band → Policy cards → Our Services → HANSA in Numbers → 
 - [ ] 4. Extend contact form (company, service needed, property type, location, honeypot)
 - [ ] 5. Add WhatsApp click-to-chat + separate emergency number
 - [x] 6. Add primary hero CTA ("Request a Quote" → `#emr_contact` + "Call" button)
-- [ ] 7. Privacy, Terms, Cookie Policy pages + cookie consent (GA4 consent-gated)
+- [x] 7. Privacy Policy page (`/privacy-policy`, carries the cookies disclosure) + contact-form privacy notice + **consent-gated GA4** (Consent Mode v2, banner, footer "Cookie settings"). Scope revised — **Terms set aside** (no accounts, transactions or user content), and one policy page instead of separate Privacy + Cookie pages so there is no duplicate content
+- [ ] 7b. **Confirm the two policy values** set at the top of `resources/views/pages/privacy.blade.php` — enquiry retention (`24 months`) and GA4 data retention (`14 months`, which must match the retention period actually configured in the GA4 property, or the policy is inaccurate). Also revisit the wording if analytics is ever switched off via `GA4_ENABLED=false`
 - [x] 8. Add `LocalBusiness` structured data (plus `Organization`, `WebSite`, `WebPage`, `BreadcrumbList` and per-service `Service` in the `partials/seo.blade.php` `@graph`)
 - [ ] 9. Publish downloadable Company Profile PDF
 
@@ -297,17 +298,35 @@ Hero → Slogan band → Policy cards → Our Services → HANSA in Numbers → 
 - [x] Environment-aware indexing — `noindex, nofollow` unless `APP_ENV=production`
 - [x] `config/seo.php` — single source of truth for the organisation / local-business entity
 - [x] `public/sitemap.xml` — added `<lastmod>`; add `php artisan sitemap:generate` (`app/Console/Commands/GenerateSitemap.php`) to regenerate it — *kept as a static file because the web server serves it directly; a dynamic `/sitemap.xml` route would require deleting the static file first*
+- [x] Insights CMS — `Post` model + `create_posts_table` migration (title, slug, excerpt, body, cover image + alt, publish date/flag, meta title/description, OG image)
+- [x] Filament `PostResource` (Content → Insights) with RichEditor, cover/OG uploads and a dedicated SEO section
+- [x] Public `/insights` index (paginated, empty-state safe) + `/insights/{slug}` article page; both render without errors before the migration runs
+- [x] Article SEO — `BlogPosting` + `ItemList` + `BreadcrumbList` schema, `og:type=article`, `article:published_time`/`modified_time`, per-article OG image
+- [x] RSS feed at `/insights/feed` (+ `rel="alternate"` autodiscovery); `/insights` in the sitemap and the `sitemap:generate` command now appends published articles
+- [x] Homepage "Latest News" section is now CMS-driven from the newest articles, falling back to the legacy static cards
+- [x] `ResolvesImageUrl` accepts a field name, so cover/OG images share the same storage-vs-public resolution as hero/client images
+- [x] Insights launch set — 4 articles drafted (facility-management buying checklist; fire and life safety failures; hotel housekeeping standards; MEP preventive maintenance), each with an excerpt, meta title/description, a real cover image + alt text, and internal links to the service pages; review copies with CMS field values in `docs/content/insights/`
+- [x] `Database\Seeders\InsightsSeeder` — idempotent (matched on slug; publish date set only on first insert), registered in `DatabaseSeeder`; article bodies live in `database/seeders/data/insights/*.html`
+- [x] Article sidebar — "More insights" (`<aside>` + `<nav aria-label>`): the 3 newest other articles with thumbnail, date and title-as-link, plus "View all insights". Excludes the article being read; hidden when there are fewer than 2 others. Two columns with a sticky aside from 1240px, single column below that so mobile/tablet are unchanged
+- [x] Privacy Policy page (`/privacy-policy`) — written from the code rather than boilerplate: what the enquiry form collects, why, the lawful basis under the Personal Data Protection Act 2026, a real cookie table (`hansa-management-session`, `XSRF-TOKEN`, `_ga`/`_ga_<id>`), sharing, international transfers, retention, data-subject rights, security, children, changes and contact. "In brief" summary + "On this page" nav + breadcrumbs, `WebPage`/`BreadcrumbList` schema, canonical, and in the sitemap
+- [x] Consent-gated Google Analytics 4 — `config/analytics.php`; Consent Mode v2 defaults (`analytics_storage`, `ad_storage`, `ad_user_data`, `ad_personalization` = `denied`) are declared before anything else, and the `gtag.js` library is only requested *after* acceptance. Declining therefore sends nothing to Google at all — not even a cookieless ping
+- [x] Consent banner + footer "Cookie settings" — non-modal and keyboard reachable; **Accept and Decline carry equal weight** and neither is pre-selected. Revocable: declining after accepting sets consent back to `denied`, clears the `_ga*` cookies and reloads without the tag. The choice is stored in `localStorage` (`hansa.consent`, versioned) so the record of consent needs no consent itself; with no JavaScript the banner stays hidden and no analytics loads
+- [x] Analytics kill-switch — `GA4_ENABLED=false` (or an empty measurement ID) removes both the tag and the banner, driven by `app/Support/Consent.php`
+- [x] Privacy notice above the submit button on both live contact forms ("we use the details you send here only to respond to your enquiry…"), linked to the policy
+- [x] Mobile fix — `.page-grid` now has a shrinkable `minmax(0, 1fr)` track, so the cookie table's `min-width` scrolls inside its wrapper instead of widening the column past the viewport and being clipped by the body's `overflow-x: clip`
+- [x] Repo note — `resources/views/pages/partials/_contact-form.blade.php` is dead code (no view includes it; both live forms are hand-written). The privacy notice was added there too so it cannot become a gap if it is ever wired up
 
 ### Phase 2 — Trust & Proof
 - [ ] 10. Certifications / Compliance page
 - [ ] 11. Testimonials + rating widget
 - [ ] 12. Case studies (3–5)
 - [ ] 13. Service-level ledger + FAQ (+ `FAQPage` schema) per service page
-- [ ] 14. Expand admin CMS (Site Settings + Pages/Services/Projects/Gallery/Team/News)
+- [x] 14a. Admin CMS — Insights (Posts): `Post` model + migration + Filament resource with SEO, cover and publish fields
+- [ ] 14b. Admin CMS — Site Settings, Pages/Services/Projects/Gallery/Team
 - [ ] 15. Dynamic copyright year — already satisfied (see above)
 
 ### Phase 3 — Depth & Growth
-- [ ] 16. News / Insights blog
+- [x] 16. News / Insights blog — engine built (CMS + `/insights` index/article pages + RSS + homepage hook); 4 launch articles drafted + `InsightsSeeder` ready (run `php artisan migrate` then `php artisan db:seed --class=InsightsSeeder`)
 - [ ] 17. Location / service-area pages
 - [ ] 18. Bangla language version + locale switcher
 - [x] 19. Careers page (built; job listings / application form optional and pending)
@@ -334,3 +353,22 @@ Hero → Slogan band → Policy cards → Our Services → HANSA in Numbers → 
 | 2026-10-17 | Security-headers middleware — CSP, HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`, `Permissions-Policy`, `X-Powered-By` removed | Done |
 | 2026-10-17 | `X-Robots-Tag: noindex` on `/admin*` and all 4xx/5xx responses | Done |
 | 2026-10-17 | `public/sitemap.xml` `<lastmod>` + `php artisan sitemap:generate` command | Done |
+| 2026-10-17 | Insights CMS: `Post` model + `create_posts_table` migration (body, cover, publish + SEO fields) | Done |
+| 2026-10-17 | Filament `PostResource` under a new "Content" navigation group | Done |
+| 2026-10-17 | Public `/insights` index + `/insights/{slug}` article page, `BlogPosting`/`ItemList` schema, `og:type=article` | Done |
+| 2026-10-17 | RSS feed `/insights/feed` + autodiscovery link | Done |
+| 2026-10-17 | Homepage "Latest News" wired to the newest articles (static fallback kept) | Done |
+| 2026-10-17 | Insights links added to desktop/mobile nav, footer, and the sitemap | Done |
+| 2026-10-17 | Insights launch set — 4 service-linked articles drafted + `InsightsSeeder` (bodies in `database/seeders/data/insights/`) registered in `DatabaseSeeder` | Done |
+| 2026-10-17 | Article page: "More insights" sidebar (3 newest other articles, self-link excluded, hidden under 2) — two columns from 1240px, sticky aside; mobile/tablet unchanged | Done |
+| 2026-10-17 | Privacy Policy page `/privacy-policy` (carries the cookies disclosure) + route, breadcrumb, canonical, `WebPage`/`BreadcrumbList` schema and sitemap entry | Done |
+| 2026-10-17 | `config/analytics.php` + `app/Support/Consent.php` — GA4 id, on/off switch and the versioned consent record in one place | Done |
+| 2026-10-17 | GA4 consent-gated — Consent Mode v2 defaults `denied`, `gtag.js` requested only after acceptance (previously fired unconditionally) | Done |
+| 2026-10-17 | Consent banner (`partials/consent.blade.php`) + `resources/js/consent.js` — equal-weight Accept/Decline, revocable, `localStorage`, safe with no JavaScript | Done |
+| 2026-10-17 | Footer legal row — "Privacy Policy" and "Cookie settings" (the latter shown only while analytics is enabled) | Done |
+| 2026-10-17 | Privacy notice above the submit button on both live contact forms | Done |
+| 2026-10-17 | `.page-grid` shrinkable mobile track — the cookie table now scrolls instead of being clipped | Done |
+| 2026-10-17 | Contrast pass on the new components — homepage notice 3.42:1 → 8.02:1 (translucent navy wash), policy date line 2.91:1 → 13.62:1; all 21 new text styles now meet WCAG AA | Done |
+| 2026-10-17 | Long-form policy styles scoped to `.legal-doc` so they cannot leak into the shared `.page-body` (service pages and Insights articles keep their own typography) | Done |
+| 2026-10-17 | Insights article lists — restored the `list-style` markers that Tailwind's preflight removed (the article bodies use plain `<ul>`), a pre-existing defect found during this work | Done |
+| 2026-10-17 | Both enquiry forms now carry the **same** notice panel — the contact page matches the homepage (solid `#002e5b`, white text, 13.62:1), replacing the band-specific translucent wash so parity no longer depends on what sits behind the notice | Done |

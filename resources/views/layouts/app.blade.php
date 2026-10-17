@@ -33,6 +33,8 @@
 
     @include('partials.footer')
 
+    @include('partials.consent')
+
     @stack('scripts')
 </body>
 </html>

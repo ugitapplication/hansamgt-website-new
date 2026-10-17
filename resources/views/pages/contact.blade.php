@@ -107,7 +107,11 @@
                         @enderror
                     </div>
                 </div>
-                <p style="margin-top:1.5rem;"><button type="submit" class="contact-submit">Submit <span class="chev">›</span></button></p>
+                <p class="form-privacy form-privacy--panel">
+                    We use the details you send here only to respond to your enquiry and provide our services.
+                    See our <a href="{{ url('privacy-policy') }}">Privacy Policy</a>.
+                </p>
+                <p style="margin-top:1rem;"><button type="submit" class="contact-submit">Submit <span class="chev">›</span></button></p>
             </form>
         </div>
     </div>

@@ -1589,6 +1589,10 @@ section[id] {
 
 .page-grid {
     display: grid;
+    /* The mobile track must be shrinkable, otherwise a wide child (such as the
+       cookie table, which has a min-width) widens the column past the viewport
+       and gets clipped by the body's overflow-x: clip instead of scrolling. */
+    grid-template-columns: minmax(0, 1fr);
     gap: 2.5rem;
     align-items: start;
 }
@@ -2448,4 +2452,671 @@ ul.svc-list li {
     font-weight: 700;
     color: #fcb000;
     margin: 0 0 0.5rem;
+}
+
+/* ============ Insights (CMS-driven articles) ============ */
+
+.insights-empty {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: #f5f6f7;
+    border-left: 4px solid #fcb000;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #414142;
+}
+
+.insights-empty p {
+    margin: 0 0 0.5rem;
+}
+
+.insights-empty p:last-child {
+    margin-bottom: 0;
+}
+
+.insights-empty a,
+.insight__body a {
+    color: #002e5b;
+    text-decoration: underline;
+}
+
+.insights-grid {
+    display: grid;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+@media (min-width: 640px) {
+    .insights-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .insights-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.insight-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(28, 20, 20, 0.1);
+    background: #fff;
+}
+
+.insight-card__media {
+    display: block;
+}
+
+.insight-card__media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+}
+
+.insight-card__body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.25rem;
+}
+
+.insight-card__date {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #6c98e1;
+}
+
+.insight-card__title {
+    font-family: 'Avenir', 'AvenirLTStd-Roman', Arial, sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 0;
+}
+
+.insight-card__title a {
+    color: #111;
+    text-decoration: none;
+}
+
+.insight-card__title a:hover {
+    color: #002e5b;
+    text-decoration: underline;
+}
+
+.insight-card__excerpt {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #414142;
+}
+
+.insight-card__more {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #002e5b;
+    text-decoration: none;
+}
+
+.insight-card__more:hover {
+    color: #fcb000;
+    text-decoration: underline;
+}
+
+.insights-pagination {
+    margin-top: 2.5rem;
+}
+
+.insight {
+    max-width: 52rem;
+}
+
+.insight__meta {
+    margin: -0.75rem 0 1.25rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #6c98e1;
+}
+
+.insight__cover {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 0 1.75rem;
+}
+
+.insight__lede {
+    margin: 0 0 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.7;
+    color: #002e5b;
+}
+
+.insight__body p {
+    margin: 0 0 1.25rem;
+    line-height: 1.8;
+}
+
+.insight__body h2 {
+    font-family: 'Avenir', 'AvenirLTStd-Roman', Arial, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    margin: 2rem 0 0.75rem;
+}
+
+.insight__body h3 {
+    font-family: 'Avenir', 'AvenirLTStd-Roman', Arial, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111;
+    margin: 1.5rem 0 0.5rem;
+}
+
+/* Tailwind's preflight removes list markers globally, but the article bodies
+   are authored with plain <ul>/<ol>, so the markers are restored here. */
+.insight__body ul,
+.insight__body ol {
+    margin: 0 0 1.25rem;
+    padding-left: 1.25rem;
+}
+
+.insight__body ul {
+    list-style: disc;
+}
+
+.insight__body ol {
+    list-style: decimal;
+}
+
+.insight__body li {
+    margin-bottom: 0.4rem;
+}
+
+.insight__body img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 1.5rem 0;
+}
+
+.insight__footer {
+    margin-top: 2.5rem;
+}
+
+.insight__back {
+    font-weight: 700;
+    color: #002e5b;
+    text-decoration: none;
+}
+
+.insight__back:hover {
+    color: #fcb000;
+    text-decoration: underline;
+}
+
+/* ============ Article page: "More insights" sidebar ============
+   Single column by default, so mobile and tablet are untouched. The two-column
+   grid only applies once the 80rem page container has room for it. */
+
+.insight-layout__main {
+    min-width: 0;
+}
+
+.insight-aside {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e6e6e6;
+}
+
+.insight-aside__title {
+    font-family: 'Avenir', 'AvenirLTStd-Roman', Arial, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #002e5b;
+    margin: 0 0 1rem;
+}
+
+.insight-aside__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.insight-aside__item + .insight-aside__item {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.insight-aside__link {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    text-decoration: none;
+}
+
+.insight-aside__link:focus-visible {
+    outline: 2px solid #6c98e1;
+    outline-offset: 3px;
+}
+
+.insight-aside__thumb {
+    flex: 0 0 auto;
+    display: block;
+    width: 88px;
+    height: 66px;
+    object-fit: cover;
+}
+
+.insight-aside__text {
+    display: block;
+    min-width: 0;
+}
+
+.insight-aside__date {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #6c98e1;
+    margin-bottom: 0.2rem;
+}
+
+.insight-aside__name {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.45;
+    color: #002e5b;
+}
+
+.insight-aside__link:hover .insight-aside__name {
+    color: #fcb000;
+    text-decoration: underline;
+}
+
+/* Redundant on mobile, where the "All insights" link sits directly above. */
+.insight-aside__all {
+    display: none;
+}
+
+@media (min-width: 1240px) {
+    .insight-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 52rem) minmax(16rem, 20rem);
+        gap: 3.5rem;
+        align-items: start;
+        justify-content: start;
+    }
+
+    .insight-aside {
+        position: sticky;
+        /* Clears the fixed header once the sticky state kicks in. */
+        top: 7rem;
+        margin-top: 0;
+        padding-top: 0;
+        border-top: 0;
+    }
+
+    .insight-aside__all {
+        display: inline-block;
+        margin-top: 1.25rem;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #002e5b;
+        text-decoration: none;
+    }
+
+    .insight-aside__all:hover {
+        color: #fcb000;
+        text-decoration: underline;
+    }
+}
+
+/* ============ Consent banner ============ */
+
+.consent[hidden] {
+    display: none !important;
+}
+
+.consent {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 70;
+    background: #002e5b;
+    color: #fff;
+    box-shadow: 0 -2px 16px rgba(0, 46, 91, 0.28);
+}
+
+.consent__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 1.1rem 1rem;
+}
+
+@media (min-width: 900px) {
+    .consent__inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+    }
+
+    .consent__text {
+        flex: 1 1 auto;
+    }
+
+    /* Wide enough to keep the notice to two lines beside the buttons, narrow
+       enough that the banner stays a bar rather than a block. */
+    .consent__text p {
+        max-width: 44rem;
+    }
+}
+
+.consent__text {
+    min-width: 0;
+}
+
+.consent__title {
+    font-family: 'Avenir', 'AvenirLTStd-Roman', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 0.35rem;
+}
+
+.consent__title:focus-visible {
+    outline: 2px solid #fcb000;
+    outline-offset: 3px;
+}
+
+.consent__text p {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.88);
+}
+
+.consent__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem 1rem;
+    flex-shrink: 0;
+}
+
+.consent__btn {
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.2;
+    padding: 0.6rem 1.2rem;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+
+/* Accept and Decline are given equal weight: neither is pre-selected or
+   styled as the "obvious" answer. */
+.consent__btn--accept {
+    background: #fcb000;
+    border-color: #fcb000;
+    color: #002e5b;
+}
+
+.consent__btn--accept:hover {
+    background: #ffc63d;
+    border-color: #ffc63d;
+}
+
+.consent__btn--decline {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.6);
+    color: #fff;
+}
+
+.consent__btn--decline:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: #fff;
+}
+
+.consent__btn:focus-visible {
+    outline: 2px solid #fcb000;
+    outline-offset: 2px;
+}
+
+.consent__link {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: underline;
+}
+
+.consent__link:hover {
+    color: #fcb000;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .consent {
+        animation: consent-in 220ms ease-out;
+    }
+
+    @keyframes consent-in {
+        from {
+            transform: translateY(100%);
+        }
+
+        to {
+            transform: translateY(0);
+        }
+    }
+}
+
+/* ============ Privacy policy page ============ */
+
+.privacy-updated {
+    margin: 0 0 1.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #002e5b;
+}
+
+.callout {
+    margin: 0 0 2rem;
+    padding: 1.25rem 1.5rem;
+    background: #f4f7fb;
+    border-left: 4px solid #fcb000;
+}
+
+.callout__title {
+    font-family: 'Avenir', 'AvenirLTStd-Roman', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #002e5b;
+    margin: 0 0 0.6rem;
+}
+
+.legal-doc .callout ul {
+    list-style: disc;
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #414142;
+}
+
+.legal-doc .callout li {
+    margin-bottom: 0.35rem;
+}
+
+/* Long-form legal copy. Scoped to the policy page so it cannot leak into the
+   shared `.page-body` used by the service pages and the Insights articles,
+   which carry their own typography. Tailwind's preflight strips list styling
+   globally, so the bullets and numbers have to be put back explicitly. */
+.legal-doc ul,
+.legal-doc ol {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #414142;
+}
+
+.legal-doc ul {
+    list-style: disc;
+}
+
+.legal-doc ol {
+    list-style: decimal;
+}
+
+.legal-doc li {
+    margin-bottom: 0.4rem;
+}
+
+.legal-doc h3 {
+    font-family: 'Avenir', 'AvenirLTStd-Roman', Arial, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #002e5b;
+    margin: 1.5rem 0 0.5rem;
+}
+
+.legal-doc a {
+    color: #002e5b;
+    text-decoration: underline;
+}
+
+.legal-doc a:hover {
+    color: #001f3f;
+}
+
+.legal-doc code {
+    font-size: 0.85em;
+    padding: 0.1rem 0.35rem;
+    background: #eef2f7;
+    border-radius: 2px;
+    word-break: break-word;
+}
+
+.privacy-table-wrap {
+    margin: 0 0 1.5rem;
+    overflow-x: auto;
+}
+
+.privacy-table {
+    width: 100%;
+    min-width: 44rem;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #414142;
+}
+
+.privacy-table th,
+.privacy-table td {
+    padding: 0.65rem 0.75rem;
+    border: 1px solid #dfe6ef;
+    text-align: left;
+    vertical-align: top;
+}
+
+.privacy-table thead th {
+    background: #002e5b;
+    color: #fff;
+    font-weight: 700;
+}
+
+.privacy-table tbody tr:nth-child(even) {
+    background: #f7f9fc;
+}
+
+.side-nav {
+    border: 1px solid #e3e9f1;
+}
+
+.side-nav__title {
+    font-family: 'Avenir', 'AvenirLTStd-Roman', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #002e5b;
+    margin: 0;
+    padding: 0.9rem 1rem;
+    background: #f4f7fb;
+    border-bottom: 1px solid #e3e9f1;
+}
+
+.side-nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 0;
+}
+
+.side-nav__list a {
+    display: block;
+    padding: 0.4rem 1rem;
+    font-size: 0.875rem;
+    color: #002e5b;
+    text-decoration: none;
+}
+
+.side-nav__list a:hover {
+    background: #f4f7fb;
+    color: #001f3f;
+}
+
+/* ============ Contact form privacy notice ============ */
+
+.form-privacy {
+    margin: 0 0 1rem;
+    font-size: 0.8rem;
+    line-height: 1.55;
+    color: #5b6470;
+}
+
+.form-privacy a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.form-privacy a:hover {
+    color: #002e5b;
+}
+
+/* The enquiry-form privacy notice is a solid brand-navy panel on both forms, so
+   the homepage band and the contact page match exactly and the contrast is
+   identical (white on #002e5b = 13.62:1). On the homepage this replaces a
+   translucent wash that had been tuned to the slategray band, so the panel no
+   longer depends on whatever colour sits behind it. */
+.form-privacy--panel {
+    margin: 1.25rem 0 0;
+    padding: 0.7rem 1rem;
+    background: #002e5b;
+    color: #fff;
+}
+
+.form-privacy--panel a {
+    color: inherit;
+}
+
+.form-privacy--panel a:hover {
+    color: #fde428;
 }

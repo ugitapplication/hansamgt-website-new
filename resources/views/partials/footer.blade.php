@@ -34,6 +34,7 @@
                 <li><a class="text-hansa-gold hover:text-white hover:underline" href="{{ url('careers') }}">Careers</a></li>
                 <li><a class="text-hansa-gold hover:text-white hover:underline" href="{{ url('projects') }}">Projects</a></li>
                 <li><a class="text-hansa-gold hover:text-white hover:underline" href="{{ url('gallery') }}">Gallery</a></li>
+                <li><a class="text-hansa-gold hover:text-white hover:underline" href="{{ url('insights') }}">Insights</a></li>
             </ul>
         </nav>
 
@@ -71,8 +72,14 @@
     </div>
 
     <div class="border-t border-white/25">
-        <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4 py-4 text-xs sm:px-6">
+        <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-4 text-xs sm:px-6">
             <p>Copyright &copy; {{ date('Y') }} HANSA Management Ltd. All rights reserved.</p>
+            <nav aria-label="Legal" class="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <a class="hover:text-white hover:underline" href="{{ url('privacy-policy') }}">Privacy Policy</a>
+                @if (\App\Support\Consent::analyticsEnabled())
+                    <button type="button" class="cursor-pointer hover:text-white hover:underline" data-consent-open>Cookie settings</button>
+                @endif
+            </nav>
             <p>Developed by Unique Group IT</p>
         </div>
     </div>
