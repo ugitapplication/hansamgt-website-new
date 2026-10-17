@@ -13,6 +13,30 @@
     RewriteCond %{HTTP:x-xsrf-token} .
     RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
 
+    # Legacy CodeIgniter index.php URLs → canonical clean URLs (SEO 301s, query preserved via QSA).
+    # Laravel strips the script name before routing, so these must redirect here —
+    # otherwise /index.php/<page> would serve a 200 duplicate instead of redirecting.
+    # Never redirect form submissions (legacy parity: POSTs were excluded from redirects).
+    RewriteCond %{REQUEST_METHOD} POST
+    RewriteRule ^index\.php - [L]
+
+    RewriteRule ^index\.php/home/history/?$ /company-profile [L,R=301,QSA,NC]
+    RewriteRule ^index\.php/home/vision/?$ /mission-vision [L,R=301,QSA,NC]
+    RewriteRule ^index\.php/home/charter/?$ /charter-of-unique-group [L,R=301,QSA,NC]
+    RewriteRule ^index\.php/home/management/?$ /management [L,R=301,QSA,NC]
+    RewriteRule ^index\.php/home/csr/?$ /corporate-social-responsibility [L,R=301,QSA,NC]
+    RewriteRule ^index\.php/home/contact/?$ /contact [L,R=301,QSA,NC]
+    RewriteRule ^index\.php/home/hardService/?$ /hospitality-management [L,R=301,QSA,NC]
+    RewriteRule ^index\.php/home/softService/?$ /security-fire-life-safety [L,R=301,QSA,NC]
+    RewriteRule ^index\.php/home/payperUse/?$ /cleaning-white-glove-housekeeping [L,R=301,QSA,NC]
+    RewriteRule ^index\.php/home/riskManagement/?$ /mep-mechanical-electrical-plumbing [L,R=301,QSA,NC]
+    RewriteRule ^index\.php/home/project/?$ /projects [L,R=301,QSA,NC]
+    RewriteRule ^index\.php/home/siteManagement/?$ /gallery [L,R=301,QSA,NC]
+    RewriteRule ^index\.php/home/index/?$ / [L,R=301,QSA,NC]
+    RewriteRule ^index\.php/home/?$ / [L,R=301,QSA,NC]
+    RewriteRule ^index\.php/(company-profile|mission-vision|charter-of-unique-group|management|corporate-social-responsibility|contact|hospitality-management|security-fire-life-safety|cleaning-white-glove-housekeeping|mep-mechanical-electrical-plumbing|projects|gallery)/?$ /$1 [L,R=301,QSA]
+    RewriteRule ^index\.php/?$ / [L,R=301,QSA]
+
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$

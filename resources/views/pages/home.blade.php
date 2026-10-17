@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('head')
-    <link rel="preload" as="image" href="{{ asset('images/home/slider/hotel-housekeeping-bed-making-hansa-management.jpg') }}" fetchpriority="high">
+    <link rel="preload" as="image" href="{{ ($heroSlides[0]['src'] ?? null) ?: asset('images/home/slider/hotel-housekeeping-bed-making-hansa-management.jpg') }}" fetchpriority="high">
     <link rel="preload" as="font" type="font/woff" href="{{ asset('fonts/AvenirLTStd-Roman.woff') }}" crossorigin>
     {{-- Critical first-paint CSS (mirrors resources/css/app.css): prevents hero
          content flashing under the absolute header before the bundle arrives. --}}

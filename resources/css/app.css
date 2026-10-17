@@ -94,6 +94,12 @@
     color: #002e5b;
 }
 
+/* Prevent accidental horizontal scroll from full-bleed sections (100vw includes scrollbar width on Windows). */
+html,
+body {
+    overflow-x: clip;
+}
+
 /* Hero mode: translucent light bar over the bright slider (scroll → solid white sticky bar) */
 body.has-hero.header_transparent #header {
     position: absolute;
@@ -2073,7 +2079,8 @@ ul.svc-list li {
 }
 
 .contact-strip {
-    margin: 0 calc(50% - 50vw) 2.5rem;
+    width: 100%;
+    margin: 0 0 2.5rem;
     background: #0a0a0a;
 }
 
@@ -2208,6 +2215,22 @@ ul.svc-list li {
     border-radius: 50%;
     background: #fff;
     color: #111;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.contact-card__socials li:nth-child(1) a:hover {
+    background: #1877f2;
+    color: #fff;
+}
+
+.contact-card__socials li:nth-child(2) a:hover {
+    background: #1da1f2;
+    color: #fff;
+}
+
+.contact-card__socials li:nth-child(3) a:hover {
+    background: #0a66c2;
+    color: #fff;
 }
 
 .contact-card__socials svg {
@@ -2250,10 +2273,13 @@ ul.svc-list li {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    min-width: 0;
 }
 
 .contact-input {
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     padding: 0.9rem 1.5rem;
     border: 0;
     background: #c8c8c8;

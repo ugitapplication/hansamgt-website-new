@@ -1,25 +1,30 @@
-{{-- Our Valued Clients (legacy: Clients.php; OwlCarousel replaced with scroll-snap carousel) --}}
+{{-- Our Valued Clients (legacy: Clients.php; OwlCarousel replaced with scroll-snap carousel).
+     Logos come from the admin panel when active rows exist; otherwise the
+     original built-in set below is used so the homepage never breaks. --}}
 @php
-    $clients = [
-        ['file' => 'westin-dhaka-logo.png', 'alt' => 'The Westin Dhaka'],
-        ['file' => 'sheraton-dhaka-logo.png', 'alt' => 'Sheraton Dhaka'],
-        ['file' => 'hansa-hotel.png', 'alt' => 'HANSA – A Premium Residence'],
-        ['file' => 'regus.png', 'alt' => 'Regus Dhaka'],
-        ['file' => 'uae-xchange.png', 'alt' => 'UAE Xchange'],
-        ['file' => 'unique-meghnaghat.png', 'alt' => 'Unique MeghnaGhat'],
-        ['file' => 'sure-cash.png', 'alt' => 'Sure Cash'],
-        ['file' => 'nipro-jmi-pharma.png', 'alt' => 'NIPRO JMI PHARMA'],
-        ['file' => 'electricity-generation-company.png', 'alt' => 'Electricity Generation Company of Bangladesh'],
-        ['file' => 'lidl.jpeg', 'alt' => 'Lidl'],
-        ['file' => 'rupayancity.jpeg', 'alt' => 'Rupayan City'],
-        ['file' => 'table.jpeg', 'alt' => 'Table'],
-        ['file' => 'ucc.jpeg', 'alt' => 'UCC'],
-        ['file' => 'vf.jpeg', 'alt' => 'VF'],
-        ['file' => 'united-hostipital.jpg', 'alt' => 'United Hospital'],
-        ['file' => 'hyatt-place.jpg', 'alt' => 'Hyatt Place'],
-        ['file' => 'in.jpg', 'alt' => 'IN'],
-        ['file' => 'foodpanda.jpg', 'alt' => 'foodpanda'],
-    ];
+    $clients = ($clients ?? []);
+    if (empty($clients)) {
+        $clients = [
+            ['src' => asset('images/home/clients/westin-dhaka-logo.png'), 'alt' => 'The Westin Dhaka'],
+            ['src' => asset('images/home/clients/sheraton-dhaka-logo.png'), 'alt' => 'Sheraton Dhaka'],
+            ['src' => asset('images/home/clients/hansa-hotel.png'), 'alt' => 'HANSA – A Premium Residence'],
+            ['src' => asset('images/home/clients/regus.png'), 'alt' => 'Regus Dhaka'],
+            ['src' => asset('images/home/clients/uae-xchange.png'), 'alt' => 'UAE Xchange'],
+            ['src' => asset('images/home/clients/unique-meghnaghat.png'), 'alt' => 'Unique MeghnaGhat'],
+            ['src' => asset('images/home/clients/sure-cash.png'), 'alt' => 'Sure Cash'],
+            ['src' => asset('images/home/clients/nipro-jmi-pharma.png'), 'alt' => 'NIPRO JMI PHARMA'],
+            ['src' => asset('images/home/clients/electricity-generation-company.png'), 'alt' => 'Electricity Generation Company of Bangladesh'],
+            ['src' => asset('images/home/clients/lidl.jpeg'), 'alt' => 'Lidl'],
+            ['src' => asset('images/home/clients/rupayancity.jpeg'), 'alt' => 'Rupayan City'],
+            ['src' => asset('images/home/clients/table.jpeg'), 'alt' => 'Table'],
+            ['src' => asset('images/home/clients/ucc.jpeg'), 'alt' => 'UCC'],
+            ['src' => asset('images/home/clients/vf.jpeg'), 'alt' => 'VF'],
+            ['src' => asset('images/home/clients/united-hostipital.jpg'), 'alt' => 'United Hospital'],
+            ['src' => asset('images/home/clients/hyatt-place.jpg'), 'alt' => 'Hyatt Place'],
+            ['src' => asset('images/home/clients/in.jpg'), 'alt' => 'IN'],
+            ['src' => asset('images/home/clients/foodpanda.jpg'), 'alt' => 'foodpanda'],
+        ];
+    }
 @endphp
 <section id="emr_clients" class="home-section home-section--tint" aria-labelledby="clients-heading">
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
@@ -29,7 +34,7 @@
             <div class="logo-carousel__track">
                 @foreach ($clients as $client)
                     <div class="logo-carousel__item">
-                        <img src="{{ asset('images/home/clients/' . $client['file']) }}"
+                        <img src="{{ $client['src'] }}"
                              alt="{{ $client['alt'] }}" title="{{ $client['alt'] }}"
                              width="200" height="140" loading="lazy" decoding="async">
                     </div>

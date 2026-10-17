@@ -8,6 +8,16 @@
 @endphp
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NJDKQTDFB5"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-NJDKQTDFB5');
+</script>
+
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <title>{{ $seoTitle }}</title>
@@ -26,6 +36,35 @@
 <meta name="twitter:title" content="{{ $seoTitle }}">
 <meta name="twitter:description" content="{{ $seoDescription }}">
 <meta name="twitter:image" content="{{ $ogImage }}">
+
+<script type="application/ld+json">
+{
+    "@@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "HANSA Management Ltd.",
+    "url": "https://hansamgt.com/",
+    "logo": "{{ $ogImage }}",
+    "description": "HANSA Management Ltd. is an integrated hospitality and facility management company in Bangladesh, a concern of Unique Group.",
+    "telephone": "+8801708800870",
+    "email": "info@hansamgt.com",
+    "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Borak Mehnur (Level-18), 51/B Kemal Ataturk Avenue, Banani",
+        "addressLocality": "Dhaka",
+        "postalCode": "1213",
+        "addressCountry": "BD"
+    },
+    "parentOrganization": {
+        "@type": "Organization",
+        "name": "Unique Group",
+        "url": "https://www.uniquegroupbd.com/"
+    },
+    "sameAs": [
+        "https://www.facebook.com/HANSAManagementLtd/",
+        "https://www.linkedin.com/in/hansa-management-ltd-222838196/"
+    ]
+}
+</script>
 
 <link rel="icon" href="{{ asset('images/hansa_logo_new.png') }}" type="image/png">
 <link rel="apple-touch-icon" href="{{ asset('images/hansa_logo_new.png') }}">

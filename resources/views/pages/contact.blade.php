@@ -64,6 +64,9 @@
         </div>
         <div class="contact-formwrap">
             <h2>Contact Us</h2>
+            @if (session('contact_success'))
+                <p class="form-note" role="status" style="color: #1a7f37; font-weight: 600;">{{ session('contact_success') }}</p>
+            @endif
             <form method="post" action="{{ url('contact') }}" aria-label="Contact HANSA">
                 @csrf
                 <div class="contact-form">
@@ -71,30 +74,41 @@
                         <div>
                             <label class="sr-only" for="contact-page-name">Full Name</label>
                             <input id="contact-page-name" type="text" name="name" required autocomplete="name"
-                                   placeholder="Full Name" class="contact-input">
+                                   placeholder="Full Name" class="contact-input" value="{{ old('name') }}">
+                            @error('name')
+                                <small class="form-note" role="alert" style="color: #b3261e;">{{ $message }}</small>
+                            @enderror
                         </div>
                         <div>
                             <label class="sr-only" for="contact-page-phone">Phone Number</label>
                             <input id="contact-page-phone" type="tel" name="phone" required autocomplete="tel"
-                                   placeholder="Phone Number" class="contact-input">
+                                   placeholder="Phone Number" class="contact-input" value="{{ old('phone') }}">
+                            @error('phone')
+                                <small class="form-note" role="alert" style="color: #b3261e;">{{ $message }}</small>
+                            @enderror
                         </div>
                     </div>
                     <div class="contact-form__col">
                         <div>
                             <label class="sr-only" for="contact-page-email">Email</label>
                             <input id="contact-page-email" type="email" name="email" required autocomplete="email"
-                                   placeholder="Email" class="contact-input">
+                                   placeholder="Email" class="contact-input" value="{{ old('email') }}">
+                            @error('email')
+                                <small class="form-note" role="alert" style="color: #b3261e;">{{ $message }}</small>
+                            @enderror
                         </div>
                         <div style="display:flex;flex:1;">
                             <label class="sr-only" for="contact-page-message">Your Message</label>
                             <textarea id="contact-page-message" name="message" rows="6" required
-                                      placeholder="Your Message *" class="contact-input"></textarea>
+                                      placeholder="Your Message *" class="contact-input">{{ old('message') }}</textarea>
                         </div>
+                        @error('message')
+                            <small class="form-note" role="alert" style="color: #b3261e;">{{ $message }}</small>
+                        @enderror
                     </div>
                 </div>
                 <p style="margin-top:1.5rem;"><button type="submit" class="contact-submit">Submit <span class="chev">›</span></button></p>
             </form>
-            <p class="form-note">Online submission backend is pending — call <a href="tel:+8801708800870">01708800870</a> for an immediate response.</p>
         </div>
     </div>
     @include('pages.home.sections._slogan')

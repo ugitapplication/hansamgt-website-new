@@ -1,20 +1,25 @@
-{{-- Hero slider (legacy: Slider.php, RevSlider replaced with lightweight rotator) --}}
+{{-- Hero slider (legacy: Slider.php, RevSlider replaced with lightweight rotator).
+     Slides come from the admin panel (HeroSlider) when active rows exist;
+     otherwise the original built-in set below is used so the homepage never breaks. --}}
 @php
-    $heroSlides = [
-        ['file' => 'hotel-housekeeping-bed-making-hansa-management.jpg', 'alt' => 'HANSA housekeeping staff making a bed in a hotel guest room'],
-        ['file' => 'hansa-management-team-group-photo.jpg', 'alt' => 'HANSA Management team group photo in a hotel restaurant'],
-        ['file' => 'security-guards-uniform-inspection-hansa-management.jpg', 'alt' => 'HANSA security guards in uniform lined up for inspection by two managers'],
-        ['file' => 'cleaning-building-hansa-management.jpg', 'alt' => 'HANSA staff in hard hats during cleaning building hose training'],
-        ['file' => 'floor-cleaning-machine-terrace-hansa-management.jpg', 'alt' => 'Two HANSA cleaning staff polishing a stone terrace floor with a scrubbing machine and wet vacuum'],
-        ['file' => 'hansa-employee-training.jpg', 'alt' => 'HANSA Management Ltd. hospitality and facility management services'],
-        ['file' => 'front-office-reception-desk-hansa-management.jpg', 'alt' => 'HANSA front office executive at a reception desk with telephone and microphone'],
-    ];
+    $heroSlides = ($heroSlides ?? []);
+    if (empty($heroSlides)) {
+        $heroSlides = [
+            ['src' => asset('images/home/slider/hotel-housekeeping-bed-making-hansa-management.jpg'), 'alt' => 'HANSA housekeeping staff making a bed in a hotel guest room'],
+            ['src' => asset('images/home/slider/hansa-management-team-group-photo.jpg'), 'alt' => 'HANSA Management team group photo in a hotel restaurant'],
+            ['src' => asset('images/home/slider/security-guards-uniform-inspection-hansa-management.jpg'), 'alt' => 'HANSA security guards in uniform lined up for inspection by two managers'],
+            ['src' => asset('images/home/slider/cleaning-building-hansa-management.jpg'), 'alt' => 'HANSA staff in hard hats during cleaning building hose training'],
+            ['src' => asset('images/home/slider/floor-cleaning-machine-terrace-hansa-management.jpg'), 'alt' => 'Two HANSA cleaning staff polishing a stone terrace floor with a scrubbing machine and wet vacuum'],
+            ['src' => asset('images/home/slider/hansa-employee-training.jpg'), 'alt' => 'HANSA Management Ltd. hospitality and facility management services'],
+            ['src' => asset('images/home/slider/front-office-reception-desk-hansa-management.jpg'), 'alt' => 'HANSA front office executive at a reception desk with telephone and microphone'],
+        ];
+    }
 @endphp
 <section class="home-hero" aria-label="HANSA Management highlights">
     <div class="home-hero__slides" id="home-hero-slides">
         @foreach ($heroSlides as $slide)
             <div class="home-hero__slide{{ $loop->first ? ' is-active' : '' }}"{{ $loop->first ? '' : ' aria-hidden="true"' }}>
-                <img src="{{ asset('images/home/slider/' . $slide['file']) }}"
+                <img src="{{ $slide['src'] }}"
                      alt="{{ $slide['alt'] }}"
                      @if ($loop->first) fetchpriority="high" @else loading="lazy" @endif>
             </div>

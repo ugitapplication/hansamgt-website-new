@@ -2,12 +2,63 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
+use App\Models\Concern;
+use App\Models\HeroSlide;
 use Illuminate\View\View;
 
 class HomeController extends Controller
 {
     public function index(): View
     {
+        // Active hero slides in display order. Any failure (table not yet
+        // migrated, DB unreachable) falls back to the built-in slides in
+        // the Blade partial so the homepage never breaks.
+        try {
+            $heroSlides = HeroSlide::query()
+                ->active()
+                ->ordered()
+                ->get()
+                ->map(fn (HeroSlide $slide) => [
+                    'src' => $slide->imageUrl(),
+                    'alt' => $slide->alt,
+                ])
+                ->values()
+                ->all();
+        } catch (\Throwable) {
+            $heroSlides = [];
+        }
+
+        try {
+            $clients = Client::query()
+                ->active()
+                ->ordered()
+                ->get()
+                ->map(fn (Client $client) => [
+                    'src' => $client->imageUrl(),
+                    'alt' => $client->alt,
+                ])
+                ->values()
+                ->all();
+        } catch (\Throwable) {
+            $clients = [];
+        }
+
+        try {
+            $concerns = Concern::query()
+                ->active()
+                ->ordered()
+                ->get()
+                ->map(fn (Concern $concern) => [
+                    'src' => $concern->imageUrl(),
+                    'alt' => $concern->alt,
+                ])
+                ->values()
+                ->all();
+        } catch (\Throwable) {
+            $concerns = [];
+        }
+
         return view('pages.home', [
             'seo' => [
                 'title' => 'HANSA Management Ltd. | Hospitality and Facility Management Services in Dhaka',
@@ -15,6 +66,9 @@ class HomeController extends Controller
                 'canonical' => 'https://hansamgt.com/',
             ],
             'hasHero' => true,
+            'heroSlides' => $heroSlides,
+            'clients' => $clients,
+            'concerns' => $concerns,
         ]);
     }
 
