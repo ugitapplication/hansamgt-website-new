@@ -3,12 +3,12 @@
 @push('head')
     <link rel="preload" as="image" href="{{ ($heroSlides[0]['src'] ?? null) ?: asset('images/home/slider/hotel-housekeeping-bed-making-hansa-management.jpg') }}" fetchpriority="high">
     <link rel="preload" as="font" type="font/woff" href="{{ asset('fonts/AvenirLTStd-Roman.woff') }}" crossorigin>
-    {{-- Critical first-paint CSS (mirrors resources/css/app.css): prevents hero
-         content flashing under the absolute header before the bundle arrives. --}}
     <style>
         #header{position:relative;z-index:50;background:#fff}
-        body.has-hero.header_transparent #header{position:absolute;top:0;left:0;right:0;background:rgba(255,255,255,.72)}
-        body.header_sticky #header,body.has-hero.header_transparent.header_sticky #header{position:fixed;left:0;top:0;right:0;width:100%;background:#fff}
+        body.has-hero.header_transparent #header{background:rgba(255,255,255,.72)}
+        body.header_sticky #header{background:#fff;box-shadow:0 2px 10px rgba(0,46,91,.12)}
+        body.has-hero.header_transparent.header_sticky #header{background:#fff}
+        @media(min-width:1025px){#header{position:sticky;top:0}#header .header_top{height:105px}html{scroll-padding-top:105px}body.has-hero #main-content{margin-top:-105px}}
         .home-hero{position:relative;height:clamp(560px,92vh,880px);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#3a3a3a}
         .home-hero__slides{position:absolute;inset:0}
         .home-hero__slide{position:absolute;inset:0;opacity:0}

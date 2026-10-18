@@ -83,11 +83,91 @@
 
 /* ============ Header replica (Consulting header_style_2 + transparent + sticky) ============ */
 
-/* Default (no hero): solid white bar, navy links — always readable */
+/* Height of the desktop sticky bar. Used for the hero offset and scroll padding. */
+:root {
+    --hansa-header-h: 105px;
+}
+
+/* Default (no hero): solid white bar, navy links — always readable.
+   On desktop the bar is a real CSS `position: sticky` element (see the
+   min-width: 1025px block below). The browser pins it by itself, so a reload at
+   any scroll offset renders the correct header on the very first paint: there is
+   no JavaScript absolute→fixed swap and no `body` padding racing the browser's
+   scroll restoration. */
 #header {
     position: relative;
     z-index: 50;
     background: #fff;
+}
+
+@media (min-width: 1025px) {
+    #header {
+        position: sticky;
+        top: 0;
+        /* The scrolled state is paint-only, so it can only ever fade — it can
+           never move the bar's contents. */
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* Fixed bar height, so the compact "scrolled" styling never changes the
+       header's outer box — toggling the state cannot shift the layout. */
+    #header .header_top {
+        height: var(--hansa-header-h);
+    }
+
+    /* In-page anchors and the rail links land below the pinned bar, not under it. */
+    html {
+        scroll-padding-top: var(--hansa-header-h);
+    }
+
+    /* Hero pages: start the hero at the very top, visually under the translucent
+       bar, while `position: sticky` keeps the bar pinned as the hero scrolls. */
+    body.has-hero #main-content {
+        margin-top: calc(-1 * var(--hansa-header-h));
+    }
+}
+
+/* Scroll-driven scrolled state (progressive enhancement).
+   The engine derives the bar's scrolled styling from the scroll offset itself,
+   so a reload at ANY scroll position paints the correct bar on the very first
+   frame — there is no JS-timing window in which the bar can visibly pop.
+   Engines without scroll-driven animations skip this block and fall back to the
+   `body.header_sticky` class below, smoothed by the transition above. */
+@supports (animation-timeline: scroll(root)) {
+    @media (min-width: 1025px) {
+        #header {
+            animation-name: hansa-header-shadow;
+            animation-duration: auto;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
+            animation-timeline: scroll(root);
+            animation-range: 0 160px;
+        }
+
+        body.has-hero.header_transparent #header {
+            animation-name: hansa-header-hero;
+        }
+    }
+}
+
+@keyframes hansa-header-shadow {
+    from {
+        box-shadow: 0 2px 10px rgba(0, 46, 91, 0);
+    }
+    to {
+        box-shadow: 0 2px 10px rgba(0, 46, 91, 0.12);
+    }
+}
+
+@keyframes hansa-header-hero {
+    from {
+        background-color: rgba(255, 255, 255, 0.72);
+        box-shadow: 0 2px 10px rgba(0, 46, 91, 0);
+    }
+    to {
+        background-color: #ffffff;
+        box-shadow: 0 2px 10px rgba(0, 46, 91, 0.12);
+    }
 }
 
 #header .top_nav_wrapper .main_menu_nav > li > a {
@@ -102,10 +182,6 @@ body {
 
 /* Hero mode: translucent light bar over the bright slider (scroll → solid white sticky bar) */
 body.has-hero.header_transparent #header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
     background: rgba(255, 255, 255, 0.72);
 }
 
@@ -182,6 +258,7 @@ body.has-hero.header_transparent #header .top_nav_wrapper .main_menu_nav > li.cu
     text-decoration: none;
     white-space: nowrap;
     padding: 10px 15px;
+    transition: color 0.3s ease;
 }
 
 body.header_sticky #header .top_nav_wrapper .main_menu_nav > li > a {
@@ -230,38 +307,27 @@ body.header_sticky #header .top_nav_wrapper .main_menu_nav > li > a {
     color: #002e5b;
 }
 
-/* Sticky state: solid white bar pinned to top */
+/* Scrolled state: solid white bar + shadow. Geometry is handled by
+   `position: sticky`; this class is purely cosmetic (paint only), so toggling it
+   can never shift the layout. */
 body.header_sticky #header {
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: auto;
-    width: 100%;
     background: #fff;
     box-shadow: 0 2px 10px rgba(0, 46, 91, 0.12);
 }
 
-body.header_sticky #header .header_top {
-    padding-top: 0;
-}
+/* NOTE: the scrolled state must never change the header's geometry or its
+   children's box sizes. The parent logo (`.header_socials img`, the UNIQUE
+   GROUP mark) used to shrink 55px→40px here; because the right-hand cell is
+   right-aligned, that reflow pushed the whole nav ~26px sideways on every
+   scroll (and again ~100ms after a reload, when JS applied the class), which
+   read as a "flash". The bar height is fixed, so the shrink bought nothing —
+   it is intentionally gone. */
 
-body.header_sticky #header .header_socials img {
-    height: 40px !important;
-    margin-top: 0 !important;
-}
-
-/* Homepage hero + sticky combined: keep the bar pinned white on scroll.
-   (Higher specificity than the translucent hero rule above.) */
+/* Homepage hero + sticky combined: pin the bar white on scroll.
+   (Higher specificity than the translucent hero rule above; the shadow comes
+   from the generic header_sticky rule.) */
 body.has-hero.header_transparent.header_sticky #header {
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: auto;
-    width: 100%;
     background: #fff;
-    box-shadow: 0 2px 10px rgba(0, 46, 91, 0.12);
 }
 
 /* Mobile header — exact old-site panel (theme dark #090f00 + yellow #fcb000) */

@@ -1,39 +1,17 @@
 import './bootstrap';
 import { initConsent } from './consent';
 
+/* The header is a real CSS `position: sticky` element (see app.css), so it is
+   already pinned correctly on the first paint — there is no geometry to manage
+   here. This only flips the cosmetic "scrolled" styling (solid background and
+   shadow), which cannot shift the layout. */
 function initStickyHeader() {
-    const header = document.querySelector('#header');
-
-    const sync = () => {
-        const sticky = window.scrollY > 80;
-        const was = document.body.classList.contains('header_sticky');
-        if (sticky === was) return;
-        const wasInFlow =
-            header &&
-            getComputedStyle(header).position !== 'fixed' &&
-            getComputedStyle(header).position !== 'absolute';
-        document.body.classList.toggle('header_sticky', sticky);
-        if (sticky && wasInFlow && header && getComputedStyle(header).position === 'fixed') {
-            document.body.style.paddingTop = `${header.getBoundingClientRect().height}px`;
-        } else {
-            document.body.style.paddingTop = '';
-        }
-    };
-
     const onScroll = () => {
-        const sticky = window.scrollY > 80;
-        if (sticky === document.body.classList.contains('header_sticky')) return;
-        sync();
+        document.body.classList.toggle('header_sticky', window.scrollY > 80);
     };
+
     document.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', () => {
-        if (document.body.classList.contains('header_sticky') && header && getComputedStyle(header).position === 'fixed') {
-            document.body.style.paddingTop = `${header.getBoundingClientRect().height}px`;
-        } else {
-            document.body.style.paddingTop = '';
-        }
-    });
-    sync();
+    onScroll();
 }
 
 function initMobileMenu() {

@@ -11,7 +11,10 @@
 
                 <div class="header_socials">
                     @if (\App\Support\Settings::filled('parent_url'))
-                        <a target="_blank" rel="noopener" href="{{ \App\Support\Settings::get('parent_url') }}"><img src="{{ asset('images/v4.gif') }}" style="height:55px;margin-top: -10px;" alt="{{ \App\Support\Settings::get('parent_name') }}" /></a>
+                        {{-- width/height give the GIF a known aspect ratio, so the
+                             right-aligned nav does not jump sideways while the file
+                             loads (CLS). 556x325 intrinsic -> 94x55 at height:55px. --}}
+                        <a target="_blank" rel="noopener" href="{{ \App\Support\Settings::get('parent_url') }}"><img src="{{ asset('images/v4.gif') }}" width="556" height="325" style="height:55px;width:auto;margin-top: -10px;" alt="{{ \App\Support\Settings::get('parent_name') }}" /></a>
                     @endif
                 </div>
             </div>

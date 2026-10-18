@@ -14,17 +14,6 @@
     </a>
 
     @include('partials.header')
-    <script>
-    (function () {
-        var header = document.getElementById('header');
-        var sticky = window.scrollY > 80;
-        var wasInFlow = header && getComputedStyle(header).position !== 'fixed' && getComputedStyle(header).position !== 'absolute';
-        document.body.classList.toggle('header_sticky', sticky);
-        if (sticky && wasInFlow && header && getComputedStyle(header).position === 'fixed') {
-            document.body.style.paddingTop = header.getBoundingClientRect().height + 'px';
-        }
-    })();
-    </script>
 
     <main id="main-content" class="flex-1">
         @include('partials.breadcrumbs', ['breadcrumbs' => $breadcrumbs])
