@@ -24,7 +24,7 @@
 <section class="home-section" aria-label="Our commitments">
     <div class="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 md:grid-cols-3">
         @foreach ($commitments as $commitment)
-            <article class="policy-card" tabindex="0">
+            <article class="policy-card" tabindex="0" data-reveal>
                 <img src="{{ $commitment['src'] }}" alt="{{ $commitment['alt'] }}"
                      width="600" height="400" loading="lazy" decoding="async" class="policy-card__img">
                 <div class="policy-card__overlay">

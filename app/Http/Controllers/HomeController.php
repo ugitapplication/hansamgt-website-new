@@ -423,7 +423,7 @@ class HomeController extends Controller
      * Both views used to carry their own copy of the same four offices, so the
      * two lists could — and did — drift apart. There is now one source.
      *
-     * @return array<int, array{title: string, address: string, phone: ?string, landline: ?string, email: ?string}>
+     * @return array<int, array{title: string, address: string, phone: ?string, landline: ?string, email: ?string, latitude: float|null, longitude: float|null}>
      */
     private function offices(): array
     {
@@ -438,6 +438,8 @@ class HomeController extends Controller
                         'phone' => $office->phone,
                         'landline' => $office->landline,
                         'email' => $office->email,
+                        'latitude' => $office->latitude,
+                        'longitude' => $office->longitude,
                     ])
                     ->values()
                     ->all();
@@ -455,7 +457,7 @@ class HomeController extends Controller
      * Kept so the contact page and the homepage section still render before
      * `php artisan migrate` and the OfficeSeeder have run.
      *
-     * @var array<int, array{title: string, address: string, phone: ?string, landline: ?string, email: ?string}>
+     * @var array<int, array{title: string, address: string, phone: ?string, landline: ?string, email: ?string, latitude: null, longitude: null}>
      */
     private const DEFAULT_OFFICES = [
         [
@@ -464,6 +466,8 @@ class HomeController extends Controller
             'phone' => '+8801708800870',
             'landline' => '88 02 222285116-123',
             'email' => 'info@hansamgt.com',
+            'latitude' => null,
+            'longitude' => null,
         ],
         [
             'title' => 'Service Booth (Midtown)',
@@ -471,6 +475,8 @@ class HomeController extends Controller
             'phone' => null,
             'landline' => '88 02 48322812',
             'email' => null,
+            'latitude' => null,
+            'longitude' => null,
         ],
         [
             'title' => 'Service Booth (Uttara)',
@@ -478,6 +484,8 @@ class HomeController extends Controller
             'phone' => null,
             'landline' => null,
             'email' => null,
+            'latitude' => null,
+            'longitude' => null,
         ],
         [
             'title' => 'Service Booth (Dhanmondi)',
@@ -485,6 +493,8 @@ class HomeController extends Controller
             'phone' => null,
             'landline' => null,
             'email' => null,
+            'latitude' => null,
+            'longitude' => null,
         ],
     ];
 }

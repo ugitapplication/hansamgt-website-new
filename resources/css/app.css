@@ -3191,3 +3191,190 @@ ul.svc-list li {
 .form-privacy--panel a:hover {
     color: #fde428;
 }
+
+/* ============ Scroll reveal (homepage pilot) ============
+   app.js adds the hidden "reveal-pending" state and the animating "reveal-ready"
+   state; neither is in the initial HTML, so the cards stay visible when
+   JavaScript is disabled or fails, and cards already on screen at load are
+   never hidden. The transition lives on the reveal state alone, so the initial
+   hide is instant (no fade-out flash) and only opacity/transform animate —
+   nothing reflows. */
+[data-reveal] {
+    --reveal-y: 18px;
+}
+
+[data-reveal].reveal-pending {
+    opacity: 0;
+    transform: translateY(var(--reveal-y));
+}
+
+/* Shorter travel on small screens, per the audit's motion spec. */
+@media (max-width: 640px) {
+    [data-reveal] {
+        --reveal-y: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    [data-reveal].reveal-ready {
+        transition: opacity 0.62s cubic-bezier(0.22, 0.61, 0.36, 1),
+            transform 0.62s cubic-bezier(0.22, 0.61, 0.36, 1);
+        transition-delay: var(--reveal-delay, 0ms);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-reveal].reveal-pending {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ============ Office map (Google Maps embed, click-to-load) ============
+   One card per verified office. Every frame reserves the map's height, so
+   revealing the embed cannot shift the page, and no request reaches Google
+   until the visitor presses the button, because the iframe ships without a
+   src (see resources/js/office-map.js). Nothing here animates, so
+   prefers-reduced-motion needs no special case. */
+.office-map {
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-block: clamp(1.5rem, 4vw, 3rem);
+    padding-inline: 1rem;
+}
+
+/* Matches the px-6 the rest of the site switches to at the sm breakpoint. */
+@media (min-width: 640px) {
+    .office-map {
+        padding-inline: 1.5rem;
+    }
+}
+
+/* The contact page renders this component inside .page-wrap, which already
+   supplies the container inset, so drop the extra padding there and let the
+   grid line up with the office cards above it. */
+.page-wrap .office-map {
+    padding-inline: 0;
+}
+
+/* auto-fit keeps a single verified office full width and turns four offices
+   into as many columns as the viewport allows, down to one on a phone. */
+.office-map__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: 1.25rem;
+}
+
+.office-map__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    min-width: 0;
+}
+
+.office-map__name {
+    margin: 0;
+    font-weight: 700;
+    color: #002e5b;
+}
+
+.office-map__frame {
+    position: relative;
+    height: clamp(200px, 26vw, 280px);
+    overflow: hidden;
+    background: #e6eff0;
+}
+
+.office-map__gate {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+/* The gate sets display:flex, which would otherwise win over the user agent's
+   [hidden] rule. */
+.office-map__gate[hidden] {
+    display: none;
+}
+
+.office-map__note {
+    margin: 0;
+    max-width: 42ch;
+    font-size: 0.85rem;
+    color: #3d3d3d;
+}
+
+.office-map__load {
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0.7rem 1.7rem;
+    color: #002e5b;
+    background: #fcb000;
+    border: 2px solid #fcb000;
+}
+
+.office-map__load:hover {
+    background: #fde428;
+    border-color: #fde428;
+}
+
+.office-map__load:focus-visible {
+    outline: 3px solid #002e5b;
+    outline-offset: 2px;
+}
+
+.office-map__load[disabled] {
+    opacity: 0.6;
+    cursor: progress;
+}
+
+/* The map fills the reserved frame. Without an explicit height the iframe
+   would fall back to the user agent's 150px and the page would jump when the
+   visitor activates it. */
+.office-map__embed {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.office-map__embed[hidden] {
+    display: none;
+}
+
+.office-map__embed:focus-visible {
+    outline: 3px solid #002e5b;
+    outline-offset: -3px;
+}
+
+/* Stays in the accessibility tree while empty, so the live region is announced
+   when it fills in, and keeps its line reserved so filling it cannot nudge the
+   page. */
+.office-map__status {
+    min-height: 1.3em;
+    margin: 0;
+    font-size: 0.85rem;
+    color: #3d3d3d;
+}
+
+.office-map__status--error {
+    color: #b00020;
+    font-weight: 600;
+}
+
+.office-map__links {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.office-map__links a {
+    color: #002e5b;
+}

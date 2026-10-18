@@ -59,6 +59,7 @@
                 </article>
             @endforeach
         </div>
+        @include('partials.office-map', ['offices' => $offices ?? []])
         <div class="contact-formwrap">
             <h2>Contact Us</h2>
             @if (session('contact_success'))

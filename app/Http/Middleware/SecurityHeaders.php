@@ -57,6 +57,23 @@ class SecurityHeaders
         $script = "'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com";
         $style = "'self' 'unsafe-inline'";
         $connect = "'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com";
+        $img = ["'self'", 'data:', 'https://www.google-analytics.com', 'https://www.googletagmanager.com'];
+
+        // The office map is a Google Maps iframe. The keyless embed URL needs
+        // exactly one extra origin, derived from the same configuration value
+        // the embed URL is built from — so the policy and the iframe cannot
+        // drift apart. No wildcard, no sub-domains, and no extra origin at all
+        // when the feature is switched off. 'self' is kept because it is what
+        // the previous frame-src fallback (default-src) already allowed.
+        $frame = ["'self'"];
+
+        if (config('site.maps.enabled')) {
+            $googleOrigin = $this->origin((string) config('site.maps.endpoint'));
+
+            if ($googleOrigin !== null) {
+                $frame[] = $googleOrigin;
+            }
+        }
 
         // Filament / Livewire / Alpine evaluate expressions at runtime, which
         // needs 'unsafe-eval'. The admin panel is private and noindexed, so the
@@ -79,12 +96,27 @@ class SecurityHeaders
             "base-uri 'self'",
             "object-src 'none'",
             "frame-ancestors 'self'",
+            'frame-src '.implode(' ', array_unique($frame)),
             "form-action 'self'",
-            "img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com",
+            'img-src '.implode(' ', array_unique($img)),
             "font-src 'self' data:",
             'script-src '.$script,
             'style-src '.$style,
             'connect-src '.$connect,
         ]);
+    }
+
+    /**
+     * The scheme://host origin of a URL, for use in a CSP source list.
+     */
+    protected function origin(string $url): ?string
+    {
+        $parts = parse_url($url);
+
+        if (! isset($parts['scheme'], $parts['host'])) {
+            return null;
+        }
+
+        return $parts['scheme'].'://'.$parts['host'];
     }
 }

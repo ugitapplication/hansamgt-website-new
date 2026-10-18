@@ -76,6 +76,23 @@ class OfficeResource extends Resource
                         ->helperText('Inactive offices are hidden from the public site.')
                         ->default(true),
                 ]),
+            Section::make('Map location')
+                ->description('Used only by the office map on the homepage and contact page. Leave both fields empty until the location has been checked against the real building — an office appears on the map only when both coordinates are filled in, and out-of-range values are rejected. The four coordinate pairs published on the old website were identical placeholders, not real positions, so they must never be reused.')
+                ->columns(2)
+                ->components([
+                    TextInput::make('latitude')
+                        ->label('Latitude')
+                        ->numeric()
+                        ->minValue(-90)
+                        ->maxValue(90)
+                        ->helperText('Decimal degrees, WGS 84, seven places. Copy the pair for the exact building from Google Maps.'),
+                    TextInput::make('longitude')
+                        ->label('Longitude')
+                        ->numeric()
+                        ->minValue(-180)
+                        ->maxValue(180)
+                        ->helperText('Decimal degrees, WGS 84, seven places. Copy the pair for the exact building from Google Maps.'),
+                ]),
         ]);
     }
 

@@ -1,5 +1,6 @@
 import './bootstrap';
 import { initConsent } from './consent';
+import { initOfficeMaps } from './office-map';
 
 /* The header is a real CSS `position: sticky` element (see app.css), so it is
    already pinned correctly on the first paint — there is no geometry to manage
@@ -88,8 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initHomeCarousels();
     initSloganParticles();
     initCountUp();
+    initScrollReveal();
     initRailLinks();
     initConsent();
+    initOfficeMaps();
 });
 
 function initHomeHero() {
@@ -411,4 +414,56 @@ function initCountUp() {
         });
     }, { threshold: 0.4 });
     els.forEach((el) => io.observe(el));
+}
+
+/* Homepage scroll reveal: one shared IntersectionObserver fades and lifts the
+   [data-reveal] cards as they enter the viewport, then stops observing each one
+   so a card animates only once. The hidden "reveal-pending" class is added here
+   and never in the HTML, so the content stays visible with JavaScript disabled
+   or when IntersectionObserver is unavailable. Cards already on screen at load
+   are left untouched, so the first paint cannot flash. Same shape as the
+   initCountUp() observer above. */
+function initScrollReveal() {
+    const els = Array.from(document.querySelectorAll('[data-reveal]'));
+    if (!els.length) return;
+
+    const showAll = () => els.forEach((el) => el.classList.remove('reveal-pending'));
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+        showAll();
+        return;
+    }
+
+    try {
+        const io = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('reveal-ready');
+                entry.target.classList.remove('reveal-pending');
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+
+        /* Cards sharing a container (a grid) stagger in DOM order, capped so a
+           long row never waits more than 350ms for its last card. */
+        const counted = new Map();
+
+        els.forEach((el) => {
+            const parent = el.parentElement;
+            const index = counted.get(parent) || 0;
+            counted.set(parent, index + 1);
+            el.style.setProperty('--reveal-delay', `${Math.min(index * 70, 350)}ms`);
+
+            const rect = el.getBoundingClientRect();
+            const onScreen = rect.top < window.innerHeight && rect.bottom > 0;
+            if (onScreen) return;
+
+            el.classList.add('reveal-pending');
+            io.observe(el);
+        });
+    } catch (error) {
+        /* Whatever happens, never leave content hidden. */
+        showAll();
+    }
 }

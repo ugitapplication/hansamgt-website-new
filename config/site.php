@@ -81,4 +81,37 @@ return [
 
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Office map (Google Maps embed)
+    |--------------------------------------------------------------------------
+    |
+    | The map is only rendered when at least one office has a verified
+    | latitude/longitude pair (admin → Offices). With no verified coordinates
+    | nothing is output at all, so the page can never show an invented or
+    | approximate location. The legacy site's coordinates were placeholders and
+    | are deliberately not reused; see docs/maps-audit-and-plan.md.
+    |
+    | OFFICE_MAP_ENABLED=false switches the whole feature off and removes the
+    | Google iframe origin from the Content-Security-Policy.
+    |
+    | 'endpoint' is the keyless Google Maps embed URL — the same one Google's
+    | own "Share → Embed a map" produces. It needs no API key, no billing
+    | account and no secret in this repository, and no JavaScript library: the
+    | map is an ordinary iframe, and the address bar of that iframe is built by
+    | App\Support\OfficeMap. Its origin is the only frame-src source the
+    | middleware adds.
+    |
+    | 'zoom' is clamped to 1…21 by OfficeMap; 'language' is stripped to
+    | letters and hyphens, and both are only ever emitted as query parameters.
+    |
+    */
+
+    'maps' => [
+        'enabled' => env('OFFICE_MAP_ENABLED', true),
+        'endpoint' => env('OFFICE_MAP_ENDPOINT', 'https://www.google.com/maps'),
+        'zoom' => (int) env('OFFICE_MAP_ZOOM', 16),
+        'language' => (string) env('OFFICE_MAP_LANGUAGE', 'en'),
+    ],
+
 ];

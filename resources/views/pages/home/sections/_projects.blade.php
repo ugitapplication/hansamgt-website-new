@@ -19,7 +19,7 @@
         <p class="mt-2 text-left"><a class="home-viewall" href="{{ url('projects') }}">+ view all</a></p>
         <div class="mt-8 grid grid-cols-1 gap-[30px] sm:grid-cols-2 lg:grid-cols-4">
             @foreach ($projects as $project)
-                <article class="project-card">
+                <article class="project-card" data-reveal>
                     <div class="project-card__media">
                         <a href="{{ url('projects') }}" aria-label="{{ $project['title'] }}">
                             <img src="{{ $project['src'] }}" alt="{{ $project['alt'] }}"
