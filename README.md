@@ -1,54 +1,74 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🏢 HANSA Management Ltd. — Corporate Website
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[![Laravel](https://img.shields.io/badge/Backend-Laravel%2012-red)](https://laravel.com)
+[![Filament](https://img.shields.io/badge/Admin-Filament%20v4-orange)](https://filamentphp.com)
+[![Tailwind](https://img.shields.io/badge/Frontend-Tailwind%20CSS%204.0-blue)](https://tailwindcss.com)
+[![PHP](https://img.shields.io/badge/PHP-8.2+-purple)](https://php.net)
 
-# HANSA Management Ltd. Website
-
-This is the official corporate website for **HANSA Management Ltd.**, built with Laravel 12 and Filament v4.
-
-## 📚 Technical Documentation
-
-This project contains extensive, source-verified technical documentation. You can find the complete guide in the `docs/technical/` directory.
-
-### Quick Links
-- 📖 **[Documentation Index](docs/technical/00-index.md)** — The starting point for all technical docs.
-- 🚀 **[Local Development Setup](docs/technical/04-local-development-setup.md)** — How to get the site running on your machine.
-- 🛠️ **[Admin Panel Reference](docs/technical/11-admin-panel-reference.md)** — Guide for managing site content.
-- 🗺️ **[Routing & URL Map](docs/technical/06-routing-and-url-map.md)** — Overview of all public and legacy routes.
-- 🛡️ **[Security & Hardening](docs/technical/17-security-and-hardening.md)** — Details on security implementations.
+The official corporate digital presence for **HANSA Management Ltd.**, a leader in Hospitality and Facility Management services. This platform serves as a professional showcase of the company's expertise in Hospitality, Security, Cleaning, and MEP (Mechanical, Electrical, and Plumbing) services.
 
 ---
 
-## 🛠 Getting Started
+## 🚀 Quick Start
+
+Get the development environment up and running in minutes using the built-in automation scripts.
 
 ### Prerequisites
-- PHP 8.2+
-- Composer
-- Node.js & NPM
-- MySQL or SQLite
+- **PHP 8.2+**
+- **Composer**
+- **Node.js & NPM**
+- **MySQL** or **SQLite**
 
-### Installation
-1. Clone the repository.
-2. Run the automated setup script:
-   ```bash
-   composer setup
-   ```
-3. Start the development server:
-   ```bash
-   composer dev
-   ```
-4. Access the site at `http://127.0.0.1:8000` and the admin panel at `http://127.0.0.1:8000/admin`.
+### Local Installation
+```bash
+# 1. Clone the repository
+git clone <your-repo-url>
+cd hansamgt-website-new
 
-## 🛠 Tech Stack
-- **Backend:** Laravel 12, PHP 8.2
-- **Admin Panel:** Filament v4
-- **Frontend:** Tailwind CSS 4.0, Vite 7.0
-- **Templating:** Laravel Blade
+# 2. Run the automated setup (Installs dependencies, configs .env, migrates DB)
+composer setup
 
-## License
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# 3. Launch the development environment
+composer dev
+```
+
+### Access the Site
+- **Frontend:** [http://127.0.0.1:8000](http://127.0.0.1:8000)
+- **Admin CMS:** [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)
+
+---
+
+## 📚 Comprehensive Documentation
+
+This repository contains a full-scale technical audit and documentation set. For detailed implementation details, refer to the `docs/technical/` directory.
+
+### Key Documentation Links:
+- 📑 **[Technical Index](docs/technical/00-index.md)** — The master map of all documentation.
+- 🛠️ **[Local Development Setup](docs/technical/04-local-development-setup.md)** — Detailed environment configuration.
+- ⚙️ **[Admin Panel Reference](docs/technical/11-admin-panel-reference.md)** — How to manage projects, team, and content.
+- 🛣️ **[Routing & URL Map](docs/technical/06-routing-and-url-map.md)** — Detailed mapping of all site URLs and legacy 301 redirects.
+- 🛡️ **[Security & Hardening](docs/technical/17-security-and-hardening.md)** — Overview of security measures and CSP.
+- 📈 **[SEO & Structured Data](docs/technical/15-seo-and-structured-data.md)** — Implementation of JSON-LD and SEO strategies.
+
+---
+
+## 🛠 Technical Architecture
+
+### Core Stack
+- **Backend:** Laravel 12 (PHP 8.2) — Providing a robust, scalable foundation.
+- **Administration:** Filament v4 — A high-performance TALL stack admin panel for seamless content management.
+- **Frontend:** Tailwind CSS 4.0 & Vite 7.0 — Ensuring a modern, responsive, and lightning-fast user experience.
+- **Templating:** Laravel Blade — For clean and maintainable frontend components.
+
+### Key Features
+- **Dynamic CMS:** Fully manageable Hero slides, Client lists, Project galleries, and Team profiles.
+- **SEO Optimized:** Implementation of advanced structured data (Schema.org) and clean URL slugs.
+- **Legacy Support:** Specialized middleware to handle 301 redirects from the previous CodeIgniter site.
+- **Lead Generation:** Integrated contact system with rate-limiting and admin notification.
+
+---
+
+## 👥 Contribution & Maintenance
+Please refer to the **[Known Issues & Roadmap](docs/technical/21-known-issues-decisions-and-roadmap.md)** before starting any new feature development.
+
+© 2026 HANSA Management Ltd. All rights reserved.
