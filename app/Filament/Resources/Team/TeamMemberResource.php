@@ -37,11 +37,11 @@ class TeamMemberResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
-    protected static ?string $navigationLabel = 'Team';
+    protected static ?string $navigationLabel = 'Management';
 
     protected static ?string $modelLabel = 'team member';
 
-    protected static ?string $pluralModelLabel = 'Team';
+    protected static ?string $pluralModelLabel = 'Management';
 
     protected static ?string $recordTitleAttribute = 'name';
 
