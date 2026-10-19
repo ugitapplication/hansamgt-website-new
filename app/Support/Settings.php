@@ -3,28 +3,13 @@
 namespace App\Support;
 
 use App\Models\Setting;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
-/**
- * Reads the editable site settings held in the `settings` table.
- *
- * Every key has a default in config/site.php, so the site behaves exactly as it
- * did before the settings module existed whenever the table is empty, not yet
- * migrated, or unreachable. Nothing here ever throws into a page render.
- */
+
 class Settings
 {
     /**
-     * Keys whose default is a real value but which the panel may legitimately
-     * empty.
-     *
-     * For these, an empty stored value means "intentionally blank" rather than
-     * "fall back to the default" — otherwise clearing the field in the panel
-     * would silently restore the very value it was meant to remove (the social
-     * profiles and the fax number both have a real default).
-     *
-     * Image settings are deliberately *not* here: their default is the bundled
-     * HANSA logo, and clearing an upload should go back to it.
      *
      * @var list<string>
      */
@@ -43,6 +28,16 @@ class Settings
     ];
 
     /**
+     * The shared-cache key for the whole settings table.
+     */
+    private const CACHE_KEY = 'site-settings:v1';
+
+    /**
+     * Safety-net lifetime, in seconds.
+     */
+    private const CACHE_TTL = 86400;
+
+    /**
      * Raw stored values, read once per request.
      *
      * @var array<string, string|null>|null
@@ -58,33 +53,58 @@ class Settings
     private static array $urlCache = [];
 
     /**
-     * Every stored value, keyed by setting name.
-     *
      * @return array<string, string|null>
      */
     public static function all(): array
     {
-        if (self::$cache === null) {
-            try {
-                /** @var array<string, string|null> $values */
-                $values = Setting::query()->pluck('value', 'key')->all();
-                self::$cache = $values;
-            } catch (\Throwable) {
-                // Table not migrated yet, or the database is unreachable. The
-                // defaults in config/site.php take over.
-                self::$cache = [];
-            }
+        if (self::$cache !== null) {
+            return self::$cache;
         }
 
-        return self::$cache;
+        $cached = self::readCached();
+
+        if ($cached !== null) {
+            return self::$cache = $cached;
+        }
+
+        try {
+            /** @var array<string, string|null> $values */
+            $values = Setting::query()->pluck('value', 'key')->all();
+        } catch (\Throwable) {
+
+            return self::$cache = [];
+        }
+
+        self::writeCached($values);
+
+        return self::$cache = $values;
+    }
+
+    private static function readCached(): ?array
+    {
+        try {
+            $cached = Cache::get(self::CACHE_KEY);
+        } catch (\Throwable) {
+            return null;
+        }
+
+        return is_array($cached) ? $cached : null;
+    }
+
+    /**
+     * @param  array<string, string|null>  $values
+     */
+    private static function writeCached(array $values): void
+    {
+        try {
+            Cache::put(self::CACHE_KEY, $values, self::CACHE_TTL);
+        } catch (\Throwable) {
+            // Ignored: the next request reads the database again instead.
+        }
     }
 
     /**
      * A single setting: the stored value, otherwise the configured default.
-     *
-     * A key that has been cleared in the panel resolves to null for the
-     * clearable keys (see CLEARABLE_KEYS), and to its default for everything
-     * else.
      */
     public static function get(string $key, ?string $default = null): ?string
     {
@@ -176,22 +196,18 @@ class Settings
         self::flush();
     }
 
-    /**
-     * Drop the per-request cache (called after any write).
-     */
     public static function flush(): void
     {
         self::$cache = null;
         self::$urlCache = [];
+
+        try {
+            Cache::forget(self::CACHE_KEY);
+        } catch (\Throwable) {
+            //
+        }
     }
 
-    /**
-     * A web-accessible URL for an image setting.
-     *
-     * Uploads made from the panel live on the "public" disk
-     * (storage/app/public); images shipped with the application live under
-     * public/ directly, e.g. "images/hansa_logo_new.png". Both resolve here.
-     */
     public static function imageUrl(string $key): string
     {
         $path = trim((string) self::get($key));
@@ -217,7 +233,6 @@ class Settings
 
     /**
      * The primary phone number in the local display format used in the markup
-     * (no country code), derived from the single stored value.
      */
     public static function phoneDisplay(): ?string
     {
@@ -240,11 +255,25 @@ class Settings
         return $phone === null ? null : 'tel:'.preg_replace('/[^\d+]/', '', $phone);
     }
 
+    public static function whatsappHref(): ?string
+    {
+        $number = self::get('whatsapp');
+
+        if ($number === null) {
+            return null;
+        }
+
+        $digits = (string) preg_replace('/[^0-9]/', '', $number);
+        $digits = (string) preg_replace('/^00/', '', $digits);
+
+        if (strlen($digits) < 8) {
+            return null;
+        }
+
+        return 'https://wa.me/'.$digits;
+    }
+
     /**
-     * The social profiles that actually have a URL, in display order.
-     *
-     * Profiles with no URL are omitted entirely, so a placeholder link can never
-     * be published by accident.
      *
      * @return array<int, array{key: string, label: string, url: string}>
      */

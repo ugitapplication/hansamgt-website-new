@@ -47,3 +47,51 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+# ---------------------------------------------------------------------------
+# Static asset caching.
+#
+# Scoped by URL path only. HTML/PHP responses, the contact form, the
+# authenticated admin panel and error responses are never given a
+# Cache-Control header here, so nothing that varies per visitor/session is
+# shared-cached.
+#
+# Prerequisites: mod_headers and mod_setenvif (both standard in Apache 2.4
+# builds). Each block is guarded, so a host without them skips these rules
+# instead of returning a 500.
+#
+# `Header set` (not `Header always set`) applies to successful responses only,
+# so 4xx/5xx — including the 403 from `Options -Indexes` — never receive these
+# headers.
+#
+# NOT VERIFIED IN PRODUCTION: this file is the only web-server configuration
+# tracked in this repository (there is no Nginx/Plesk config here). If the host
+# runs Nginx, or ignores .htaccess, these rules have no effect until configured
+# on the host. Confirm with `curl -I` against the real domain.
+# ---------------------------------------------------------------------------
+<IfModule mod_headers.c>
+    <IfModule mod_setenvif.c>
+        # 1) Vite build output. File names carry a content hash
+        #    (public/build/manifest.json -> assets/app-<hash>.css|js), so every
+        #    build produces a brand-new URL. Safe to cache for a year, immutably.
+        SetEnvIf Request_URI "^/build/" hansa_hashed_asset
+
+        # 2) Replaceable assets with plain, unhashed names: public/images/** and
+        #    the legacy fonts directly under public/fonts/**. They are
+        #    overwritten in place, so they must NOT be immutable and must not be
+        #    held for a year. Seven days bounds how long a replaced file can stay
+        #    stale for returning visitors; rename the file (or append ?v=) to
+        #    refresh it immediately.
+        SetEnvIf Request_URI "^/(images|fonts)/" hansa_replaceable_asset
+
+        # 3) Filament's published admin assets. Their URLs always carry a
+        #    ?v=<package version> query (vendor/filament/support/src/Assets/
+        #    Css.php, Js.php), so a Filament upgrade yields a new URL and a 30-day
+        #    lifetime is safe.
+        SetEnvIf Request_URI "^/(css|js)/" hansa_versioned_asset
+
+        Header set Cache-Control "public, max-age=31536000, immutable" env=hansa_hashed_asset
+        Header set Cache-Control "public, max-age=604800" env=hansa_replaceable_asset
+        Header set Cache-Control "public, max-age=2592000" env=hansa_versioned_asset
+    </IfModule>
+</IfModule>

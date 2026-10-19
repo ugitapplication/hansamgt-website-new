@@ -3378,3 +3378,76 @@ ul.svc-list li {
 .office-map__links a {
     color: #002e5b;
 }
+
+/* ============ Floating WhatsApp button ============
+   Bottom-right click-to-chat link, emitted by
+   partials/whatsapp-float.blade.php only when a usable number is stored and the
+   switch in the panel is on. It is one ordinary link: no JavaScript, no
+   third-party request, and nothing is fetched from WhatsApp until the visitor
+   clicks.
+
+   The z-index sits above the sticky header (50) and the homepage quick-link rail
+   (60) but below the consent banner (70), which is a full-width bar across the
+   bottom of the viewport. That is the same relationship the rail already has
+   with the banner, and it means nothing ever overlaps: the banner measures 108px
+   on a desktop, 164px on a tablet and 236px on a phone, so it is always deeper
+   than the button's top edge (1.25rem + 3.5rem = 76px). While the banner is on
+   screen the button is simply covered, and it appears as soon as the visitor
+   answers the banner. */
+.whatsapp-float {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 65;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 9999px;
+    background-color: #25d366;
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.whatsapp-float:hover {
+    background-color: #1da851;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.whatsapp-float:focus-visible {
+    outline: 3px solid #fcb000;
+    outline-offset: 3px;
+}
+
+.whatsapp-float__icon {
+    width: 1.9rem;
+    height: 1.9rem;
+}
+
+/* A little smaller on a phone, where it must not cover content. */
+@media (max-width: 640px) {
+    .whatsapp-float {
+        right: 1rem;
+        bottom: 1rem;
+        width: 3.25rem;
+        height: 3.25rem;
+    }
+
+    .whatsapp-float__icon {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .whatsapp-float {
+        transition: none;
+    }
+
+    .whatsapp-float:hover {
+        transform: none;
+    }
+}

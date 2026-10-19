@@ -62,6 +62,17 @@ class ManageSettings extends Page
      */
     protected const IMAGE_KEYS = ['logo', 'footer_logo', 'favicon', 'og_image'];
 
+    /**
+     * Settings edited with a switch but stored as "1" / "0".
+     *
+     * The database only holds strings, so the form state has to be cast back to
+     * a real boolean or the switch would be filled from the string "0" — which
+     * is truthy in PHP and would show a switch that is off as on.
+     *
+     * @var list<string>
+     */
+    protected const BOOLEAN_KEYS = ['ga4_enabled', 'whatsapp_enabled'];
+
     public function mount(): void
     {
         $this->form->fill($this->currentValues());
@@ -113,7 +124,7 @@ class ManageSettings extends Page
                                 ->label('WhatsApp number')
                                 ->tel()
                                 ->maxLength(30)
-                                ->helperText('International format, e.g. +8801708800870. Leave empty to hide click-to-chat.'),
+                                ->helperText('International format, e.g. +8801708800870. Leave empty to hide the WhatsApp button.'),
                             TextInput::make('fax')
                                 ->label('Fax')
                                 ->maxLength(50),
@@ -136,6 +147,13 @@ class ManageSettings extends Page
                             TextInput::make('address_country')
                                 ->label('Country code')
                                 ->helperText('Two letters, e.g. BD.'),
+                        ]),
+                    Section::make('WhatsApp button')
+                        ->description('A floating “chat on WhatsApp” button in the bottom-right corner of every public page. It opens a WhatsApp chat with the number set in the Phone section above, and is never shown while that number is empty.')
+                        ->schema([
+                            Toggle::make('whatsapp_enabled')
+                                ->label('Show the floating WhatsApp button')
+                                ->default(true),
                         ]),
                 ]),
 
@@ -379,7 +397,10 @@ class ManageSettings extends Page
             $values[$key] = ($value === null || $value === '') ? $defaults[$key] : $value;
         }
 
-        $values['ga4_enabled'] = filter_var($values['ga4_enabled'] ?? false, FILTER_VALIDATE_BOOL);
+        // Switches carry "1" / "0" in the table but a real boolean in the form.
+        foreach (self::BOOLEAN_KEYS as $key) {
+            $values[$key] = filter_var($values[$key] ?? false, FILTER_VALIDATE_BOOL);
+        }
 
         return $values;
     }

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="page-wrap">
-        <h2 class="page-h1 page-h1--center">Management</h2>
+        <h1 class="page-h1 page-h1--center">Management</h1>
         {{-- Managed under Content → Team. The built-in list below is the
              fallback so the page still renders before the table is seeded. --}}
         @php

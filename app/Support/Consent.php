@@ -5,10 +5,6 @@ namespace App\Support;
 /**
  * Answers "is there anything on this site that needs the visitor's consent?"
  *
- * Used by the layout, the banner, the footer link and the <head> so that the
- * Google Analytics tag, the consent banner and the "Cookie settings" control
- * all switch on and off together.
- *
  * The values come from the settings table (admin panel → Settings → Site
  * Settings) with the defaults in config/site.php and config/analytics.php.
  */
@@ -16,8 +12,6 @@ class Consent
 {
     public static function analyticsEnabled(): bool
     {
-        // Environment-level kill switch. GA4_ENABLED=false removes the tag, the
-        // banner and the footer control entirely, and overrides the panel.
         if (! config('analytics.ga4.enabled')) {
             return false;
         }

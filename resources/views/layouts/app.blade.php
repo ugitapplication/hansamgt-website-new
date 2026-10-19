@@ -22,6 +22,8 @@
 
     @include('partials.footer')
 
+    @include('partials.whatsapp-float')
+
     @include('partials.consent')
 
     @stack('scripts')

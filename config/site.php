@@ -48,6 +48,12 @@ return [
         'phone_primary' => '+8801708800870',
         'phone_emergency' => null,
         'whatsapp' => null,
+        // The floating click-to-chat button (partials/whatsapp-float.blade.php).
+        // The number above is the real gate: with it empty nothing is ever
+        // rendered, so this can safely default to on for the day a number is
+        // entered, and the panel switch turns the button off without having to
+        // delete the number.
+        'whatsapp_enabled' => true,
         'fax' => '88-02-8823392',
         'email' => 'info@hansamgt.com',
         'enquiry_recipient' => 'info@hansamgt.com',

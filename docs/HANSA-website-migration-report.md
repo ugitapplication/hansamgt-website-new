@@ -185,6 +185,51 @@ entries yet.
   or generated links/previews break); restart `serve` after `.env` changes and
   bypass browser cache when verifying 301s (`curl -I`, incognito).
 
+### 8.1 Static asset caching (Apache)
+
+`public/.htaccess` sets path-scoped `Cache-Control` headers for static assets.
+It requires `mod_headers` + `mod_setenvif`; each block is `<IfModule>`-guarded,
+so a host without them skips the rules rather than failing.
+
+| Path | Policy | Why |
+| --- | --- | --- |
+| `/build/**` | `public, max-age=31536000, immutable` | Vite output; file names contain a content hash, so a rebuild changes the URL. |
+| `/css/**`, `/js/**` | `public, max-age=2592000` (30 days) | Filament assets; URLs carry `?v=<package version>`, so an upgrade changes the URL. |
+| `/images/**`, `/fonts/**` | `public, max-age=604800` (7 days) | Tracked files with plain names, overwritten in place — bounded rather than immutable. |
+
+Nothing here applies to HTML/PHP responses, the contact form, the admin panel or
+error responses. `Header set` (not `Header always set`) means 4xx/5xx are never
+given these headers, and every rule is scoped with `env=` so no rule can apply to
+every URL.
+
+> **Unverified in production.** This repository tracks no web-server config other
+> than `public/.htaccess`, so whether these rules are active depends on the host.
+> Check on the real server, e.g.
+> `curl -I https://hansamgt.com/build/assets/app-<hash>.css` — expect
+> `cache-control: public, max-age=31536000, immutable`. If the host runs Nginx or
+> ignores `.htaccess`, the equivalent `location` blocks must be configured there
+> instead (outside this repository).
+
+### 8.2 Production optimization checklist
+
+1. **Build assets:** `npm ci && npm run build` (Vite writes `public/build/`).
+2. **Verify the target environment first:** `php -v` (≥ 8.2), the `.env` values
+   for *that* environment, required PHP extensions (`php -m`), and a clean
+   `php artisan about`.
+3. **Optimize during deploy:** run `php artisan optimize` — it caches config,
+   routes/events and views in one step. Verify afterwards with `php artisan
+   about` and by loading a few pages.
+4. **Test the caches in the intended environment** before relying on them:
+   `config:cache` bakes `.env` values into `bootstrap/cache/config.php` (later
+   `.env` edits appear to do nothing until re-cached), `route:cache` fails on any
+   route that cannot be serialised, and `view:cache` pre-compiles Blade.
+5. **Rebuild caches after any deploy that changes routes, config or views:** run
+   `php artisan optimize` again. If a rebuild is genuinely needed, `php artisan
+   optimize:clear` (then `optimize`) only clears framework caches — it must never
+   be confused with clearing application data, sessions or the queue.
+6. These commands are **not** assumed to be enabled or scheduled in production
+   today, and nothing in this repository runs them automatically.
+
 ---
 
 ## 9. Outstanding Items

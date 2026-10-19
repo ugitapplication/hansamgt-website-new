@@ -3,8 +3,6 @@
 @section('content')
     <div class="page-wrap">
         <h1 class="page-h1 page-h1--center">Site Management Gallery</h1>
-        {{-- Managed under Content → Gallery. The built-in list below is the
-             fallback so the page still renders before the table is seeded. --}}
         @php
             $photos = ($photos ?? []);
 
@@ -27,7 +25,7 @@
         @endphp
         <div class="gal-grid">
             @foreach ($photos as $photo)
-                <figure class="gal-item">
+                <figure class="gal-item" data-reveal>
                     <button type="button" data-gal-open="{{ $photo['src'] }}" data-gal-cap="{{ $photo['caption'] }}" aria-haspopup="dialog" aria-label="View larger: {{ $photo['caption'] }}">
                         <img src="{{ $photo['src'] }}" alt="{{ $photo['caption'] }}"
                              width="350" height="250" loading="lazy" decoding="async">
