@@ -2,7 +2,7 @@
 
 > **Purpose:** Assess the application's actual security posture from source: headers, CSP, authentication, authorization, input handling, XSS trust boundaries, secrets, and abuse controls.
 > **Audience:** Developers, security reviewers, and the site owner.
-> **Last reviewed:** 2026-10-19
+> **Last reviewed:** 2026-10-24
 > **Evidence basis:** `app/Http/Middleware/SecurityHeaders.php` (122 lines, full), `app/Http/Middleware/RedirectIndexPhp.php`, `bootstrap/app.php`, `config/auth.php`, `app/Models/User.php`, all controllers, all Filament resources, `public/.htaccess`, `.env.example`, `.gitignore`. **No penetration test was performed.**
 
 **Verification legend:** ✅ source-verified · 🟡 runtime-unverified · ⚠️ partial · ⛔ missing · ❓ unknown
@@ -19,8 +19,8 @@
 | Security headers | ✅ good baseline | — |
 | CSP | ⚠️ `unsafe-inline` on public, `unsafe-eval` on admin | Medium |
 | Authentication | ✅ Filament login | — |
-| **Authorization** | ⛔ **none** | **High** |
-| 2FA | ⛔ none | High (given no RBAC) |
+| **Authorization** | ✅ panel gate (`is_admin`); ⛔ no fine-grained RBAC | **Medium** |
+| 2FA | ⛔ none | High (every admin is all-powerful) |
 | CSRF | ✅ framework + explicit `@csrf` | — |
 | SQL injection | ✅ Eloquent/parameterised | — |
 | XSS (public) | ⚠️ article body rendered raw | High |
@@ -126,7 +126,7 @@ When `app()->environment('local')`, `http://localhost:5173` and `http://127.0.0.
 
 ## 4. Authorization
 
-This is the most serious finding in the codebase.
+Panel access is gated by a single boolean flag. Fine-grained authorization is still absent.
 
 ### 4.1 What exists
 
@@ -135,16 +135,20 @@ This is the most serious finding in the codebase.
 | Authentication | `AdminPanelProvider.php:29` `->login()`; `Filament\Http\Middleware\Authenticate` (61-63) |
 | Session guard | `config/auth.php:40-45`, Eloquent provider, `App\Models\User` |
 | Login throttling | Filament's built-in login rate limiter ⚠️ (framework behaviour, not customised) |
+| Panel access gate | `User implements FilamentUser`; `canAccessPanel()` requires `is_admin = true` (`User.php:13,59-62`) |
+| Admin flag | `users.is_admin` boolean, default `false` (`2026_10_24_000001_add_is_admin_to_users_table.php`) |
+| Mass-assignment protection | `is_admin` is absent from `$fillable` (`User.php:23-27`) |
+| Local-only provisioning | `php artisan admin:create` refuses outside `app()->environment('local')` (`CreateAdmin.php:25-29`) |
 
 ### 4.2 What does not exist
 
 | Control | Evidence |
 |---|---|
-| Roles / permissions | no `role` column (`users` migration), no package, no enum |
+| Roles / permissions | no `role` column, no package, no enum; `is_admin` is binary |
 | Policies | no `app/Policies` directory |
 | Gates | `grep` for `Gate::` across `app/` → no matches |
 | `authorize()` / `can()` | no matches in controllers or resources |
-| `is_admin` flag | absent from `users` |
+| Per-resource permissions | none — every admin can use every resource |
 | User management UI | no `UserResource` |
 | 2FA | no MFA configuration in the panel |
 | IP allow-list | none |
@@ -153,7 +157,7 @@ This is the most serious finding in the codebase.
 
 ### 4.3 Consequence
 
-**Any row in `users` can do everything in `/admin`.** That includes:
+**Any row with `is_admin = true` can do everything in `/admin`.** That includes:
 
 - reading every enquiry (name, email, phone, message)
 - deleting any content
@@ -163,27 +167,29 @@ This is the most serious finding in the codebase.
 - uploading arbitrary images
 - writing arbitrary HTML into an article body (see §6)
 
+A row with `is_admin = false` is authenticated but receives **HTTP 403** on every panel route, including when `APP_ENV=local`. Guests are redirected to `/admin/login`.
+
 There is no way to create a "content editor" who cannot see PII. There is no way to revoke one capability without revoking all.
 
 ### 4.4 How accounts are created
 
 Only via:
 
-- `DatabaseSeeder` (`test@example.com` / known default password — see §5)
-- `UserFactory`
-- `php artisan tinker`
+- `php artisan admin:create` (interactive, **local environment only**)
+- `php artisan tinker` (an explicit `forceFill(['is_admin' => true])` update)
+- `UserFactory` in automated tests
 
-There is no UI. Adding an editor requires shell access, which is a de-facto second layer of protection but not a designed control.
+`DatabaseSeeder` no longer creates an account. There is no UI. Adding an editor requires shell access, which is a de-facto second layer of protection but not a designed control.
 
-**Severity: High.** This is not a theoretical risk: the privacy policy claims access is limited (§7 of [16](16-analytics-consent-and-privacy.md#7-privacy-policy--accuracy-audit)).
+**Severity: Medium** for panel access (the previous High finding is fixed), **High** for the absence of per-resource controls whenever more than one person holds `is_admin`. The privacy policy claims access is limited (§7 of [16](16-analytics-consent-and-privacy.md#7-privacy-policy--accuracy-audit)).
 
 **Mitigations available without code changes:**
 
-1. Keep the `users` table to the minimum number of accounts.
+1. Keep the number of `is_admin = true` accounts to the minimum.
 2. Use long, unique passwords stored in a password manager.
 3. Restrict `/admin` at the proxy/host by IP where staff IPs are stable.
 4. Enable host-level WAF rules for `/admin/login`.
-5. Review `users` after any staff change.
+5. Review `users.is_admin` after any staff change.
 
 **Proper fix (not applied):** add a role column or a policy layer, or install a permission package, and gate `ContactSubmissionResource` and destructive actions.
 
@@ -193,33 +199,28 @@ There is no UI. Adding an editor requires shell access, which is a de-facto seco
 
 ### 5.1 Password handling
 
-`app/Models/User.php:42-48` casts `password => hashed`, so `bcrypt`/`argon` hashing is automatic. `$hidden` excludes `password` and `remember_token` from serialisation. ✅
+`app/Models/User.php:44-51` casts `password => hashed`, so `bcrypt`/`argon` hashing is automatic. `$hidden` excludes `password` and `remember_token` from serialisation. ✅
 
 ### 5.2 Email verification
 
 `MustVerifyEmail` is commented out (`User.php:5`). Email addresses are never verified. ⚠️ Low impact for an admin-only panel, but it means a typo in an account email is undetected.
 
-### 5.3 Seeded account
+### 5.3 Seeded account — fixed 2026-10-24
 
-`database/seeders/DatabaseSeeder.php:20-23` creates:
+`DatabaseSeeder` **no longer creates a user account**. The unconditional `Test User` / `test@example.com` factory call was removed, so a fresh `php artisan db:seed` leaves the `users` table empty. Administrator accounts are created explicitly with `php artisan admin:create`, which refuses to run outside `local` and never promotes an existing row.
 
-```php
-User::factory()->create([
-    'name' => 'Test User',
-    'email' => 'test@example.com',
-]);
-```
-
-`UserFactory` uses a fixed default password (`password`). **If this seeder has ever run in production, a known-credential admin account exists.**
-
-⚠️ **Unverified:** whether production ran the seeder. The `.env` and database were not read. This must be checked by the operator:
+⚠️ **Legacy deployments:** if the seeder ran before 2026-10-24, a known-credential account may still exist. This must be checked once by the operator:
 
 ```bash
 # read-only check
 php artisan tinker --execute="echo App\Models\User::where('email','test@example.com')->exists() ? 'PRESENT' : 'absent';"
 ```
 
-If present: delete it or rotate its password immediately.
+If present: delete it (or rotate its password and confirm `is_admin`). Also confirm that `is_admin` is set only on the intended accounts:
+
+```bash
+php artisan tinker --execute="App\Models\User::where('is_admin', true)->pluck('email');"
+```
 
 ### 5.4 No password reset
 
@@ -266,10 +267,10 @@ So a malicious or compromised admin can inject `<script>` that runs for every vi
 The realistic threat is **not** an anonymous visitor — they cannot reach the editor. It is:
 
 1. A compromised admin account (made worse by no 2FA and no RBAC).
-2. A malicious insider with any admin access.
+2. A malicious insider with any `is_admin` access.
 3. A future feature that lets lower-trust users write content.
 
-Given §4, "any authenticated admin" is the entire trust boundary. There is no separation between "can write an article" and "can run script on every visitor's browser".
+Given §4, "any `is_admin` account" is the entire trust boundary. There is no separation between "can write an article" and "can run script on every visitor's browser".
 
 **Severity: High** in combination with §4. In isolation (trusted single admin), Medium.
 
@@ -378,7 +379,7 @@ Only the contact form validates at the HTTP layer (`ContactController.php:22-36`
 
 | Issue | Detail |
 |---|---|
-| Enquiry PII readable by all admins | §4 |
+| Enquiry PII readable by every `is_admin` account | §4 |
 | No audit trail of who read/deleted an enquiry | no logging |
 | Enquiry data in mail logs | `report($exception)` may include recipient |
 | No data export/erasure tooling | manual SQL/tinker only |
@@ -392,7 +393,8 @@ Only the contact form validates at the HTTP layer (`ContactController.php:22-36`
 ### Before launch (blocking)
 
 - [ ] Confirm `APP_DEBUG=false` and `APP_ENV=production` on the live host.
-- [ ] Confirm the seeded `test@example.com` account is absent or rotated.
+- [ ] Run `php artisan migrate` so `users.is_admin` exists.
+- [ ] Confirm `is_admin = true` only on intended accounts; no legacy `test@example.com` account remains.
 - [ ] Set a real `MAIL_FROM_ADDRESS` on the `hansamgt.com` domain (SPF/DKIM/DMARC aligned).
 - [ ] Run `php artisan storage:link`.
 - [ ] Revoke the legacy Google Maps key.
@@ -422,7 +424,7 @@ Only the contact form validates at the HTTP layer (`ContactController.php:22-36`
 
 - No penetration test, scanner, or manual exploit was performed.
 - Live headers were not observed; all header claims are from source.
-- `APP_DEBUG`, `APP_ENV`, and the live `users` table are unknown.
+- `APP_DEBUG`, `APP_ENV`, and the live `users` table (including which rows have `is_admin = true`) are unknown.
 - `composer audit` / `npm audit` could not run (shell unavailable).
 - Filament's built-in login throttling behaviour was not verified in this version.
 - The actual RichEditor HTML allow-list was not inspected in `vendor/`.

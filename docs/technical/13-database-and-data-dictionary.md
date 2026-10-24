@@ -2,8 +2,8 @@
 
 > **Purpose:** Describe every table the application creates, its columns, types, indexes and constraints, and — importantly — what relationships do *not* exist.
 > **Audience:** Developers, DBAs, and anyone writing migrations, seeders, or admin features.
-> **Last reviewed:** 2026-10-19
-> **Evidence basis:** All 15 migration files under `database/migrations/` and all 10 seeders under `database/seeders/` were read in full. No database was queried (shell unavailable; see [Known limitations](#known-limitations)).
+> **Last reviewed:** 2026-10-24
+> **Evidence basis:** All 16 migration files under `database/migrations/` and all 10 seeders under `database/seeders/` were read in full. No database was queried (shell unavailable; see [Known limitations](#known-limitations)).
 
 **Verification legend**
 
@@ -30,7 +30,7 @@
 | Pivot tables | **0** ✅ |
 | Soft deletes | **0** ✅ |
 | Enums / check constraints | **0** ✅ |
-| Migrations | 15 |
+| Migrations | 16 |
 | Default connection | `sqlite` → `database/database.sqlite` (`config/database.php:20,35-44`) 🟡 live value unknown |
 
 ### 1.1 Why the model is flat
@@ -82,11 +82,14 @@ Migration: `database/migrations/0001_01_01_000000_create_users_table.php:14-22`
 | `email_verified_at` | timestamp | nullable |
 | `password` | varchar(255) | not null (hashed cast on the model) |
 | `remember_token` | varchar(100) | nullable |
+| `is_admin` | tinyint(1) / boolean | **not null, default `0`**; added by `2026_10_24_000001_add_is_admin_to_users_table.php` |
 | `created_at`, `updated_at` | timestamp | nullable |
 
-Model: `app/Models/User.php`. `$fillable = ['name','email','password']` (21-25); `$hidden = ['password','remember_token']` (32-35); casts `email_verified_at => datetime`, `password => hashed` (42-48). `MustVerifyEmail` is commented out (line 5), so email verification is **not** enforced. ⛔
+Model: `app/Models/User.php`. `$fillable = ['name','email','password']` (23-27) — `is_admin` is deliberately **excluded**; `$hidden = ['password','remember_token']` (34-37); casts `email_verified_at => datetime`, `password => hashed`, `is_admin => boolean` (44-51). `MustVerifyEmail` is commented out (line 5), so email verification is **not** enforced. ⛔
 
-There is **no** `role`, `is_admin`, `permissions`, or `last_login_at` column. ⛔ Authorization is discussed in [17 — Security](17-security-and-hardening.md#4-authorization).
+The model implements `FilamentUser` (line 13) and `canAccessPanel()` (59-62) returns `true` only when the panel id is `admin` **and** `is_admin` is true.
+
+There is **no** `role`, `permissions`, or `last_login_at` column. `is_admin` is a single binary panel-access flag, not a role system. Authorization is discussed in [17 — Security](17-security-and-hardening.md#4-authorization).
 
 ### 2.2 `password_reset_tokens`
 
@@ -408,8 +411,9 @@ Identical shape to `clients`: `id`, `name`, `image`, `alt`, `sort_order`, `is_ac
 | 13 | `2026_10_17_000006_create_team_members_table.php` | `team_members` |
 | 14 | `2026_10_17_000007_create_homepage_section_items_table.php` | `homepage_section_items` |
 | 15 | `2026_10_18_000001_add_coordinates_to_offices_table.php` | alters `offices` |
+| 16 | `2026_10_24_000001_add_is_admin_to_users_table.php` | alters `users` (adds `is_admin`) |
 
-Because no migration references another table, ordering is only cosmetic — except that #15 must follow #10. ✅
+Because no migration references another table, ordering is only cosmetic — except that #15 must follow #10 and #16 must follow #1. ✅
 
 ---
 
@@ -436,20 +440,33 @@ This table exists to prevent future documentation or code from assuming a relati
 
 ## 6. Seeders
 
-`database/seeders/DatabaseSeeder.php:16-34` runs, in order:
+`database/seeders/DatabaseSeeder.php:16-27` runs, in order:
 
-1. `User::factory()->create(['name' => 'Test User', 'email' => 'test@example.com'])` — **unconditional** (20-23)
-2. `HeroSlideSeeder`
-3. `ClientSeeder`
-4. `ConcernSeeder`
-5. `OfficeSeeder`
-6. `InsightsSeeder`
-7. `ProjectSeeder`
-8. `GallerySeeder`
-9. `TeamSeeder`
-10. `HomepageSectionSeeder`
+1. `HeroSlideSeeder`
+2. `ClientSeeder`
+3. `ConcernSeeder`
+4. `OfficeSeeder`
+5. `InsightsSeeder`
+6. `ProjectSeeder`
+7. `GallerySeeder`
+8. `TeamSeeder`
+9. `HomepageSectionSeeder`
 
-### 6.1 Seeder idempotency
+**`DatabaseSeeder` creates no user accounts.** The fixed-password `Test User` / `test@example.com` factory call was removed on 2026-10-24. Administrator accounts are created separately, explicitly, with the local-only `admin:create` command (see [11 §1](11-admin-panel-reference.md#1-access)).
+
+### 6.1 Administrator creation
+
+`php artisan admin:create` (`app/Console/Commands/CreateAdmin.php`):
+
+- refuses to run unless `app()->environment('local')`;
+- prompts for name, email, password and confirmation (hidden input);
+- validates a unique email and a confirmed password of at least 12 characters;
+- hashes the password and sets `is_admin = true` explicitly;
+- never promotes an existing account — an existing email is rejected.
+
+The migration defaults every existing row to `is_admin = 0`, so no account is silently promoted.
+
+### 6.2 Seeder idempotency
 
 | Seeder | Strategy | Re-runnable? |
 |---|---|---|
@@ -462,11 +479,10 @@ This table exists to prevent future documentation or code from assuming a relati
 | `GallerySeeder` | `updateOrCreate` (33) | ✅ yes |
 | `TeamSeeder` | `updateOrCreate` (62) | ✅ yes |
 | `HomepageSectionSeeder` | `updateOrCreate` (164) | ✅ yes |
-| `DatabaseSeeder` user block | `User::factory()->create(...)` (20-23) | ⛔ **no** — second run violates `users.email` unique |
 
-**Consequence:** all nine content seeders are individually idempotent, but `php artisan db:seed` as a whole is **not**: the unconditional `users` insert fails first, so a second run aborts before any content seeder executes. This is a confirmed source-level defect, not a runtime observation. Severity: **Medium** (blocks repeatable local setup and any re-seed on staging). It also means the migration report's claim that "seeders are idempotent" is true of the content seeders and false of the entry point. See [21 — Known Issues](21-known-issues-decisions-and-roadmap.md).
+**Consequence:** every seeder, including `DatabaseSeeder` as an entry point, is now re-runnable for the `users` table — `DatabaseSeeder` no longer inserts a user. The nine content seeders use `updateOrCreate` / `firstOrNew`, so a second `db:seed` converges rather than aborting. (Before 2026-10-24 the unconditional `users` insert failed on the unique email and aborted the run; that defect is fixed.)
 
-### 6.2 Seed volumes (source-declared)
+### 6.3 Seed volumes (source-declared)
 
 | Seeder | Records | Evidence |
 |---|---|---|
@@ -503,7 +519,7 @@ This table exists to prevent future documentation or code from assuming a relati
 - **No database was queried.** Row counts, actual column types after migration, index existence, and any drift between migrations and the live schema are **runtime-unverified**.
 - `database/database.sqlite` was deliberately **not opened** (may contain real enquiry PII).
 - The exact `failed_jobs` column list was only partially read; it follows the Laravel 12 skeleton unchanged. ⚠️
-- Seeder idempotency was verified only for `OfficeSeeder` and the `users` insert; the remaining seeders were not read line-by-line for `updateOrCreate` usage. ❓
+- Seeder idempotency is source-read: `DatabaseSeeder` no longer inserts a user, and the content seeders use `updateOrCreate` / `firstOrNew`. No seeder was executed against a database. 🟡
 - No `php artisan schema:dump` or `db:table` output exists to cross-check.
 
 ---

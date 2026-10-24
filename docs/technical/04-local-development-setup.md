@@ -2,7 +2,7 @@
 
 > **Purpose:** Get a working local copy of the site from a fresh clone, with the exact commands and the known traps.
 > **Audience:** Developers onboarding to this project.
-> **Last reviewed:** 2026-10-19
+> **Last reviewed:** 2026-10-24
 > **Evidence basis:** `composer.json` scripts, `package.json`, `.env.example`, `phpunit.xml`, `.gitignore`, `config/*.php`, `bootstrap/app.php`. **No command in this chapter was executed** — the shell is unavailable in the audit environment (exit code 66).
 
 **Verification legend:** ✅ source-verified · 🟡 runtime-unverified · ⚠️ partial · ⛔ missing · ❓ unknown
@@ -64,6 +64,7 @@ php artisan key:generate
 #   Unix:    touch database/database.sqlite
 php artisan migrate
 php artisan db:seed           # optional but recommended for content
+php artisan admin:create      # create the local administrator (§5)
 php artisan storage:link
 npm install
 npm run build
@@ -129,39 +130,48 @@ php artisan db:seed
 
 Runs `DatabaseSeeder` (see [13 §6](13-database-and-data-dictionary.md#6-seeders)):
 
-- creates `Test User` / `test@example.com` (factory default password)
 - seeds 7 hero slides, 18 clients, 13 concerns, 4 offices, 4 articles, 11 projects, 12 photos, 4 team members, and all 4 homepage sections
+- creates **no** user account
 
-### 4.1 Re-seeding fails
+Administrators are created separately — see §5.
 
-`DatabaseSeeder.php:20-23` uses `User::factory()->create(...)` unconditionally. A second `db:seed` violates the unique `users.email` constraint and aborts **before** the content seeders run.
+### 4.1 Re-seeding is safe
 
-Workarounds (choose one, none applied):
+`DatabaseSeeder` no longer inserts a user, so the old duplicate-`users.email` failure is gone (fixed 2026-10-24). Every content seeder uses `updateOrCreate` / `firstOrNew`, so a second `php artisan db:seed` converges instead of duplicating rows.
 
-```bash
-php artisan migrate:fresh --seed     # destroys all data
-```
-
-or delete the test user first, or use `db:seed --class=OfficeSeeder` etc. individually.
-
-⚠️ `migrate:fresh` is destructive. Never run it against a database with real enquiries.
+⚠️ `migrate:fresh` is still destructive. Never run it against a database with real enquiries.
 
 ---
 
 ## 5. Admin access
 
-1. Seed the database, **or** create an account:
+Admin access requires **authentication plus `is_admin = true`**. A fresh database has no administrators.
+
+1. Apply the migration (adds `users.is_admin`, default `0`):
 
 ```bash
-php artisan tinker --execute="App\Models\User::create(['name'=>'Admin','email'=>'you@hansamgt.com','password'=>bcrypt('change-me-now')]);"
+php artisan migrate
 ```
 
-2. Visit `http://127.0.0.1:8000/admin`.
-3. Log in.
+2. Create a local administrator interactively:
 
-⚠️ There is **no** registration, password-reset, or user-management UI. Accounts are CLI-only. See [11 §1](11-admin-panel-reference.md#1-access).
+```bash
+php artisan admin:create
+```
 
-⚠️ If you seeded, the account is `test@example.com` with the factory's default password. Change or delete it.
+Enter a name, email, a password of at least 12 characters, and the same password again. The command hashes the password and sets `is_admin = true`.
+
+3. Visit `http://127.0.0.1:8000/admin` and log in.
+
+Existing users are **not** promoted — the migration sets every existing row to `is_admin = 0`. To deliberately promote an existing local account:
+
+```bash
+php artisan tinker --execute="App\Models\User::where('email','you@hansamgt.com')->update(['is_admin' => true]);"
+```
+
+⚠️ `admin:create` refuses to run outside `APP_ENV=local`. There is **no** registration, password-reset, or user-management UI. Accounts are CLI-only. See [11 §1](11-admin-panel-reference.md#1-access).
+
+⚠️ `is_admin` is not mass assignable, so `User::create([... 'is_admin' => true])` silently ignores the flag. Use `forceFill` or the `update()` call above.
 
 ---
 
@@ -172,6 +182,8 @@ php artisan tinker --execute="App\Models\User::create(['name'=>'Admin','email'=>
 | `http://127.0.0.1:8000/` | homepage with hero, sections, footer |
 | `http://127.0.0.1:8000/up` | 200, empty body |
 | `http://127.0.0.1:8000/admin` | redirect to `/admin/login` |
+| Logged in without `is_admin` | **403** on `/admin` and every panel route |
+| Logged in with `is_admin` | dashboard loads |
 | `http://127.0.0.1:8000/sitemap.xml` | XML with 20 URLs (committed file) |
 | `http://127.0.0.1:8000/robots.txt` | text |
 | `php artisan test` | see [19](19-testing-and-qa.md) |

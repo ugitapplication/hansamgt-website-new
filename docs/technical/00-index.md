@@ -2,7 +2,7 @@
 
 > **Purpose:** The authoritative, source-grounded documentation set for the `hansamgt-website-new` Laravel application.
 > **Audience:** Developers, administrators, DevOps, and reviewers.
-> **Last reviewed:** 2026-10-19
+> **Last reviewed:** 2026-10-24
 > **Scope:** The current implementation in this repository, as inspected read-only. Not a roadmap, not a wish list.
 
 ---
@@ -93,7 +93,7 @@ This documentation was produced under strict rules, and the rules still apply to
 
 | # | Chapter | What it covers |
 |---|---|---|
-| 11 | [Admin Panel Reference](11-admin-panel-reference.md) | Access, the authorization reality, all 10 resources, dashboard, shared upload pattern, what the panel cannot do |
+| 11 | [Admin Panel Reference](11-admin-panel-reference.md) | Access (`is_admin` gate), the remaining authorization gaps, all 10 resources, dashboard, shared upload pattern, what the panel cannot do |
 | 12 | [Site Settings](12-site-settings.md) | `settings` table, resolution logic, clear-vs-default semantics, caching, 5 admin tabs, test-email action |
 
 ### Data and media
@@ -116,7 +116,7 @@ This documentation was produced under strict rules, and the rules still apply to
 | # | Chapter | What it covers |
 |---|---|---|
 | 18 | [Frontend Assets & Accessibility](18-frontend-assets-and-accessibility.md) | Build, Tailwind v4, CSS architecture, JS modules, interactions, a11y strengths and weaknesses, performance |
-| 19 | [Testing & QA](19-testing-and-qa.md) | All 9 files / 59 methods, coverage map, highest-value missing tests, manual QA checklist |
+| 19 | [Testing & QA](19-testing-and-qa.md) | All 11 files / 72 methods, coverage map, highest-value missing tests, manual QA checklist |
 | 20 | [Deployment & Operations](20-deployment-and-operations.md) | Release procedure, env checklist, Apache/Nginx, **launch blockers**, backups, monitoring, rollback, scheduling |
 | 21 | [Known Issues, Decisions & Roadmap](21-known-issues-decisions-and-roadmap.md) | 4 launch blockers, 10 medium, 21 low, 12 runtime-unverified, 15 deliberate decisions, stale docs, roadmap |
 
@@ -134,7 +134,7 @@ This documentation was produced under strict rules, and the rules still apply to
 
 ### Security review
 
-[17](17-security-and-hardening.md) → [11 §2](11-admin-panel-reference.md#2-authorization-reality) → [16](16-analytics-consent-and-privacy.md) → [21 §1](21-known-issues-decisions-and-roadmap.md#1-launch-blockers)
+[17](17-security-and-hardening.md) → [11 §2](11-admin-panel-reference.md#2-authorization-reality) → [16](16-analytics-consent-and-privacy.md) → [21 §1](21-known-issues-decisions-and-roadmap.md#1-launch-blockers-and-resolved-items)
 
 ### Deployment / on-call
 
@@ -158,11 +158,11 @@ This documentation was produced under strict rules, and the rules still apply to
 | Custom admin pages | 1 | [12](12-site-settings.md) |
 | Dashboard widgets | 1 | [11 §4](11-admin-panel-reference.md#4-dashboard) |
 | Database tables | 19 | [13](13-database-and-data-dictionary.md) |
-| Migrations | 15 | [13 §4](13-database-and-data-dictionary.md#4-migration-order) |
+| Migrations | 16 | [13 §4](13-database-and-data-dictionary.md#4-migration-order) |
 | Seeders | 10 | [13 §6](13-database-and-data-dictionary.md#6-seeders) |
 | Eloquent models | 12 | [13](13-database-and-data-dictionary.md), [02 §5](02-architecture-and-request-lifecycle.md#5-data-access) |
 | Support classes | 5 | [12](12-site-settings.md), [14](14-media-and-image-pipeline.md), [16](16-analytics-consent-and-privacy.md) |
-| Test files / methods | 9 / 59 | [19](19-testing-and-qa.md) |
+| Test files / methods | 11 / 72 | [19](19-testing-and-qa.md) |
 | Config files | 13 | [05](05-configuration-reference.md) |
 | Custom commands | 1 | [15 §6](15-seo-and-structured-data.md#6-sitemap) |
 | Known issues | 4 high, 10 medium, 21 low | [21](21-known-issues-decisions-and-roadmap.md) |
@@ -218,7 +218,7 @@ The repository already contains five documents:
 |---|---|---|
 | `docs/website-audit-and-benchmark.md` | audit + benchmark, Oct 2026 | partly outdated |
 | `docs/2026-10-15-work-report.md` | work log | historical |
-| `docs/admin-panel-audit.md` | admin audit + build tracker | mostly current; one stale claim |
+| `docs/admin-panel-audit.md` | admin audit + build tracker | mostly current; updated 2026-10-24 for `is_admin` |
 | `docs/HANSA-website-migration-report.md` | migration report | partly outdated |
 | `docs/maps-audit-and-plan.md` | map decision record | current |
 
@@ -229,7 +229,7 @@ Notable contradictions:
 - A claimed "14 URLs" in `sitemap.xml` — the file has **20**.
 - A claimed absent `resources/views/errors/` — both views **exist**.
 - A claimed "Contact Submissions outside navigation groups" — it is in **Operations**.
-- A claim that "seeders are idempotent" — the nine content seeders are; the `DatabaseSeeder` user block is **not**.
+- A claim that "seeders are idempotent" — true now (2026-10-24); the old `DatabaseSeeder` user block that made the entry point fail on re-run has been removed.
 - "Filament v4.15.2" — **unverified**.
 - "MySQL" as a requirement — the default is **SQLite**.
 

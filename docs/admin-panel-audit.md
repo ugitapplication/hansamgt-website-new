@@ -56,8 +56,8 @@ empty.
 
 | Gap | Impact | Where |
 |---|---|---|
-| No **Users** resource | Adding or removing an admin needs a developer (`tinker`/seeder) | — |
-| No **roles/permissions** | Every admin can delete all content and read every enquiry | Filament Shield not installed |
+| No **Users** resource | Adding or removing an admin needs a developer (`php artisan admin:create` locally, or `tinker`). There is still no UI | `CreateAdmin.php` |
+| No **roles/permissions** | Every `is_admin` account can delete all content and read every enquiry | Filament Shield not installed |
 | No **2FA** | `/admin` is a predictable path with password-only access | `AdminPanelProvider` |
 | No **profile page** | Users cannot change their own password from the panel | `AdminPanelProvider` |
 | `Contact Submissions` is **ungrouped** | It floats above the two groups in the sidebar, inconsistently | `ContactSubmissionResource` |
@@ -156,7 +156,7 @@ These are public values. Leaking them costs nothing, and staff should own them.
 
 | Setting | Why it must not be in the database |
 |---|---|
-| **`MAIL_*` SMTP credentials** (host, port, username, password) | These are secrets. Stored in the DB they sit in plaintext, are readable by every admin, and are stolen with any database leak or SQL injection. **Mail credentials belong in `.env`.** |
+| **`MAIL_*` SMTP credentials** (host, port, username, password) | These are secrets. Stored in the DB they sit in plaintext, are readable by every `is_admin` account, and are stolen with any database leak or SQL injection. **Mail credentials belong in `.env`.** |
 | **`APP_KEY`** | Encrypts sessions and cookies. Exposing or rotating it via a web form breaks every session and can expose encrypted data |
 | **`APP_ENV`, `APP_DEBUG`, `APP_URL`** | `APP_DEBUG=true` in production leaks stack traces and file paths to visitors |
 | **`DB_*` credentials** | Self-evident |
@@ -562,9 +562,10 @@ the published state. Until they run, each page falls back to the built-in list
 inside its Blade partial, exactly as the hero slider and client logos do — so
 `migrate` alone never leaves a page blank.
 
-Do **not** use plain `php artisan db:seed` on an existing database:
-`DatabaseSeeder` still creates the default `Test User` unconditionally and would
-fail on the duplicate address.
+Plain `php artisan db:seed` is now safe on an existing database: since 2026-10-24
+`DatabaseSeeder` no longer creates a user account, and every content seeder is
+idempotent (`updateOrCreate` / `firstOrNew`). Administrator accounts are created
+separately with `php artisan admin:create` (local only).
 
 ---
 
@@ -581,3 +582,4 @@ fail on the duplicate address.
 | 2026-10-17 | Pinned `$slug` on the Team and Homepage Sections resources (their directory names produced nested `/admin/team/team-members` URLs) | Done |
 | 2026-10-17 | Hero "Call" ghost-button fix mirrored into the homepage's inline critical CSS (`home.blade.php`), which still carried the old transparent background | Done |
 | 2026-10-17 | Tier 2 verified pre-seed (Section 12): fallbacks render the published content byte-for-byte on 4 pages, 0 console errors, 8 admin routes register | Done |
+| 2026-10-24 | Admin authorization: `users.is_admin` migration, `User implements FilamentUser` + `canAccessPanel()`, `is_admin` excluded from `$fillable`; `DatabaseSeeder` no longer creates `test@example.com`; new local-only `php artisan admin:create`; feature tests added (not yet executed) | Done (source) |

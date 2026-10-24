@@ -2,7 +2,7 @@
 
 > **Purpose:** Document the consent-gated GA4 implementation, the cookie banner, the revocation path, and the gap between the published privacy policy and what the code actually does.
 > **Audience:** Developers, marketing, and anyone responsible for data-protection compliance.
-> **Last reviewed:** 2026-10-19
+> **Last reviewed:** 2026-10-24
 > **Evidence basis:** `app/Support/Consent.php` (53 lines, full), `resources/views/partials/consent.blade.php` (36 lines, full), `resources/js/consent.js` (132 lines, full), `resources/views/partials/seo.blade.php:154-173`, `resources/views/pages/privacy.blade.php` (258 lines, full), `config/analytics.php`, `config/site.php:75-86`, `app/Filament/Pages/ManageSettings.php:193-218`, `app/Support/Settings.php`.
 
 **Verification legend:** ✅ source-verified · 🟡 runtime-unverified · ⚠️ partial · ⛔ missing · ❓ unknown
@@ -224,8 +224,8 @@ The policy is unusually detailed and mostly matches the implementation. Point-by
 | `_ga` / `_ga_<id>` up to 2 years (140-143) | ✅ | Google default |
 | Enquiries kept 24 months (187) | ⛔ **no mechanism** | see §6 |
 | Analytics retained 14 months (188) | ❓ GA4 property setting | not in repo |
-| "limiting which colleagues can see enquiries" (211) | ⛔ **false** | every authenticated admin sees every enquiry; no roles |
-| "access controls on our systems" (211) | ⚠️ authentication only, no authorization | see [17](17-security-and-hardening.md#4-authorization) |
+| "limiting which colleagues can see enquiries" (211) | ⛔ **false** | every `is_admin` account sees every enquiry; no per-user roles |
+| "access controls on our systems" (211) | ⚠️ authentication + binary `is_admin` gate; no fine-grained authorization | see [17](17-security-and-hardening.md#4-authorization) |
 | "encrypted (HTTPS) connection" (211) | ❓ host-dependent; HSTS only emitted when already secure | `SecurityHeaders.php:44-46` |
 | Policy published in English, Bangla on request (235) | ✅ | single-locale app |
 | Past versions available on request (222) | ⛔ no version history stored | |
@@ -278,7 +278,7 @@ flowchart LR
 
 | Data | Where | Retention | Deletable by |
 |---|---|---|---|
-| Enquiry PII | `contact_submissions` | indefinite ⛔ | any admin (manual) |
+| Enquiry PII | `contact_submissions` | indefinite ⛔ | any `is_admin` account (manual) |
 | Enquiry copy | recipient inbox | mail-provider policy ❓ | mailbox owner |
 | Analytics events | Google | 14 months (claimed) ❓ | GA admin |
 | Consent decision | browser `localStorage` | until cleared / version bump | visitor |

@@ -2,7 +2,7 @@
 
 > **Purpose:** Explain what this website is, who it is for, what it can do today, and where its boundaries lie.
 > **Audience:** Everyone — new developers, the site owner, marketing, and reviewers.
-> **Last reviewed:** 2026-10-19
+> **Last reviewed:** 2026-10-24
 > **Evidence basis:** Source inspection across the whole repository. No runtime verification (shell unavailable).
 
 **Verification legend:** ✅ source-verified · 🟡 runtime-unverified · ⚠️ partial · ⛔ missing · 🕓 legacy · ❓ unknown
@@ -130,7 +130,7 @@ flowchart TB
 | Database | SQLite by default (MySQL/Postgres supported) |
 | Cache / session / queue | database |
 | Mail | `log` by default (**must be changed for production**) |
-| Tests | PHPUnit 11.5, 9 files, 59 methods |
+| Tests | PHPUnit 11.5, 11 files, 72 methods |
 
 Full detail: [03 — Technology Stack](03-technology-stack.md).
 
@@ -141,7 +141,7 @@ Full detail: [03 — Technology Stack](03-technology-stack.md).
 ```text
 hansamgt-website-new/
 ├── app/
-│   ├── Console/Commands/GenerateSitemap.php
+│   ├── Console/Commands/         (GenerateSitemap, CreateAdmin)
 │   ├── Filament/
 │   │   ├── Pages/ManageSettings.php
 │   │   ├── Resources/            (10 resources, 29 page classes)
@@ -155,7 +155,7 @@ hansamgt-website-new/
 ├── bootstrap/app.php             ← middleware + routing config
 ├── config/                       (13 files)
 ├── database/
-│   ├── migrations/               (15)
+│   ├── migrations/               (16)
 │   ├── seeders/                  (10 + data/)
 │   └── factories/
 ├── docs/                         (5 historical + technical/)
@@ -166,7 +166,7 @@ hansamgt-website-new/
 │   └── views/                    (~54 Blade files)
 ├── routes/                       (web.php, console.php)
 ├── storage/app/public/           (uploads: team/, hero-slides/)
-├── tests/                        (9 files)
+├── tests/                        (11 files)
 └── hansamgtWebsite_old/          ← legacy CodeIgniter, git-ignored, out of scope
 ```
 
@@ -198,8 +198,8 @@ The site is a **migration from CodeIgniter** to Laravel. Evidence is pervasive:
 | Public site completeness | **High** — all pages exist, content is real, SEO is thorough |
 | Admin coverage | **Medium** — 9 content surfaces + settings, but 10 pages are code-only |
 | Code quality | **High** — small surface, clear naming, unusually good docblocks |
-| Test coverage | **Low–Medium** — strong on utilities, zero on the contact form and admin |
-| Security | **Mixed** — good headers and consent; no authorization, raw HTML rendering |
+| Test coverage | **Low–Medium** — strong on utilities; the admin access gate now has feature tests (authored, not yet executed); the contact form is still untested |
+| Security | **Mixed** — good headers and consent; panel access gated by `is_admin`, but no fine-grained roles; raw HTML rendering |
 | Operations | **Low** — no CI, no backups, no scheduler, no monitoring, no error tracking |
 | Documentation | **Mixed** — rich historical docs, several stale claims; this set is current |
 
@@ -207,7 +207,7 @@ The site is a **migration from CodeIgniter** to Laravel. Evidence is pervasive:
 
 ## 9. The five things to know first
 
-1. **Authorization does not exist.** Any row in `users` can do everything in `/admin`, including reading every enquiry. → [17 §4](17-security-and-hardening.md#4-authorization)
+1. **Authorization is a single binary gate.** Only `users.is_admin = true` can enter `/admin`; a logged-in non-admin gets 403. Once inside, every admin can do everything, including reading every enquiry — there is no role system. → [17 §4](17-security-and-hardening.md#4-authorization)
 2. **The storage symlink is missing.** Uploaded images resolve to `/storage/...` and will 404 until `php artisan storage:link` runs. → [14 §4](14-media-and-image-pipeline.md#42-the-missing-symlink)
 3. **Mail defaults to `log`.** With the shipped example config, enquiries are stored but never emailed, while the visitor sees success. → [10 §6](10-contact-and-enquiries.md#6-email)
 4. **Ten pages are code-only.** Company profile, mission/vision, charter, CSR, four services, careers, and the privacy body cannot be edited in the admin. → [07 §15](07-public-pages-reference.md#15-content-source-summary)

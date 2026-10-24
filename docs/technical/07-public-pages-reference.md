@@ -2,7 +2,7 @@
 
 > **Purpose:** One authoritative entry per public page: URL, controller method, view, SEO metadata, content source, partials used, and known gaps.
 > **Audience:** Content editors, developers, and QA.
-> **Last reviewed:** 2026-10-19
+> **Last reviewed:** 2026-10-24
 > **Evidence basis:** `routes/web.php`, `app/Http/Controllers/HomeController.php`, `app/Http/Controllers/InsightController.php`, and all 19 page Blade files were read in full. Pages were not rendered in a browser (no shell).
 
 **Verification legend:** ✅ source-verified · 🟡 runtime-unverified · ⚠️ partial · ⛔ missing · 🕓 legacy · ❓ unknown
@@ -258,7 +258,7 @@ Full detail: [09 — Insights Subsystem](09-insights-subsystem.md).
 - Breadcrumbs supplied manually: Home → Insights → truncated title (62-66).
 - Schema: `BlogPosting` (`articleSchema`, 146-172).
 
-⚠️ **Trust boundary:** the body is rich-text HTML from the Filament `RichEditor` and is rendered without escaping. Any authenticated admin can inject script. CSP allows `'unsafe-inline'` on the public site, so inline `<script>` in an article body would execute. Documented as a finding in [17 — Security](17-security-and-hardening.md#6-xss-trust-boundaries).
+⚠️ **Trust boundary:** the body is rich-text HTML from the Filament `RichEditor` and is rendered without escaping. Any `is_admin` account can inject script. CSP allows `'unsafe-inline'` on the public site, so inline `<script>` in an article body would execute. Documented as a finding in [17 — Security](17-security-and-hardening.md#6-xss-trust-boundaries).
 
 ---
 

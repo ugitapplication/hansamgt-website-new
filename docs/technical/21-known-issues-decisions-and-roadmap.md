@@ -2,8 +2,8 @@
 
 > **Purpose:** A single, severity-ordered register of confirmed defects, unresolved risks, deliberate design decisions, and deferred work — each tied to evidence.
 > **Audience:** Site owner, developers, and anyone planning the next iteration.
-> **Last reviewed:** 2026-10-19
-> **Evidence basis:** Direct source inspection across all chapters. **Nothing in this chapter has been fixed.** No application file was modified.
+> **Last reviewed:** 2026-10-24
+> **Evidence basis:** Direct source inspection across all chapters. **Most items remain open.** B4 was fixed in source on 2026-10-24 and B3 was downgraded; neither fix was runtime-verified.
 
 **Verification legend:** ✅ source-confirmed · 🟡 source-inferred / runtime-unverified · ⚠️ partial · ⛔ missing · ❓ unknown
 
@@ -11,9 +11,9 @@
 
 ---
 
-## 1. Launch blockers
+## 1. Launch blockers and resolved items
 
-These should be resolved before the site is considered production-ready.
+B1 and B2 should be resolved before the site is considered production-ready. B3 is now Medium (panel access is gated). B4 is fixed in source on 2026-10-24.
 
 ### B1 — Missing `public/storage` symlink
 
@@ -38,27 +38,27 @@ These should be resolved before the site is considered production-ready.
 | Fix | Set a real SMTP transport and a `@hansamgt.com` sender with SPF/DKIM/DMARC aligned; send a test from **Site Settings → Send test email** |
 | Note | Existing documents flag this as unresolved (defect 6). It is still unresolved in the repository. |
 
-### B3 — No admin authorization model
+### B3 — No fine-grained admin authorization
 
 | Field | Detail |
 |---|---|
-| Severity | **High** |
+| Severity | **Medium** (panel access gate added 2026-10-24); **High** for PII once more than one admin exists |
 | Type | ✅ confirmed source |
-| Evidence | No `app/Policies`; no `Gate::`; no `authorize()`/`can()`; no `role` column (`0001_01_01_000000_create_users_table.php:14-22`); `AdminPanelProvider.php:29` enables login only |
-| Effect | Any row in `users` can read all enquiry PII, delete any content, and change the enquiry recipient. The privacy policy's claim that access is limited is **false** (`privacy.blade.php:211`) |
+| Evidence | `User implements FilamentUser`; `canAccessPanel()` requires `is_admin` (`User.php:13,59-62`). Still absent: `app/Policies`, `Gate::`, `authorize()`/`can()`, roles, per-resource permissions |
+| Effect | Only `is_admin = true` can enter `/admin`; a non-admin gets **403**. Once inside, every admin can read all enquiry PII, delete any content, and change the enquiry recipient. The privacy policy's claim that access is limited remains **false** for multi-admin deployments (`privacy.blade.php:211`) |
 | Fix | Add roles/policies or a permission package; gate `ContactSubmissionResource` and destructive actions; add 2FA |
-| Interim | Minimise accounts, strong passwords, IP-restrict `/admin` at the proxy |
+| Interim | Minimise the number of `is_admin` accounts, strong passwords, IP-restrict `/admin` at the proxy |
 
-### B4 — Seeded default admin account
+### B4 — Seeded default admin account — fixed 2026-10-24
 
 | Field | Detail |
 |---|---|
-| Severity | **High if present in production** |
-| Type | ✅ confirmed in seeder; ❓ whether it ran |
-| Evidence | `DatabaseSeeder.php:20-23` creates `Test User` / `test@example.com` unconditionally; `UserFactory` uses a known default password |
-| Effect | Known-credential admin access |
-| Fix | Check and delete/rotate; make the seeder conditional |
-| Note | Not a launch blocker if production was never seeded — verify first |
+| Severity | **High only on deployments seeded before 2026-10-24** |
+| Type | ✅ fixed in source; ❓ whether a legacy row exists in production |
+| Evidence | `DatabaseSeeder` no longer imports `User` and no longer creates `Test User` / `test@example.com`. Administrator creation is now the explicit local-only `admin:create` command |
+| Effect | A fresh install has no known-credential account. A deployment seeded before the fix may still hold `test@example.com` |
+| Fix | Fixed in source. Legacy deployments: run the read-only existence check in [17 §5.3](17-security-and-hardening.md#53-seeded-account--fixed-2026-10-24) and delete/rotate if present |
+| Note | No longer a launch blocker for fresh installs; still a one-time check for an existing production database |
 
 ---
 
@@ -72,7 +72,7 @@ These should be resolved before the site is considered production-ready.
 | Type | ✅ confirmed source |
 | Evidence | `pages/insight.blade.php:28` `{!! $post->body !!}`; CSP allows `'unsafe-inline'` (`SecurityHeaders.php:57`) |
 | Effect | Any admin can execute script for every visitor of an article |
-| Aggravated by | B3 (no RBAC) — the trust boundary is "any authenticated admin" |
+| Aggravated by | B3 (no RBAC) — the trust boundary is "any `is_admin` account" |
 | Fix | Server-side HTML sanitisation with an allow-list, or nonce-based CSP + script stripping |
 
 ### M2 — Static sitemap, no scheduled regeneration
@@ -132,7 +132,7 @@ These should be resolved before the site is considered production-ready.
 | Severity | **Medium** |
 | Type | ✅ confirmed source |
 | Evidence | `ManageSettings.php:356-362` shows `Str::limit($exception->getMessage(), 300)` |
-| Effect | SMTP host/username may be exposed to every admin (no roles) |
+| Effect | SMTP host/username may be exposed to every `is_admin` account (no roles) |
 | Fix | Show a generic message; log the detail |
 
 ### M8 — CSP allows `unsafe-inline` on the public site
@@ -204,7 +204,7 @@ These are inferences, clearly separated from confirmed findings.
 | U1 | Uploaded images currently 404 | no HTTP request made | `curl -I https://hansamgt.com/storage/<path>` |
 | U2 | Contact email is not delivered | live `.env` not read | admin "Send test email"; check the recipient inbox |
 | U3 | Production may be `APP_DEBUG=true` | `.env` not read | `curl -s https://hansamgt.com/ | grep -i "whoops\|laravel"`; check `php artisan about` |
-| U4 | `test@example.com` may exist | DB not opened | `php artisan tinker` existence check |
+| U4 | A legacy `test@example.com` account may still exist | DB not opened; the seeder was fixed 2026-10-24 but an older deployment may retain the row | `php artisan tinker` existence check ([17 §5.3](17-security-and-hardening.md#53-seeded-account--fixed-2026-10-24)) |
 | U5 | Sitemap may be staler than the DB | DB not opened | compare `/sitemap.xml` with `/insights` |
 | U6 | Cache headers may be absent | host unknown | `curl -I` on a `/build/` asset |
 | U7 | HTTP→HTTPS may not redirect | host unknown | `curl -I http://hansamgt.com` |
@@ -237,6 +237,11 @@ Recording these prevents a future reader from "fixing" something intentional.
 | `CLEARABLE_KEYS` excludes image keys | clearing an upload should restore the bundled logo | `Settings.php:18-44` |
 | No SVG uploads | SVG can carry script | all `FileUpload` definitions |
 | `unsafe-eval` only on admin | Filament/Livewire need it; the public site stays stricter | `SecurityHeaders.php:78-84` |
+| Admin access is a single `is_admin` boolean, not a role system | one binary decision is enough for a small staff; roles can layer on later | `User::canAccessPanel()`; `2026_10_24_000001_add_is_admin_to_users_table.php` |
+| `is_admin` is excluded from `$fillable` | prevents privilege escalation through forms, factories, or mass assignment | `User.php:23-27` |
+| The admin gate ignores `APP_ENV` | `local` must not turn every authenticated account into an admin | `User.php:59-62` |
+| `admin:create` refuses outside `local` | production administrator creation must be a deliberate operator action, not a command any deploy script can run | `CreateAdmin.php:25-29` |
+| `DatabaseSeeder` creates no users | removes the known-credential account and makes re-seeding safe | `DatabaseSeeder.php` |
 
 ---
 
@@ -253,7 +258,7 @@ The repository contains five pre-existing documents under `docs/`. They are **hi
 | `admin-panel-audit.md:275-276` | "`MAIL_FROM_ADDRESS` is still `hello@example.com` in `.env`" | still true in `.env.example:56`; live value unknown | **still open** |
 | `admin-panel-audit.md:263-269` | office phone/email duplication defects | fixed — `contact.blade.php` now guards each field | outdated |
 | `HANSA-website-migration-report.md:27` | "Filament v4.15.2" | exact version unverified (`composer.lock` not read) | unverified |
-| `HANSA-website-migration-report.md:161` | "Seeders … are idempotent" | the nine content seeders are; `DatabaseSeeder.php:20-23` is **not** | **partly incorrect** |
+| `HANSA-website-migration-report.md:161` | "Seeders … are idempotent" | true since 2026-10-24 — the non-idempotent `DatabaseSeeder` user block was removed | resolved |
 | `HANSA-website-migration-report.md:179` | "Requirements: … MySQL" | default is SQLite (`config/database.php:20`) | outdated |
 | `2026-10-15-work-report.md:4` | "Filament v4.15.2" | unverified | unverified |
 
@@ -270,7 +275,7 @@ Ordered by risk reduction per unit of effort. **Nothing here is implemented.**
 1. Confirm `APP_ENV=production`, `APP_DEBUG=false`.
 2. Set real mail transport + `MAIL_FROM_ADDRESS`; send a test.
 3. Run `php artisan storage:link`; verify an uploaded image loads.
-4. Check/remove `test@example.com`; rotate if present.
+4. Run `php artisan migrate`; confirm `is_admin = true` only on intended accounts and that no legacy `test@example.com` account remains.
 5. Revoke the legacy Google Maps key.
 6. Confirm HTTP→HTTPS redirect and `/.env` is not reachable.
 7. Confirm `SESSION_SECURE_COOKIE=true`.
@@ -284,7 +289,7 @@ Ordered by risk reduction per unit of effort. **Nothing here is implemented.**
 12. Add a contact honeypot/CAPTCHA and qualifying fields.
 13. Add `contact:prune` + schedule; align the policy.
 14. Add a daily log channel with a bounded retention.
-15. Fix the seeder to be idempotent.
+15. ~~Fix the seeder to be idempotent.~~ Done 2026-10-24: `DatabaseSeeder` no longer creates a user.
 16. Register `sitemap:generate` on a schedule.
 17. Remove or qualify the privacy policy's "limiting which colleagues can see enquiries" claim.
 
@@ -315,11 +320,12 @@ Ordered by risk reduction per unit of effort. **Nothing here is implemented.**
 
 | Severity | Count | Items |
 |---|---|---|
-| **High (launch blockers)** | 4 | B1 symlink, B2 mail, B3 authorization, B4 seeded account |
-| **Medium** | 10 | M1–M10 |
+| **High (launch blockers)** | 2 | B1 symlink, B2 mail |
+| **Medium** | 11 | B3 fine-grained authorization, M1–M10 |
 | **Low** | 21 | L1–L21 |
 | **Runtime-unverified** | 12 | U1–U12 |
-| **Deliberate decisions** | 15 | §5 |
+| **Resolved 2026-10-24** | 1 | B4 seeded account |
+| **Deliberate decisions** | 20 | §5 |
 | **Stale doc claims** | 10 | §6 |
 
 ---

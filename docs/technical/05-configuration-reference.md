@@ -2,7 +2,7 @@
 
 > **Purpose:** List every configuration key that affects behaviour, what it controls, its safe default, and how it interacts with the database `settings` table.
 > **Audience:** Developers, DevOps, and anyone preparing a production environment.
-> **Last reviewed:** 2026-10-19
+> **Last reviewed:** 2026-10-24
 > **Evidence basis:** All 13 files in `config/` were read (some partially, where only defaults matter), plus `.env.example`. **`.env` was not read** — it contains secrets and is excluded by policy.
 
 **Verification legend:** ✅ source-verified · 🟡 runtime-unverified · ⚠️ partial · ⛔ absent · ❓ unknown
@@ -20,7 +20,7 @@ The application has **two** configuration layers, and confusing them is the most
 | Environment/config | `.env` → `config/*.php` | infrastructure: DB, mail transport, app key, feature kill-switches | No (requires deploy) |
 | Database settings | `settings` table via `App\Support\Settings` | public site content: phone, email, address, social URLs, GA4 id, branding | Yes (admin panel) |
 
-`config/site.php:14-19` states the rule explicitly: secrets stay in `.env`; anything stored in `settings` is **public by definition** because a database row is readable by every admin and exposed in any database leak.
+`config/site.php:14-19` states the rule explicitly: secrets stay in `.env`; anything stored in `settings` is **public by definition** because a database row is readable by every `is_admin` account and exposed in any database leak.
 
 Resolution order for a site setting (`app/Support/Settings.php:167-186`):
 

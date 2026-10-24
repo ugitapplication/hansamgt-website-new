@@ -2,7 +2,7 @@
 
 > **Purpose:** Everything needed to deploy, run, and maintain the site: prerequisites, build, release steps, environment checklist, web-server configuration, backups, and rollback.
 > **Audience:** DevOps, hosting provider, and the developer on call.
-> **Last reviewed:** 2026-10-19
+> **Last reviewed:** 2026-10-24
 > **Evidence basis:** `composer.json`, `package.json`, `public/.htaccess`, `public/index.php`, `.env.example`, `bootstrap/app.php`, `config/*.php`, `docs/HANSA-website-migration-report.md`. **No deployment was performed and no server was inspected.**
 
 **Verification legend:** ✅ source-verified · 🟡 runtime-unverified · ⚠️ partial · ⛔ missing · ❓ unknown
@@ -73,7 +73,21 @@ php artisan optimize                 # config + route + view cache
 
 Then point the virtual host at `public/` and smoke-test (§8).
 
-⚠️ `php artisan db:seed --force` creates `test@example.com`. On a real deployment either skip seeding the user or delete it immediately. See [17 §5.3](17-security-and-hardening.md#53-seeded-account).
+⚠️ `php artisan db:seed --force` **no longer creates a user account** (since 2026-10-24). On a brand-new database the `users` table is empty; on an existing database every row gets `is_admin = 0`. Either way, nobody can enter `/admin` until an administrator is created deliberately.
+
+`php artisan admin:create` refuses to run outside `local`, so on production create the first administrator with a one-off `tinker` command (note `is_admin` is not mass assignable, hence `forceFill`):
+
+```bash
+php artisan tinker --execute='$u = App\Models\User::create(["name" => "Operations", "email" => "admin@hansamgt.com", "password" => bcrypt("REPLACE_WITH_A_STRONG_PASSWORD")]); $u->forceFill(["is_admin" => true])->save();'
+```
+
+Then verify:
+
+```bash
+php artisan tinker --execute='App\Models\User::where("is_admin", true)->pluck("email");'
+```
+
+Never commit the password. See [17 §4](17-security-and-hardening.md#4-authorization) and [17 §5.3](17-security-and-hardening.md#53-seeded-account--fixed-2026-10-24).
 
 ### 3.2 Subsequent deploys
 

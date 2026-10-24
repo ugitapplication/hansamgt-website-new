@@ -1,9 +1,9 @@
 # 11 — Admin Panel Reference
 
-> **Purpose:** Document the Filament v4 admin panel: access, navigation, all 10 resources, the custom settings page, the dashboard widget, and the authorization reality.
+> **Purpose:** Document the Filament v4 admin panel: access, the `is_admin` gate, navigation, all 10 resources, the custom settings page, the dashboard widget, and the remaining authorization gaps.
 > **Audience:** Administrators, developers, and security reviewers.
-> **Last reviewed:** 2026-10-19
-> **Evidence basis:** `app/Providers/Filament/AdminPanelProvider.php`, all 10 resources under `app/Filament/Resources/`, all **29** resource page classes (9 resources × list/create/edit + 2 for the read-only enquiry resource), `app/Filament/Pages/ManageSettings.php`, `app/Filament/Widgets/DashboardStats.php`, `config/auth.php`, `app/Models/User.php`. The panel was **not rendered** (no shell/browser).
+> **Last reviewed:** 2026-10-24
+> **Evidence basis:** `app/Providers/Filament/AdminPanelProvider.php`, all 10 resources under `app/Filament/Resources/`, all **29** resource page classes (9 resources × list/create/edit + 2 for the read-only enquiry resource), `app/Filament/Pages/ManageSettings.php`, `app/Filament/Widgets/DashboardStats.php`, `config/auth.php`, `app/Models/User.php`, `database/migrations/2026_10_24_000001_add_is_admin_to_users_table.php`, `app/Console/Commands/CreateAdmin.php`, `tests/Feature/Admin/`. The panel was **not rendered** (no shell/browser).
 
 **Verification legend:** ✅ source-verified · 🟡 runtime-unverified · ⚠️ partial · ⛔ missing · ❓ unknown
 
@@ -23,39 +23,52 @@
 | Colour | Amber | 31 |
 | Auth guard | `web` (session, Eloquent `users`) | `config/auth.php:40-45` |
 | Auth middleware | `Filament\Http\Middleware\Authenticate` | `AdminPanelProvider.php:61-63` |
+| Admin gate | `User implements FilamentUser`; `canAccessPanel()` returns `true` only for the `admin` panel **and** `is_admin = true` | `app/Models/User.php:13,59-62` |
+| Admin flag | `users.is_admin` boolean, `NOT NULL DEFAULT 0` | `database/migrations/2026_10_24_000001_add_is_admin_to_users_table.php` |
+| Account creation | `php artisan admin:create` (local only) or a deliberate `tinker` update; **no UI** | `app/Console/Commands/CreateAdmin.php` |
 
-**Who can log in:** any row in `users` with a password. There is no `is_admin` flag, no role column, no allow-list. Accounts are created only by seeder/factory/tinker — there is **no user-management UI**. ⛔
+**Who can log in:** any row in `users` with a password can authenticate, but the panel middleware additionally requires `is_admin = true`. A logged-in non-admin is rejected with **HTTP 403**; a guest is redirected to `/admin/login`. `is_admin` is deliberately **not** mass assignable. Accounts are created only by `admin:create` (local development), `tinker`, or `UserFactory` in tests — there is still **no user-management UI**. ⛔
+
+The check is independent of `APP_ENV`: `APP_ENV=local` does **not** grant panel access to ordinary accounts.
+
+```bash
+php artisan migrate          # adds users.is_admin (default 0)
+php artisan admin:create     # interactive; refuses outside APP_ENV=local
+```
 
 ---
 
 ## 2. Authorization reality
 
-This section is deliberately blunt because it is the panel's largest risk.
+This section is deliberately blunt because it is the panel's largest remaining risk.
 
 | Control | Status |
 |---|---|
 | Authentication | ✅ Filament login |
-| Role-based access control | ⛔ **none** |
+| Panel access gate | ✅ `FilamentUser::canAccessPanel()` requires `is_admin` |
+| Role-based access control | ⛔ **none** — the flag is binary |
 | Policies | ⛔ no `app/Policies` directory |
 | Gates | ⛔ no `Gate::define` anywhere in `app/` |
 | `authorize()` / `can()` calls | ⛔ none |
 | Per-resource permission checks | ⛔ none |
 | Field-level permissions | ⛔ none |
-| User management | ⛔ none |
+| User management | ⛔ none (CLI only) |
 | Audit log | ⛔ none |
 | IP allow-list | ⛔ none |
 | 2FA | ⛔ none |
 
 **Consequences:**
 
-1. A marketing editor cannot be prevented from reading enquiry PII.
-2. Any admin can delete any post, project, office, or submission.
-3. A compromised account has full control of public content and all stored enquiries.
+1. Any account with `is_admin = true` can read every enquiry and change or delete any content.
+2. A marketing editor cannot be given access without also giving them enquiry PII.
+3. A compromised admin account has full control of public content and all stored enquiries.
 4. There is no record of who changed or deleted what.
 
-Authentication alone is **not** fine-grained access control. Any statement that "only authorised staff can access the admin" means only "only people with a `users` row can log in".
+The `is_admin` gate answers **"may this person enter `/admin` at all?"** It does **not** answer "may this person see enquiries but not edit content?". Every admin is still all-powerful once inside.
 
-Severity: **High**. Mitigations available today are operational (strong unique passwords, restrict `/admin` by IP/proxy, keep the user table minimal), not application-level.
+Severity: **Medium** for panel access (previously High), **High** for the absence of per-resource controls whenever more than one person holds `is_admin`. Mitigations available today are operational (keep the admin list minimal, strong unique passwords, restrict `/admin` by IP/proxy).
+
+**Proper fix (not applied):** add roles/policies or a permission package, and gate `ContactSubmissionResource` and destructive actions.
 
 ---
 
@@ -303,7 +316,8 @@ Purpose: allow a single field to hold either a `public/`-relative legacy path or
 
 | Capability | Status |
 |---|---|
-| Manage users / invite editors | ⛔ |
+| Manage users / invite editors | ⛔ (create via `admin:create` / tinker only) |
+| Grant or revoke `is_admin` | ⛔ (CLI only; `is_admin` is not mass assignable) |
 | Reset a password | ⛔ (no UI; must use tinker/CLI) |
 | Assign roles | ⛔ |
 | View an audit trail | ⛔ |
@@ -323,13 +337,16 @@ Purpose: allow a single field to hold either a `public/`-relative legacy path or
 
 | Area | Tests |
 |---|---|
-| Admin login | ⛔ |
+| Admin login | ✅ `AdminAccessTest` — guest redirect, login page reachable |
+| Authorization | ✅ `AdminAccessTest` — non-admin 403, admin 200, local-env denial, mass assignment |
+| Admin command | ✅ `CreateAdminCommandTest` — local-only guard, creation, password mismatch, existing email |
 | Any resource CRUD | ⛔ |
-| Authorization | ⛔ (nothing to test) |
 | Upload handling | ⛔ |
 | Dashboard counts | ⛔ |
 
-⛔ **The entire admin panel has zero automated tests.** See [19 — Testing & QA](19-testing-and-qa.md#4-coverage-map).
+⚠️ These tests were **authored but not executed** in the documentation environment (shell unavailable). Their pass/fail status is unverified; see [19 — Testing & QA](19-testing-and-qa.md#4-coverage-map).
+
+The panel's **access gate** is covered. Resource CRUD, uploads and dashboard counts remain untested.
 
 ---
 
@@ -338,7 +355,7 @@ Purpose: allow a single field to hold either a `public/`-relative legacy path or
 - The panel was not rendered; field behaviour (conditional visibility, live slug generation) is source-derived.
 - Filament v4 exact minor version unknown.
 - Generated route slugs for resources without an explicit `$slug` are inferred, not observed.
-- Whether the deployed `users` table has more than the seeded test account is unknown.
+- Whether the deployed `users` table has been migrated (`is_admin`) and which rows carry `is_admin = true` is unknown (no production DB access).
 - No screenshot or browser verification of the UI exists.
 
 ---

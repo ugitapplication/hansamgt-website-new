@@ -2,8 +2,8 @@
 
 > **Purpose:** Document exactly what is tested, what is not, how to run the suite, and how much confidence each test actually provides.
 > **Audience:** Developers and reviewers.
-> **Last reviewed:** 2026-10-19
-> **Evidence basis:** `phpunit.xml`, all 9 test files under `tests/` (read in full), `tests/TestCase.php`, `composer.json` test script. **The suite was not executed** — shell unavailable (exit code 66).
+> **Last reviewed:** 2026-10-24
+> **Evidence basis:** `phpunit.xml`, all 11 test files under `tests/` (read in full), `tests/TestCase.php`, `composer.json` test script. **The suite was not executed** — shell unavailable (exit code 66).
 
 **Verification legend:** ✅ source-verified · 🟡 runtime-unverified · ⚠️ partial · ⛔ missing · ❓ unknown
 
@@ -14,16 +14,16 @@
 | Metric | Value |
 |---|---|
 | Test framework | PHPUnit `^11.5.50` |
-| Test files | **9** (plus `TestCase.php`) |
-| Test methods | **59** |
-| Suites | `Unit` (3 files), `Feature` (6 files) |
+| Test files | **11** (plus `TestCase.php`) |
+| Test methods | **72** |
+| Suites | `Unit` (3 files), `Feature` (8 files) |
 | Database | SQLite `:memory:` |
 | Refresh strategy | `RefreshDatabase` on feature tests that need it |
 | Coverage driver | ❓ not configured in `phpunit.xml` |
 | Last executed | **Unknown** — no run was possible |
 | CI | ⛔ none |
 
-**59 methods is not 59 tests.** Three methods use `#[DataProvider]`, so the executed case count is higher:
+**72 methods is not 72 tests.** Three methods use `#[DataProvider]`, so the executed case count is higher:
 
 | File | Methods | Data-provider cases | Effective cases |
 |---|---|---|---|
@@ -34,10 +34,12 @@
 | `SettingsCacheTest` | 10 | — | 10 |
 | `OfficeMapPageTest` | 16 | — | 16 |
 | `StaticAssetCacheHeadersTest` | 6 | — | 6 |
+| `AdminAccessTest` | 9 | — | 9 |
+| `CreateAdminCommandTest` | 4 | — | 4 |
 | `ExampleTest` (Unit) | 1 | — | 1 |
 | `ExampleTest` (Feature) | 1 | — | 1 |
 
-🟡 Effective count = **85 test cases** (59 methods − 3 provider methods + 16 + 5 + 8 provider cases). The exact number depends on provider cardinality at runtime.
+🟡 Effective count = **98 test cases** (72 methods − 3 provider methods + 16 + 5 + 8 provider cases). The exact number depends on provider cardinality at runtime.
 
 ---
 
@@ -134,6 +136,35 @@ Reads `public/.htaccess` as **text** and asserts directives are present/absent.
 
 ⚠️ **It proves the file's contents, not the served headers.** The test's own docblock says so (10-15). On Nginx these rules do nothing and the test still passes.
 
+### 2.10 `tests/Feature/Admin/AdminAccessTest.php` — 9 methods
+
+Uses `RefreshDatabase` and `UserFactory`. Administrator rows are created with `forceFill(['is_admin' => true])` because `is_admin` is not mass assignable.
+
+| Test | Asserts |
+|---|---|
+| guest redirect | `GET /admin` → `filament.admin.auth.login` |
+| login page | `/admin/login` returns 200 |
+| non-admin dashboard | authenticated non-admin → **403** |
+| non-admin sensitive pages | `/admin/settings`, `/admin/contact-submissions` → **403** |
+| admin dashboard | `is_admin` → 200 |
+| admin settings | `is_admin` → 200 |
+| local environment | non-admin still **403** with `app.env = local` |
+| mass assignment | `is_admin` not in `$fillable`; `User::create(['is_admin' => true])` stays false |
+| seeder regression | `DatabaseSeeder` creates no users and no `test@example.com` |
+
+⚠️ Authored but **not executed** in this environment.
+
+### 2.11 `tests/Feature/Admin/CreateAdminCommandTest.php` — 4 methods
+
+| Test | Asserts |
+|---|---|
+| refuses outside local | `admin:create` fails with a clear message; no user row |
+| creates an admin | prompts answered; row has `is_admin = true`, a valid hash, and panel access |
+| password mismatch | fails on `confirmed`; no user row |
+| existing email | fails on `unique`; the existing user is **not** promoted |
+
+⚠️ Authored but **not executed** in this environment.
+
 ---
 
 ## 3. How to run
@@ -196,7 +227,8 @@ php artisan test --coverage        # requires xdebug or pcov
 | **Contact form POST** | ⛔ **none** | validation, persistence, mail, throttle |
 | **Insights detail** | ⛔ none | 404, unpublished, related, schema |
 | **RSS feed** | ⛔ none | XML validity |
-| **Admin panel** | ⛔ none | login, CRUD, uploads, authorization |
+| **Admin panel** | ⚠️ access gate only (`AdminAccessTest`) | resource CRUD, uploads, dashboard counts |
+| **Admin command** | ✅ `CreateAdminCommandTest` — local-only guard, creation, mismatch, existing email | — |
 | **Redirects** | ⛔ none | `/index.php/*`, `/home/*` |
 | **Security headers** | ⚠️ only CSP frame-src | full header set |
 | **JSON-LD** | ⛔ none | parse/validity |
@@ -205,9 +237,9 @@ php artisan test --coverage        # requires xdebug or pcov
 | **Consent gating** | ⛔ none | `analyticsEnabled()` matrix |
 | **SEO metadata** | ⛔ none | title/description/canonical presence |
 | **404 / 500 pages** | ⛔ none | — |
-| **Authorization** | ⛔ nothing to test | no RBAC exists |
+| **Authorization** | ✅ `AdminAccessTest` — guest redirect, login page, non-admin 403, admin 200, local-env denial, mass assignment | per-resource policies (none exist) |
 
-**Estimated line coverage: low.** Roughly half the `app/` surface is untouched — controllers, the contact pipeline, all Filament classes, the console command, and the middleware (except CSP).
+**Estimated line coverage: low.** Roughly half the `app/` surface is untouched — controllers, the contact pipeline, most Filament resource classes, and the middleware (except CSP). The admin access gate and the `admin:create` command now have tests; the console sitemap command still does not.
 
 ---
 
@@ -218,7 +250,7 @@ Ordered by risk, not effort:
 1. **`ContactController::store`** — success path writes a row and sends 2 mails (`Mail::fake`); validation errors; throttle returns 429; mail exception still returns success.
 2. **`InsightController::show`** — 200 for published, 404 for draft, 404 for future date, related posts exclude self.
 3. **`Consent::analyticsEnabled`** — 4-case matrix (env off, setting off, no id, all on).
-4. **Admin authorization** — currently impossible; a test asserting "a second user cannot access X" would document the absence and catch a future regression.
+4. **Admin CRUD and uploads** — the access gate is now covered by `tests/Feature/Admin/AdminAccessTest.php`; the remaining gap is resource CRUD, upload handling, and dashboard counts.
 5. **`GenerateSitemap`** — run the command, assert the XML contains each static path plus published posts and excludes drafts.
 6. **Redirects** — `GET /index.php/home/history` → 301 `/company-profile`, query preserved.
 7. **Security headers** — assert the full set on a public response and on `/admin`.
@@ -242,7 +274,7 @@ Ordered by risk, not effort:
 
 - Two placeholder `ExampleTest` files remain.
 - No test touches the contact form — the only public write path.
-- No admin tests at all.
+- The admin access gate and `admin:create` now have tests; resource CRUD and uploads do not.
 - No browser/DOM tests, so JS behaviour is untested.
 - No coverage threshold enforced.
 - No CI, so tests only run when a developer remembers.
@@ -275,6 +307,10 @@ Not automated; recommended before a release.
 ### Admin
 
 - [ ] `/admin` redirects to login when logged out
+- [ ] A logged-in non-admin gets 403 on `/admin` and `/admin/settings`
+- [ ] An `is_admin` user reaches the dashboard and settings
+- [ ] `is_admin` cannot be set through mass assignment
+- [ ] `admin:create` refuses to run outside `local`
 - [ ] Login works; logout works
 - [ ] Each of the 10 resources lists, creates, edits, deletes
 - [ ] Image upload previews and saves

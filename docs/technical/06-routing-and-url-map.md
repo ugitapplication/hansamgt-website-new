@@ -2,7 +2,7 @@
 
 > **Purpose:** Document every declared route, how URLs map to controllers, how legacy CodeIgniter URLs are redirected, and where to add a new page.
 > **Audience:** Backend developers, SEO/marketing, and anyone debugging a 404 or redirect.
-> **Last reviewed:** 2026-10-19
+> **Last reviewed:** 2026-10-24
 > **Evidence basis:** `routes/web.php`, `routes/console.php`, `bootstrap/app.php`, `app/Http/Middleware/RedirectIndexPhp.php`, `public/.htaccess`, `public/robots.txt` — all read in full. Routes were **not** confirmed with `php artisan route:list` (shell unavailable).
 
 **Verification legend:** ✅ source-verified · 🟡 runtime-unverified · ⚠️ partial · ⛔ missing · 🕓 legacy · ❓ unknown
@@ -166,22 +166,24 @@ Filament registers its own routes under `/admin` from `app/Providers/Filament/Ad
 | URI pattern | Purpose | Auth |
 |---|---|---|
 | `/admin/login` | Filament login | public |
-| `/admin` | Dashboard | `Filament\Http\Middleware\Authenticate` |
-| `/admin/posts`, `/admin/posts/create`, `/admin/posts/{record}/edit` | Insights | authenticated |
-| `/admin/projects`, `/admin/projects/create`, `/admin/projects/{record}/edit` | Projects | authenticated |
-| `/admin/gallery-images`, `/admin/gallery-images/create`, `/admin/gallery-images/{record}/edit` | Gallery | authenticated |
-| `/admin/team-members`, `/admin/team-members/create`, `/admin/team-members/{record}/edit` | Team | authenticated |
-| `/admin/hero-slides`, `/admin/hero-slides/create`, `/admin/hero-slides/{record}/edit` | Hero | authenticated |
-| `/admin/clients`, `/admin/clients/create`, `/admin/clients/{record}/edit` | Clients | authenticated |
-| `/admin/concerns`, `/admin/concerns/create`, `/admin/concerns/{record}/edit` | Concerns | authenticated |
-| `/admin/homepage-section-items`, `/admin/homepage-section-items/create`, `/admin/homepage-section-items/{record}/edit` | Homepage sections | authenticated |
-| `/admin/offices`, `/admin/offices/create`, `/admin/offices/{record}/edit` | Offices | authenticated |
-| `/admin/contact-submissions`, `/admin/contact-submissions/{record}` | Enquiries (list + view only) | authenticated |
-| `/admin/settings` | Site Settings | authenticated |
+| `/admin` | Dashboard | `is_admin` + authenticated |
+| `/admin/posts`, `/admin/posts/create`, `/admin/posts/{record}/edit` | Insights | `is_admin` + authenticated |
+| `/admin/projects`, `/admin/projects/create`, `/admin/projects/{record}/edit` | Projects | `is_admin` + authenticated |
+| `/admin/gallery-images`, `/admin/gallery-images/create`, `/admin/gallery-images/{record}/edit` | Gallery | `is_admin` + authenticated |
+| `/admin/team-members`, `/admin/team-members/create`, `/admin/team-members/{record}/edit` | Team | `is_admin` + authenticated |
+| `/admin/hero-slides`, `/admin/hero-slides/create`, `/admin/hero-slides/{record}/edit` | Hero | `is_admin` + authenticated |
+| `/admin/clients`, `/admin/clients/create`, `/admin/clients/{record}/edit` | Clients | `is_admin` + authenticated |
+| `/admin/concerns`, `/admin/concerns/create`, `/admin/concerns/{record}/edit` | Concerns | `is_admin` + authenticated |
+| `/admin/homepage-section-items`, `/admin/homepage-section-items/create`, `/admin/homepage-section-items/{record}/edit` | Homepage sections | `is_admin` + authenticated |
+| `/admin/offices`, `/admin/offices/create`, `/admin/offices/{record}/edit` | Offices | `is_admin` + authenticated |
+| `/admin/contact-submissions`, `/admin/contact-submissions/{record}` | Enquiries (list + view only) | `is_admin` + authenticated |
+| `/admin/settings` | Site Settings | `is_admin` + authenticated |
 
 Slugs are **derived from the resource class name** by Filament unless overridden. Two are explicitly overridden: `TeamMemberResource::$slug = 'team-members'` (`TeamMemberResource.php:32`) and `HomepageSectionItemResource::$slug = 'homepage-section-items'` (`HomepageSectionItemResource.php:33`). The rest follow Filament's pluralised kebab-case convention. ⚠️ Exact generated slugs for the non-overridden resources were **not runtime-confirmed**; they follow Filament v4 defaults from the class names (`PostResource` → `posts`, `GalleryResource` → `galleries`, `HeroSlideResource` → `hero-slides`, `ClientResource` → `clients`, `ConcernResource` → `concerns`, `OfficeResource` → `offices`, `ContactSubmissionResource` → `contact-submissions`).
 
 `AdminPanelProvider` enables `->login()` only (line 29). ⛔ No `->passwordReset()`, no `->registration()`, no `->profile()`.
+
+All panel routes except `/admin/login` require **both** an authenticated session and `User::canAccessPanel()` — i.e. `is_admin = true` (`app/Models/User.php:59-62`). A guest is redirected to `/admin/login`; a logged-in non-admin receives **403**. The gate is independent of `APP_ENV`.
 
 ---
 

@@ -2,7 +2,7 @@
 
 > **Purpose:** Document the enquiry pipeline end to end — form, validation, persistence, mail, admin inbox, and the privacy/retention gaps.
 > **Audience:** Developers, operations staff who triage enquiries, and anyone assessing PII handling.
-> **Last reviewed:** 2026-10-19
+> **Last reviewed:** 2026-10-24
 > **Evidence basis:** `app/Http/Controllers/ContactController.php`, `resources/views/pages/partials/_contact-form.blade.php`, `resources/views/pages/home/sections/_contact.blade.php`, `resources/views/pages/contact.blade.php`, `resources/views/emails/contact-admin.blade.php`, `resources/views/emails/contact-confirmation.blade.php`, `app/Filament/Resources/ContactSubmissions/ContactSubmissionResource.php`, `app/Filament/Pages/ManageSettings.php:91-108`, `database/migrations/2026_10_15_000002_create_contact_submissions_table.php`, `routes/web.php:16-18`.
 
 **Verification legend:** ✅ source-verified · 🟡 runtime-unverified · ⚠️ partial · ⛔ missing · ❓ unknown
@@ -250,7 +250,7 @@ Personally identifiable: name, email, phone, free-text message. Plus `created_at
 
 ### 9.3 Access control
 
-Every authenticated admin can read every enquiry. There is no role separation, so a content editor necessarily sees PII. See [17 — Security](17-security-and-hardening.md#4-authorization).
+Every `is_admin` account can read every enquiry. There is no role separation, so a content editor necessarily sees PII. See [17 — Security](17-security-and-hardening.md#4-authorization).
 
 ### 9.4 Logging risk
 

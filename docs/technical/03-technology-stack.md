@@ -2,7 +2,7 @@
 
 > **Purpose:** State exactly what the application is built on, what each dependency is used for, and — equally important — what is *not* used despite being installed.
 > **Audience:** New developers, reviewers, and procurement/security assessors.
-> **Last reviewed:** 2026-10-19
+> **Last reviewed:** 2026-10-24
 > **Evidence basis:** `composer.json`, `package.json`, `vite.config.js`, `phpunit.xml`, `config/*.php`, `vendor/composer/installed.json` (package names only). No dependency audit or build was run.
 
 **Verification legend:** ✅ source-verified · 🟡 runtime-unverified · ⚠️ partial · ⛔ not used/absent · ❓ unknown
@@ -29,7 +29,7 @@
 | Routing (api) | ⛔ | no `routes/api.php` |
 | Eloquent ORM | ✅ | 12 models |
 | Query builder | ✅ | via Eloquent scopes |
-| Migrations | ✅ | 15 files |
+| Migrations | ✅ | 16 files |
 | Seeders & factories | ✅ | 10 seeders, `UserFactory` |
 | Blade | ✅ | ~54 views |
 | Middleware | ✅ | 2 custom + framework |
@@ -49,7 +49,7 @@
 | Broadcasting | ⛔ | none |
 | API resources | ⛔ | none |
 | Localization | ⚠️ | locale `en` only; no `lang/` overrides |
-| Testing | ✅ | PHPUnit 11, 9 files |
+| Testing | ✅ | PHPUnit 11, 11 files |
 
 ---
 
@@ -65,6 +65,7 @@
 | Nav groups | Content, Homepage Management, Settings, Operations (38-48) |
 | Middleware | EncryptCookies, AddQueuedCookies, StartSession, AuthenticateSession, ShareErrors, VerifyCsrfToken, SubstituteBindings, DisableBladeIconComponents, DispatchServingFilamentEvent (50-60) |
 | Auth middleware | `Filament\Http\Middleware\Authenticate` (61-63) |
+| Admin gate | `User implements FilamentUser`; `canAccessPanel()` requires `is_admin = true` (`User.php:13,59-62`) |
 | Extra plugins | **none** — no Shield, no Spatie Permission, no media library, no activity log |
 
 Filament v4 API surface used: `Filament\Schemas\Schema`, `Filament\Schemas\Components\{Section, Tabs, Tab, Form, Actions, EmbeddedSchema}`, `Filament\Forms\Components\*`, `Filament\Tables\Columns\*`, `Filament\Actions\*`, `Filament\Infolists\Components\TextEntry`. ✅ (read in source; not rendered)
@@ -182,7 +183,7 @@ Also installed but not exercised: Pint (formatting), Sail (Docker — no compose
 |---|---|---|
 | `phpunit/phpunit` | tests | ✅ |
 | `fakerphp/faker` | `UserFactory` | ✅ seeders |
-| `mockery/mockery` | test doubles | ⚠️ not used in the 9 test files read |
+| `mockery/mockery` | test doubles | ⚠️ not used directly in the 11 test files read |
 | `nunomaduro/collision` | CLI error output | ✅ framework |
 | `laravel/pint` | code style | ⚠️ no CI runs it |
 | `laravel/sail` | Docker dev | ❓ no compose file inspected |

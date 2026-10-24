@@ -2,7 +2,7 @@
 
 > **Purpose:** Explain how a request becomes a page: entry point, bootstrap, middleware, routing, controllers, models, views, and the fallback strategy that shapes the whole application.
 > **Audience:** Developers joining the project, and reviewers assessing structural risk.
-> **Last reviewed:** 2026-10-19
+> **Last reviewed:** 2026-10-24
 > **Evidence basis:** `public/index.php`, `bootstrap/app.php`, `bootstrap/providers.php`, `routes/web.php`, `routes/console.php`, `app/Http/Controllers/*`, `app/Http/Middleware/*`, `app/Models/*`, `app/Support/*`, `app/Providers/*`, `resources/views/layouts/app.blade.php`. Nothing was executed.
 
 **Verification legend:** ✅ source-verified · 🟡 runtime-unverified · ⚠️ partial · ⛔ missing · ❓ unknown
@@ -31,7 +31,7 @@ This is a **classic server-rendered Laravel monolith** with one admin panel bolt
 | Filament pages | 1 custom | `app/Filament/Pages/` |
 | Filament widgets | 1 | `app/Filament/Widgets/` |
 | Blade views | ~54 | `resources/views/` |
-| Migrations | 15 | `database/migrations/` |
+| Migrations | 16 | `database/migrations/` |
 
 ⛔ Absent: `app/Http/Requests`, `app/Policies`, `app/Events`, `app/Listeners`, `app/Jobs`, `app/Notifications`, `app/Mail`, `app/Observers`, `app/Enums`, `app/Casts`, `app/View`, `app/Exceptions`, `routes/api.php`, `routes/channels.php`.
 
@@ -332,7 +332,7 @@ flowchart LR
 - Each resource = model + form schema + table + 3 page classes (list/create/edit), except `ContactSubmissionResource` (list/view only).
 - `ManageSettings` is a custom `Page` with a 5-tab form, saving through `Settings::setMany()`.
 - `DashboardStats` is a `StatsOverviewWidget` with 5 counts.
-- **No policies, no gates** — Filament's default is "authenticated = allowed". See [11 §2](11-admin-panel-reference.md#2-authorization-reality).
+- **No policies, no gates.** Panel access is gated by `User::canAccessPanel()` (`is_admin = true`); once inside, every admin is allowed everything. See [11 §2](11-admin-panel-reference.md#2-authorization-reality).
 
 ---
 
@@ -342,6 +342,7 @@ flowchart LR
 |---|---|---|
 | `inspire` | `routes/console.php:6-8` | n/a (framework demo) |
 | `sitemap:generate` | `app/Console/Commands/GenerateSitemap.php` | ⛔ **never** |
+| `admin:create` | `app/Console/Commands/CreateAdmin.php` | n/a (interactive; local only) |
 
 `routes/console.php` is 8 lines and registers no schedule. There is no `app/Console/Kernel.php` (Laravel 12 style).
 
@@ -389,7 +390,7 @@ The rule is documented in `config/site.php:14-19` and is genuinely followed: no 
 |---|---|
 | God controller (`HomeController`, 500 lines) | hard to test, easy to break |
 | Fallback masks failures | outages are invisible |
-| No authorization layer | any admin can do anything |
+| No fine-grained authorization | any `is_admin` account can do anything |
 | No service/domain layer | business rules live in controllers and Blade |
 | Static support classes | hard to mock; global state |
 | No events/jobs | nothing is decoupled; everything is synchronous |

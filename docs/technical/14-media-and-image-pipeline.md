@@ -2,7 +2,7 @@
 
 > **Purpose:** Explain how images are stored, resolved, served, and where the pipeline currently breaks in a fresh deployment.
 > **Audience:** Developers, DevOps, and content editors uploading images.
-> **Last reviewed:** 2026-10-19
+> **Last reviewed:** 2026-10-24
 > **Evidence basis:** `app/Support/ImageUrl.php` (read in full), all 10 Filament resources' `FileUpload` definitions, `config/filesystems.php`, `public/.htaccess`, filesystem glob of `public/` and `storage/app/public/`. **No upload was performed.**
 
 **Verification legend:** ✅ source-verified · 🟡 runtime-unverified · ⚠️ partial · ⛔ missing · ❓ unknown
@@ -184,7 +184,7 @@ flowchart TD
 php artisan storage:link
 ```
 
-This is a **deployment step**, not a code change. It must run on every environment, and `composer setup` should arguably include it. Recorded as a launch blocker in [21 — Known Issues](21-known-issues-decisions-and-roadmap.md#1-launch-blockers).
+This is a **deployment step**, not a code change. It must run on every environment, and `composer setup` should arguably include it. Recorded as a launch blocker in [21 — Known Issues](21-known-issues-decisions-and-roadmap.md#1-launch-blockers-and-resolved-items).
 
 ---
 

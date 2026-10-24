@@ -2,7 +2,7 @@
 
 > **Purpose:** Document the `settings` table module: every key, its tab in the admin panel, clear-vs-default semantics, caching, image handling, and the test-email action.
 > **Audience:** Developers and administrators.
-> **Last reviewed:** 2026-10-19
+> **Last reviewed:** 2026-10-24
 > **Evidence basis:** `app/Support/Settings.php` (402 lines, read in full), `app/Filament/Pages/ManageSettings.php` (read to line 364), `config/site.php`, `database/migrations/2026_10_17_000002_create_settings_table.php`, `tests/Feature/SettingsCacheTest.php`.
 
 **Verification legend:** ✅ source-verified · 🟡 runtime-unverified · ⚠️ partial · ⛔ missing · ❓ unknown
@@ -13,7 +13,7 @@
 
 Before this module existed, the logo, phone number, email, address and social links were duplicated across the header, footer, contact page and SEO partial. `settings` centralises them into one key/value table editable at **Settings → Site Settings** (`/admin/settings`).
 
-**Design rule** (`config/site.php:14-19`): only **public** values live in the table. Secrets — mail credentials, `APP_KEY`, database credentials — stay in `.env` and are deliberately not editable, because a database row is plaintext, readable by every admin, and stolen with any database leak.
+**Design rule** (`config/site.php:14-19`): only **public** values live in the table. Secrets — mail credentials, `APP_KEY`, database credentials — stay in `.env` and are deliberately not editable, because a database row is plaintext, readable by every `is_admin` account, and stolen with any database leak.
 
 ---
 
