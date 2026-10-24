@@ -27,3 +27,6 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/storage/app/google-analytics/service-account.json
+/storage/app/google-analytics/*.json
+website_comparison.md
