@@ -22,6 +22,8 @@
 
     @include('partials.footer')
 
+    @include('pages.home.sections._rail')
+
     @include('partials.whatsapp-float')
 
     @include('partials.consent')

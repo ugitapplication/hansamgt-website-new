@@ -106,7 +106,7 @@ work can be scheduled and verified.
 | Business Concerns | `sections/_concerns.blade.php` | Database-backed (Concern) — **already editable** |
 | Let's Talk form | `sections/_contact.blade.php` | Form markup (no data) |
 | Offices | `sections/_offices.blade.php` | 4 offices — title, address, landline |
-| Quick-link rail | `sections/_rail.blade.php` | 6 in-page anchor links (structural — fine to leave in code) |
+| Quick-link rail | `sections/_rail.blade.php` | 7 homepage anchor links, rendered site-wide from the layout (structural — fine to leave in code) |
 
 ### 4.3 Inner pages
 

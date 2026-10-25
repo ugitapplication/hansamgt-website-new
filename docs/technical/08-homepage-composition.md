@@ -29,9 +29,8 @@
 | 12 | `_contact` | enquiry form | static form, POST `/contact` |
 | 13 | `partials/office-map` | click-to-load maps | DB `offices` with coordinates |
 | 14 | `_offices` | office cards | DB `offices` + `DEFAULT_OFFICES` |
-| 15 | `_rail` | 7 anchor links | static |
 
-> Note: the list has **15 includes** but 14 live in `pages/home/sections/`; `office-map` is a shared partial. Prior documents describe "14 sections" — that counts the section partials only.
+> Note: the list has **14 includes** but 13 live in `pages/home/sections/`; `office-map` is a shared partial. The floating quick-link rail (`_rail`) is shared chrome rendered from `layouts/app.blade.php`, so it is not a homepage section.
 
 ---
 
@@ -147,8 +146,9 @@ Each Blade partial then applies its **own** hard-coded fallback when its array i
 
 ### 3.15 Rail (`_rail.blade.php`)
 
-- 7 anchor links to page sections.
-- Smooth scroll + active-state highlighting (`app.js:349-368`).
+- Shared chrome, rendered from `layouts/app.blade.php` on every public page.
+- 7 links to homepage sections; on the homepage `app.js` smooth-scrolls, and on inner pages the browser follows the absolute homepage anchor.
+- Smooth scroll (`app.js:349-368`).
 
 ---
 

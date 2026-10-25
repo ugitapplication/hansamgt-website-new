@@ -1,4 +1,9 @@
-{{-- Floating quick-link rail (legacy: wpfm floating menu in Footer.php; homepage only) --}}
+{{-- Global floating quick-link rail (legacy: wpfm floating menu).
+
+     Included from layouts/app.blade.php so it appears on every public page, as
+     the legacy menu did. The links always point at homepage sections; on the
+     homepage app.js smooth-scrolls to the target, and on every other page the
+     browser simply follows the href. --}}
 @php
     $railLinks = [
         ['href' => '#what_we_do', 'label' => 'Our Services', 'pill' => 'OUR SERVICES', 'icon' => '<circle cx="12" cy="8" r="3.2"/><path d="M5.5 19c1.2-3.2 3.6-4.8 6.5-4.8s5.3 1.6 6.5 4.8"/>'],
@@ -10,7 +15,7 @@
         ['href' => '#emr_contact', 'label' => 'Contact Us', 'pill' => 'CONTACT US', 'icon' => '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>'],
     ];
 @endphp
-<nav class="home-rail" aria-label="Homepage sections">
+<nav class="home-rail" aria-label="Quick links">
     @foreach ($railLinks as $link)
         <a href="{{ url('/') . $link['href'] }}" title="{{ $link['label'] }}" aria-label="{{ $link['label'] }}" data-rail-link>
             <span class="rail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{!! $link['icon'] !!}</svg></span>

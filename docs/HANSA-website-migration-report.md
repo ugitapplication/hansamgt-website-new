@@ -75,7 +75,7 @@ site; heavy plugins replaced with lightweight equivalents:
 | Latest News (2 training items) | Slick carousel | Static grid linking to service pages (`_news`) |
 | Let's Talk form | AJAX to `sendData` | POST to `/contact` with validation (`_contact`) |
 | Office blocks (4) | Address carousel + Google Map | Static cards (map omitted by design) (`_offices`) |
-| Quick-link rail (7 anchors) | Floating menu | Homepage-only smooth-scroll rail (`_rail`) |
+| Quick-link rail (7 anchors) | Floating menu | Site-wide rail linking to homepage sections (`_rail`, included from the layout) |
 
 Shared chrome: sticky desktop/mobile header with Unique Group banner,
 skip link, black 4-column footer (brand, services, company, contact +

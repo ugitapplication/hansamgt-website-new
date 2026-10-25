@@ -39,5 +39,4 @@
     @include('pages.home.sections._contact')
     @include('partials.office-map', ['offices' => $offices ?? []])
     @include('pages.home.sections._offices')
-    @include('pages.home.sections._rail')
 @endsection
