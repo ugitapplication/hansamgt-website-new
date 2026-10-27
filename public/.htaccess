@@ -35,7 +35,10 @@
     RewriteRule ^index\.php/home/index/?$ / [L,R=301,QSA,NC]
     RewriteRule ^index\.php/home/?$ / [L,R=301,QSA,NC]
     RewriteRule ^index\.php/(company-profile|mission-vision|charter-of-unique-group|management|corporate-social-responsibility|contact|hospitality-management|security-fire-life-safety|cleaning-white-glove-housekeeping|mep-mechanical-electrical-plumbing|projects|gallery)/?$ /$1 [L,R=301,QSA]
+
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/+index\.php[/\s?] [NC]
     RewriteRule ^index\.php/?$ / [L,R=301,QSA]
+
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
