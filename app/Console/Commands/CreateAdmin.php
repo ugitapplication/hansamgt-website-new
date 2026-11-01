@@ -30,7 +30,7 @@ class CreateAdmin extends Command
 
         $name = trim((string) $this->ask('Name'));
         $email = trim((string) $this->ask('Email address'));
-        $password = (string) $this->secret('Password (min. 12 characters)');
+        $password = (string) $this->secret('Password (min. 8 characters)');
         $confirmation = (string) $this->secret('Confirm password');
 
         $validator = Validator::make(
@@ -43,7 +43,7 @@ class CreateAdmin extends Command
             [
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-                'password' => ['required', 'string', 'min:12', 'confirmed'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
             ],
         );
 

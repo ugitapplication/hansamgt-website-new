@@ -1,8 +1,3 @@
-{{-- HANSA in Numbers (legacy: Counter.php) — managed under Homepage Management →
-     Homepage Sections. The list below is the fallback so the band still renders
-     before the table is seeded. The count-up animation derives its
-     target/prefix/suffix from the number itself, so an editor only ever types
-     the figure as it should read. --}}
 @php
     $statistics = ($statistics ?? []);
 

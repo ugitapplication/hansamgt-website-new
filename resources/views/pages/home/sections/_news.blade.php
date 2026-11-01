@@ -1,5 +1,3 @@
-{{-- Latest News — CMS-driven from Insights. Falls back to the legacy static cards
-     when no articles are published yet (or before the posts table exists). --}}
 @php($latest = collect($latestPosts ?? [])->take(2))
 <section id="emr_awards" class="home-section" aria-labelledby="news-heading">
     <div class="mx-auto max-w-7xl px-4 sm:px-6">

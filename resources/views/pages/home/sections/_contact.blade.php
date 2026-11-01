@@ -1,4 +1,3 @@
-{{-- Let's Talk (legacy: Contact.php; UI only — backend submission arrives with the contact page) --}}
 <section id="emr_contact" class="home-contact" aria-labelledby="contact-heading">
     <div class="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 md:grid-cols-3">
         <div>

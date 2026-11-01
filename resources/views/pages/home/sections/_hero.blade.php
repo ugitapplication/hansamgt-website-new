@@ -1,6 +1,3 @@
-{{-- Hero slider (legacy: Slider.php, RevSlider replaced with lightweight rotator).
-     Slides come from the admin panel (HeroSlider) when active rows exist;
-     otherwise the original built-in set below is used so the homepage never breaks. --}}
 @php
     $heroSlides = ($heroSlides ?? []);
     if (empty($heroSlides)) {
