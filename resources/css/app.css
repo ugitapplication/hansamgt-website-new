@@ -1583,6 +1583,20 @@ section[id] {
     margin: 0 0 0.4rem;
 }
 
+.office-card__row {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+}
+
+.office-card__row svg {
+    flex: 0 0 auto;
+    width: 15px;
+    height: 15px;
+    margin-top: 0.2rem;
+    color: #fcb000;
+}
+
 .office-card a {
     color: #fff;
     text-decoration: none;

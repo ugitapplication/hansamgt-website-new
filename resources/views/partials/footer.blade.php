@@ -40,10 +40,15 @@
 
         <div>
             <h2 class="font-heading text-lg font-bold tracking-wide text-white">Contact</h2>
+            @php
+                $pin = '<svg class="mt-0.5 h-4 w-4 shrink-0 text-hansa-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+                $phone = '<svg class="mt-0.5 h-4 w-4 shrink-0 text-hansa-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+                $mail = '<svg class="mt-0.5 h-4 w-4 shrink-0 text-hansa-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>';
+            @endphp
             <address class="mt-4 space-y-2 text-sm not-italic">
-                <p>{{ \App\Support\Settings::get('postal_address') }}</p>
-                <p><a class="text-hansa-gold hover:text-white hover:underline" href="{{ \App\Support\Settings::phoneHref() }}">{{ \App\Support\Settings::phoneDisplay() }}</a></p>
-                <p><a class="text-hansa-gold hover:text-white hover:underline" href="mailto:{{ \App\Support\Settings::get('email') }}">{{ \App\Support\Settings::get('email') }}</a></p>
+                <p class="flex items-start gap-2">{!! $pin !!}<span>{{ \App\Support\Settings::get('postal_address') }}</span></p>
+                <p class="flex items-start gap-2">{!! $phone !!}<span><a class="text-hansa-gold hover:text-white hover:underline" href="{{ \App\Support\Settings::phoneHref() }}">{{ \App\Support\Settings::phoneDisplay() }}</a></span></p>
+                <p class="flex items-start gap-2">{!! $mail !!}<span><a class="text-hansa-gold hover:text-white hover:underline" href="mailto:{{ \App\Support\Settings::get('email') }}">{{ \App\Support\Settings::get('email') }}</a></span></p>
             </address>
             @include('partials.social-links', ['style' => 'footer'])
         </div>
